@@ -39,6 +39,8 @@ public class Product extends EntityCommon{
     @JoinColumn(name = "typeGoodCode")
     TypeGood typeGood;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "storeCode")
+    Store store;
 
 }
