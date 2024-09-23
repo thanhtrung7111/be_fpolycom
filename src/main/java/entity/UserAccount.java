@@ -83,4 +83,16 @@ public class UserAccount extends EntityCommon {
 
     @OneToMany(mappedBy = "userAccount")
     List<BankUser> bankUserList;
+
+    @OneToMany(mappedBy = "userAccount")
+    List<VoucherUser> voucherUserList;
+
+    @OneToMany(mappedBy = "userAccount")
+    List<Liked> likedList;
+
+    @OneToMany(mappedBy = "userAccount")
+    List<Evaluate> evaluateList;
+
+    @OneToMany(mappedBy = "userAccount")
+    List<ShoppingCart> shoppingCartList;
 }

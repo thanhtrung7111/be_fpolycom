@@ -1,8 +1,10 @@
 package entity;
 
-import entity.enum_package.VoucherType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
@@ -12,36 +14,32 @@ import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @SuperBuilder
-@EqualsAndHashCode(callSuper = false)
-@AttributeOverride(name = "id", column = @Column(name = "voucherCode"))
-public class Voucher extends EntityCommon {
+@AttributeOverride(name="id",column = @Column(name = "discountCode"))
+public class Discount extends EntityCommon{
 
     @Lob
     @Nationalized
     String name;
 
-    Double priceApply;
-
     Integer percentDecrease;
+
+    @Lob
+    @Nationalized
+    String description;
 
     @Temporal(TemporalType.DATE)
     Date beginDate;
-
-    @Temporal(TemporalType.DATE)
-    Date endDate;
-
-    @Enumerated(EnumType.STRING)
-    VoucherType voucherType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "storeCode")
     Store store;
 
-    @OneToMany(mappedBy = "voucher")
-    List<VoucherUser> voucherUserList;
+    @OneToMany(mappedBy = "discount")
+    List<ProductDetail> productDetailList;
+
 
 }

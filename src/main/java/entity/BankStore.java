@@ -34,6 +34,6 @@ public class BankStore extends EntityCommon{
     @JoinColumn(name = "storeCode")
     Store store;
 
-    @OneToOne(mappedBy = "bankStore")
+    @OneToMany(mappedBy = "bankStore")
     List<StoreWithdrawalMoney> storeWithdrawalMoneyList;
 }

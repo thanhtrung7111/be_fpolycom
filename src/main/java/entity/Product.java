@@ -7,6 +7,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -43,4 +45,12 @@ public class Product extends EntityCommon{
     @JoinColumn(name = "storeCode")
     Store store;
 
+    @OneToMany(mappedBy = "product")
+    List<ProductDetail> productDetailList;
+
+    @OneToMany(mappedBy = "product")
+    List<Liked> likedList;
+
+    @OneToMany(mappedBy = "product")
+    List<Evaluate> evaluateList;
 }

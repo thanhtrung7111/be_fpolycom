@@ -72,4 +72,10 @@ public class Store extends EntityCommon {
     @OneToMany(mappedBy = "store")
     List<Product> productList;
 
+
+    @OneToMany(mappedBy = "store")
+    List<Voucher> voucherList;
+
+    @OneToMany(mappedBy = "store")
+    List<Discount> discountList;
 }
