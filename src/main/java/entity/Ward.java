@@ -6,6 +6,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -23,4 +25,10 @@ public class Ward extends EntityCommon {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "districtCode")
     District district;
+
+    @OneToMany(mappedBy = "ward")
+    List<UserAccount> userAccountList;
+
+    @OneToMany(mappedBy = "ward")
+    List<Store> storeList;
 }

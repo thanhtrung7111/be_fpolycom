@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -57,7 +58,26 @@ public class UserAccount extends EntityCommon {
 
     String tokenConfirm;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "provinceCode")
+    Province province;
 
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "districtCode")
+    District district;
 
+    @ManyToOne
+    @JoinColumn(name = "wardCode")
+    Ward ward;
+
+
+    @OneToMany(mappedBy = "userAccountPrimary")
+    List<Relationship> relationshipList;
+
+    @OneToMany(mappedBy = "userAccount")
+    List<NotifycationUser> notifycationUserList;
+
+    @OneToOne(mappedBy = "userAccount")
+    Store store;
 }

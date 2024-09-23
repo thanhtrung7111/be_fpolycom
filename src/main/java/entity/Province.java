@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
 
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "provinceCode"))
@@ -25,4 +26,10 @@ public class Province extends EntityCommon {
 
     @OneToMany(mappedBy = "province")
     List<District> districtList;
+
+    @OneToMany (mappedBy = "province")
+    List<UserAccount> userAccountList;
+
+    @OneToMany(mappedBy = "province")
+    List<Store> storeList;
 }

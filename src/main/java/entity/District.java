@@ -29,4 +29,10 @@ public class District extends EntityCommon {
 
     @OneToMany(mappedBy = "district")
     List<Ward> wardList;
+
+    @OneToMany(mappedBy = "district")
+    List<UserAccount> userAccountList;
+
+    @OneToMany(mappedBy = "district")
+    List<Store> storeList;
 }
