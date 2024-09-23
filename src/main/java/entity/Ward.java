@@ -1,9 +1,6 @@
 package entity;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -16,10 +13,14 @@ import org.hibernate.annotations.Nationalized;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AttributeOverride(name = "id", column = @Column(name = "wardCode"))
 @EqualsAndHashCode(callSuper = false)
-@Builder
+@SuperBuilder
 public class Ward extends EntityCommon {
 
     @Lob
     @Nationalized
     String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "districtCode")
+    District district;
 }

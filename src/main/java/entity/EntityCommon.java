@@ -11,10 +11,10 @@ import lombok.experimental.SuperBuilder;
 import java.util.Date;
 
 @MappedSuperclass
-@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public abstract class EntityCommon {
 
 

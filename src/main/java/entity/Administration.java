@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false)
-@Builder
+@SuperBuilder
 public class Administration extends EntityCommon {
 
     private String userLogin;

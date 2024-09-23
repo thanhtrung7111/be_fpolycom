@@ -15,23 +15,28 @@ import java.util.Date;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false)
-@AttributeOverride(name = "id",column = @Column(name = "userCode"))
-@Builder
-public class UserAccount extends EntityCommon{
+@AttributeOverride(name = "id", column = @Column(name = "userCode"))
+@SuperBuilder
+public class UserAccount extends EntityCommon {
 
     String userLogin;
 
     String password;
 
     @Lob
-            @Nationalized
+    @Nationalized
     String name;
 
     String phone;
 
     @Lob
     @Nationalized
-    String  address;
+    String addressDetail;
+
+
+    @Lob
+    @Nationalized
+    String address;
 
     @Lob
     String image;
@@ -47,6 +52,12 @@ public class UserAccount extends EntityCommon{
 
     @Enumerated(EnumType.STRING)
     UserStatus userStatus;
+
+    Boolean gender;
+
+    String tokenConfirm;
+
+
 
 
 }

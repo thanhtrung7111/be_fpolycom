@@ -16,7 +16,7 @@ import org.hibernate.annotations.Nationalized;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AttributeOverride(name="id",column = @Column(name = "bankCode"))
 @EqualsAndHashCode(callSuper = false)
-@Builder
+@SuperBuilder
 public class Bank extends EntityCommon{
     @Lob
     @Nationalized

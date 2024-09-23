@@ -1,13 +1,12 @@
 package entity;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
+
+import java.util.List;
 
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "provinceCode"))
@@ -16,11 +15,14 @@ import org.hibernate.annotations.Nationalized;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false)
-@Builder
+@SuperBuilder
 public class Province extends EntityCommon {
 
     @Lob
     @Nationalized
     String name;
 
+
+    @OneToMany(mappedBy = "province")
+    List<District> districtList;
 }

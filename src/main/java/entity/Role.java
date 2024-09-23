@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false)
-@Builder
+@SuperBuilder
 public class Role extends EntityCommon{
 
      String name;

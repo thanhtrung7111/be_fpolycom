@@ -16,7 +16,7 @@ import org.hibernate.annotations.Nationalized;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AttributeOverride(name = "id",column = @Column(name = "typeGoodCode"))
 @EqualsAndHashCode(callSuper = false)
-@Builder
+@SuperBuilder
 public class TypeGood extends EntityCommon{
 
     @Lob

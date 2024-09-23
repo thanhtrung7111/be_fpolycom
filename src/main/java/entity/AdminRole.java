@@ -9,16 +9,18 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@AttributeOverride(name = "id",column = @Column(name = "adminRoleCode"))
+@AttributeOverride(name = "id", column = @Column(name = "adminRoleCode"))
 @EqualsAndHashCode(callSuper = false)
-@Builder
-public class AdminRole extends EntityCommon{
+@SuperBuilder
+public class AdminRole extends EntityCommon {
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "roleCode")
     Role role;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "adminCode")
     Administration administration;
 
 }
