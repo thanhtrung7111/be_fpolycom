@@ -9,31 +9,31 @@ import lombok.experimental.SuperBuilder;
 import java.util.List;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@AttributeOverride(name = "id", column = @Column(name = "bankUserCode"))
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
-@AttributeOverride(name = "id",column = @Column(name = "bankStoreCode"))
-public class BankStore extends EntityCommon{
+public class BankUser extends EntityCommon {
 
-    String accountName;
 
     String accountNumber;
 
+    String accountName;
+
     @Enumerated(EnumType.STRING)
-    BankStatus bankStoreStatus;
+    BankStatus bankStatus;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userCode")
+    UserAccount userAccount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bankCode")
     Bank bank;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "storeCode")
-    Store store;
-
-    @OneToOne(mappedBy = "bankStore")
-    List<StoreWithdrawalMoney> storeWithdrawalMoneyList;
+    @OneToMany(mappedBy = "bankUser")
+    List<UserWithdrawalMoney> userWithdrawalMoneyList;
 }

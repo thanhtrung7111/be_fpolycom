@@ -1,6 +1,6 @@
 package entity.enum_package;
 
-public enum BankStoreStatus {
+public enum BankStatus {
     active,
     inActive,
 }

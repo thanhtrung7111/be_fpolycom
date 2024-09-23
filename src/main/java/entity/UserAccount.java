@@ -80,4 +80,7 @@ public class UserAccount extends EntityCommon {
 
     @OneToOne(mappedBy = "userAccount")
     Store store;
+
+    @OneToMany(mappedBy = "userAccount")
+    List<BankUser> bankUserList;
 }

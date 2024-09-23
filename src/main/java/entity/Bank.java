@@ -30,4 +30,7 @@ public class Bank extends EntityCommon{
 
     @OneToMany(mappedBy = "bank")
     List<BankStore> bankStoreList;
+
+    @OneToMany(mappedBy = "bank")
+    List<BankUser> bankUserList;
 }
