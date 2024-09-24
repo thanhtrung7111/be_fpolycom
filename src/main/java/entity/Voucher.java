@@ -44,4 +44,6 @@ public class Voucher extends EntityCommon {
     @OneToMany(mappedBy = "voucher")
     List<VoucherUser> voucherUserList;
 
+    @OneToMany(mappedBy = "voucher")
+    List<VoucherApply> voucherApplyList;
 }

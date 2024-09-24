@@ -42,4 +42,6 @@ public class Discount extends EntityCommon{
     List<ProductDetail> productDetailList;
 
 
+    @OneToMany(mappedBy = "discount")
+    List<OrderDetail> orderDetailList;
 }
