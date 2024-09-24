@@ -31,4 +31,7 @@ public class Ward extends EntityCommon {
 
     @OneToMany(mappedBy = "ward")
     List<Store> storeList;
+
+    @OneToMany(mappedBy = "ward")
+    List<Orders> ordersList;
 }

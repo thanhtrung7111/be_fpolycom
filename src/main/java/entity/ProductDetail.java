@@ -1,10 +1,7 @@
 package entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
@@ -17,9 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @SuperBuilder
-
+@EqualsAndHashCode(callSuper = false)
 @AttributeOverride(name = "id",column = @Column(name = "productDetailCode"))
-public class ProductDetail {
+public class ProductDetail extends EntityCommon{
 
     @Lob
     @Nationalized
@@ -43,5 +40,7 @@ public class ProductDetail {
     @OneToMany(mappedBy = "productDetail")
     List<ShoppingCart> shoppingCartList;
 
+    @OneToMany(mappedBy = "productDetail")
+    List<OrderDetail> orderDetailList;
 
 }

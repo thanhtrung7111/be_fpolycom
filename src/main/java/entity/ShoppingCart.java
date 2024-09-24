@@ -27,4 +27,5 @@ public class ShoppingCart extends  EntityCommon{
     @JoinColumn(name = "productDetailCode")
     ProductDetail productDetail;
 
+
 }
