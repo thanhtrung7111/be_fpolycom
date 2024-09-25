@@ -54,4 +54,5 @@ public class FpolycomApplication implements CommandLineRunner {
 		Administration administration = Administration.builder().id(1L).userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		adminRepository.save(administration);
 	}
+
 }

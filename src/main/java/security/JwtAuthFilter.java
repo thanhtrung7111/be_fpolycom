@@ -38,42 +38,44 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authHeader= request.getHeader("Authorization");
-        String token = null;
-        String username = null;
+        try {
+            String authHeader= request.getHeader("Authorization");
+            String token = null;
+            String username = null;
 
 
 
-        if(authHeader != null && authHeader.startsWith("Bearer ")){
-            token = authHeader.substring(7);
-            if(jwtService.isTokenExpired(token)){
-                response.sendRedirect("/error/access-denied");
+            if(authHeader != null && authHeader.startsWith("Bearer ")){
+                token = authHeader.substring(7);
+                username= jwtService.extractUsername(token);
             }
-            username= jwtService.extractUsername(token);
+
+            if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
+                String[] detachResult = username.split("&");
+                UserDetails userDetails = null;
+                if(detachResult[1].equals(RoleType.USER.name())) {
+                    userDetails = userAccountService.loadUserByUsername(detachResult[0]);
+                } else if (detachResult[1].equals(RoleType.ADMIN.name())) {
+                    userDetails = administrationService.loadUserByUsername(detachResult[0]);
+                } else if (detachResult[1].equals(RoleType.SHIPPER.name())) {
+                    userDetails = administrationService.loadUserByUsername(detachResult[0]);
+                }else if (detachResult[1].equals(RoleType.STORE.name())) {
+                    userDetails = storeService.loadUserByUsername(detachResult[0]);
+                }
+
+                if(jwtService.validateToken(token,userDetails)){
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }else{
+                    response.sendRedirect("/error/access-denied");
+                }
+
+            }
+            filterChain.doFilter(request,response);
+        }catch (Exception e){
+            response.sendRedirect("/error/access-denied");
         }
 
-        if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            String[] detachResult = username.split("&");
-            UserDetails userDetails = null;
-            if(detachResult[1].equals(RoleType.USER.name())) {
-                userDetails = userAccountService.loadUserByUsername(detachResult[0]);
-            } else if (detachResult[1].equals(RoleType.ADMIN.name())) {
-                userDetails = administrationService.loadUserByUsername(detachResult[0]);
-            } else if (detachResult[1].equals(RoleType.SHIPPER.name())) {
-                userDetails = administrationService.loadUserByUsername(detachResult[0]);
-            }else if (detachResult[1].equals(RoleType.STORE.name())) {
-                userDetails = storeService.loadUserByUsername(detachResult[0]);
-            }
-
-            if(jwtService.validateToken(token,userDetails)){
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }else{
-                response.sendRedirect("/error/access-denied");
-            }
-
-        }
-        filterChain.doFilter(request,response);
     }
 }
