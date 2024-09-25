@@ -42,8 +42,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String token = null;
         String username = null;
 
+
+
         if(authHeader != null && authHeader.startsWith("Bearer ")){
             token = authHeader.substring(7);
+            if(jwtService.isTokenExpired(token)){
+                response.sendRedirect("/error/access-denied");
+            }
             username= jwtService.extractUsername(token);
         }
 
