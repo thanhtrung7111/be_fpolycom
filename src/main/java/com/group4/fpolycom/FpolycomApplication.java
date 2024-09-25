@@ -1,6 +1,8 @@
 package com.group4.fpolycom;
 
+import dao.AdminRepository;
 import dao.UserAccountRepository;
+import entity.Administration;
 import entity.UserAccount;
 import entity.enum_package.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class FpolycomApplication implements CommandLineRunner {
 	UserAccountRepository userAccountRepository;
 
 	@Autowired
+	AdminRepository adminRepository;
+
+	@Autowired
 	PasswordEncoder encoder;
 
 	public static void main(String[] args) {
@@ -34,7 +39,10 @@ public class FpolycomApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		UserAccount userAccount = UserAccount.builder().userLogin("thanhtrung").password(encoder.encode("thanhtrung")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		UserAccount userAccount = UserAccount.builder().id(1L).userLogin("thanhtrung").password(encoder.encode("thanhtrung")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		userAccountRepository.save(userAccount);
+
+		Administration administration = Administration.builder().id(1L).userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		adminRepository.save(administration);
 	}
 }

@@ -26,6 +26,9 @@ public class SecurityConfig {
     @Autowired
     JwtAuthFilter authFilter;
 
+    @Autowired
+    CustomAccessDeniedHandler customAccessDeniedHandler;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserAccountService();
@@ -33,8 +36,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth.requestMatchers("/generateToken","/hello").permitAll().requestMatchers("/auth/user/**").hasAuthority("USER").anyRequest().authenticated()).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authenticationProvider(authenticationProvider())
-                    .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth.requestMatchers("/generateTokenAdmin","/generateToken","/hello","/error/access-denied").permitAll().requestMatchers("/auth/user/**").hasAuthority("USER").requestMatchers("/auth/admin/**").hasAuthority("ADMIN").anyRequest().authenticated()).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authenticationProvider(authenticationProvider())
+                    .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling(x -> x.accessDeniedHandler(customAccessDeniedHandler));
         return httpSecurity.build();
     }
 

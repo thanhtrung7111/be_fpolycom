@@ -1,5 +1,7 @@
 package security;
 
+import entity.Administration;
+import entity.Store;
 import entity.UserAccount;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,6 +22,18 @@ public class UserInfoDetails implements UserDetails {
         this.authorityList = List.of(new SimpleGrantedAuthority("USER"));
     }
 
+    public UserInfoDetails(Administration administration){
+        this.username = administration.getUserLogin();
+        this.password = administration.getPassword();
+        this.authorityList = List.of(new SimpleGrantedAuthority("ADMIN"));
+    }
+
+    public UserInfoDetails(Store store){
+        this.username = store.getPassword();
+        this.password = "";
+        this.authorityList = List.of(new SimpleGrantedAuthority("STORE"));
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorityList;
@@ -27,12 +41,12 @@ public class UserInfoDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
     @Override

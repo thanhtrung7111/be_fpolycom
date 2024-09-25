@@ -36,6 +36,8 @@ public class Store extends EntityCommon {
 
     String phone;
 
+    String email;
+
     String password;
 
     @Lob
