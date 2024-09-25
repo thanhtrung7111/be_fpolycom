@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import java.util.function.Function;
 @Service
 public class JWTService {
 
+    @Autowired
+    EncodingService encodingService;
 
     public static final String SECRECT_KEY = "qazwsxedcrfvtgbyhnujmikolpplokmijnuhbygvtfcrdxeszwaqfpolycom";
 
@@ -26,7 +29,7 @@ public class JWTService {
     }
 
     private String createToken(Map<String, Object> claims, String username) {
-        return Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)).signWith(getSignKey()).compact();
+        return Jwts.builder().setClaims(claims).setSubject(encodingService.encode(username)).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)).signWith(getSignKey()).compact();
     }
 
     private Key getSignKey(){
@@ -35,7 +38,7 @@ public class JWTService {
     }
 
     public String extractUsername(String token){
-        return extractClaim(token,Claims::getSubject);
+        return encodingService.decode(extractClaim(token,Claims::getSubject));
     }
 
     public Date extractExpiration(String token){

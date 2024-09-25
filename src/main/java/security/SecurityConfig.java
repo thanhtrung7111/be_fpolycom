@@ -29,30 +29,23 @@ public class SecurityConfig {
     @Autowired
     CustomAccessDeniedHandler customAccessDeniedHandler;
 
+    @Autowired
+    CustomAuthenticationProvider customAuthenticationProvider;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserAccountService();
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth.requestMatchers("/generateTokenAdmin","/generateToken","/hello","/error/access-denied").permitAll().requestMatchers("/auth/user/**").hasAuthority("USER").requestMatchers("/auth/admin/**").hasAuthority("ADMIN").anyRequest().authenticated()).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authenticationProvider(authenticationProvider())
+    public SecurityFilterChain securityFilterChainUser(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> auth.requestMatchers("/generateTokenAdmin","/generateToken","/hello","/error/access-denied","/generateTokenStore").permitAll().requestMatchers("/auth/user/**").hasAuthority("USER").requestMatchers("/auth/admin/**").hasAuthority("ADMIN").requestMatchers("/auth/store/**").hasAuthority("STORE").anyRequest().authenticated()).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authenticationProvider(customAuthenticationProvider)
                     .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling(x -> x.accessDeniedHandler(customAccessDeniedHandler));
         return httpSecurity.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
-    }
+
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {

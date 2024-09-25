@@ -31,10 +31,10 @@ public class AuthController {
     public ResponseEntity<Object> authenticateAndGetToken(@RequestBody AuthLoginRequest authRequest) {
         System.out.println(authRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(authRequest.getUsername()+"&"+RoleType.USER.name(), authRequest.getPassword())
         );
         if (authentication.isAuthenticated()) {
-             return ResponseEntity.ok().body(jwtService.generateToken(authentication.getName()+"&"+ RoleType.USER.toString()));
+             return ResponseEntity.ok().body(jwtService.generateToken(authentication.getName()+"&"+ RoleType.USER.name()));
         } else {
             return ResponseEntity.ok().body("Fail");
         }
@@ -44,18 +44,37 @@ public class AuthController {
     public ResponseEntity<Object> authenticateAndGetTokenAdmin(@RequestBody AuthLoginRequest authRequest) {
         System.out.println(authRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(authRequest.getUsername()+"&"+RoleType.ADMIN.name(), authRequest.getPassword())
         );
         if (authentication.isAuthenticated()) {
-            return ResponseEntity.ok().body(jwtService.generateToken(authentication.getName()));
+            return ResponseEntity.ok().body(jwtService.generateToken(authentication.getName()+"&"+ RoleType.ADMIN.name()));
         } else {
             return ResponseEntity.ok().body("Fail");
         }
     }
 
+    @PostMapping("/generateTokenStore")
+    public ResponseEntity<Object> authenticateAndGetTokenStore(@RequestBody AuthLoginRequest authRequest) {
+        System.out.println(authRequest.getPassword());
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getUsername()+"&"+RoleType.STORE.name(), authRequest.getPassword())
+        );
+        if (authentication.isAuthenticated()) {
+            return ResponseEntity.ok().body(jwtService.generateToken(authentication.getName()+"&"+ RoleType.STORE.name()));
+        } else {
+            return ResponseEntity.ok().body("Fail");
+        }
+    }
+
+
     @GetMapping("/auth/user/list")
     public ResponseEntity<Object> getData(){
         return ResponseEntity.ok().body("Success user");
+    }
+
+    @GetMapping("/auth/store/list")
+    public ResponseEntity<Object> getDataStore(){
+        return ResponseEntity.ok().body("Success store");
     }
 
     @GetMapping("/auth/admin/list")

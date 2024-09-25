@@ -29,8 +29,8 @@ public class UserInfoDetails implements UserDetails {
     }
 
     public UserInfoDetails(Store store){
-        this.username = store.getPassword();
-        this.password = "";
+        this.username = store.getUserAccount().getUserLogin();
+        this.password = store.getPassword();
         this.authorityList = List.of(new SimpleGrantedAuthority("STORE"));
     }
 
