@@ -3,7 +3,6 @@ package dto.province;
 import entity.District;
 import entity.Province;
 import org.mapstruct.Mapper;
-import org.mapstruct.MapperConfig;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
@@ -19,9 +18,9 @@ public interface ProvinceMapper {
 
     @Mapping(target = "provinceCode",source = "id")
     @Mapping(target = "numberOfDistricts",source = "districtList",qualifiedByName = "calculateNumberOfDistricts")
-    ProvinceResponseDTO toDTO(Province entity);
+    AdminProvinceResponseDTO toAdminDTO(Province entity);
 
-    List<ProvinceResponseDTO> toDTOList(List<Province> list);
+    List<AdminProvinceResponseDTO> toDTOList(List<Province> list);
 
 
     @Named("calculateNumberOfDistricts")
