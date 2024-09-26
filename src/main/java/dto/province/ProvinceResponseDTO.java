@@ -12,4 +12,9 @@ public class ProvinceResponseDTO {
     String name;
 
     String provinceCode;
+
+    Integer numberOfDistricts;
+
+
+
 }
