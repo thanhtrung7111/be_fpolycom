@@ -1,13 +1,12 @@
 package service.province;
 
 import dao.ProvinceRepository;
+import dto.province.AdminProvinceResponseDTO;
 import dto.province.ProvinceCreateRequestDTO;
 import dto.province.ProvinceMapper;
-import dto.province.ProvinceResponseDTO;
 import entity.Province;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import service.common.CommonService;
 
 import java.util.List;
 
@@ -19,23 +18,23 @@ public class ProvinceServiceImpl implements ProvinceService {
 
 
     @Override
-    public ProvinceResponseDTO postData(ProvinceCreateRequestDTO provinceCreateRequestDTO) {
+    public AdminProvinceResponseDTO postData(ProvinceCreateRequestDTO provinceCreateRequestDTO) {
         Province saved = provinceRepository.save(ProvinceMapper.INSTANCE.toEnity(provinceCreateRequestDTO));
-        return ProvinceMapper.INSTANCE.toDTO(saved);
+        return ProvinceMapper.INSTANCE.toAdminDTO(saved);
     }
 
     @Override
-    public ProvinceResponseDTO updateData(ProvinceCreateRequestDTO provinceCreateRequestDTO) {
+    public AdminProvinceResponseDTO updateData(ProvinceCreateRequestDTO provinceCreateRequestDTO) {
         return null;
     }
 
     @Override
-    public ProvinceResponseDTO deleteData(ProvinceCreateRequestDTO provinceCreateRequestDTO) {
+    public AdminProvinceResponseDTO deleteData(ProvinceCreateRequestDTO provinceCreateRequestDTO) {
         return null;
     }
 
     @Override
-    public List<ProvinceResponseDTO> getAllData() {
+    public List<AdminProvinceResponseDTO> getAllData() {
         return ProvinceMapper.INSTANCE.toDTOList(provinceRepository.findAll());
     }
 }

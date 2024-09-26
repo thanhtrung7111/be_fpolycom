@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class ProvinceResponseDTO {
+public class AdminProvinceResponseDTO {
 
     String name;
 

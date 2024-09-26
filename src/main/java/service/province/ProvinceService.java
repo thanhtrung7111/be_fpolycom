@@ -1,10 +1,10 @@
 package service.province;
 
 import dto.province.ProvinceCreateRequestDTO;
-import dto.province.ProvinceResponseDTO;
+import dto.province.AdminProvinceResponseDTO;
 import service.common.CommonService;
 
-public interface ProvinceService extends  CommonService<ProvinceCreateRequestDTO, ProvinceResponseDTO> {
+public interface ProvinceService extends  CommonService<ProvinceCreateRequestDTO, AdminProvinceResponseDTO> {
 
 
 
