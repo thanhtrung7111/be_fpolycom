@@ -1,9 +1,11 @@
 package com.group4.fpolycom;
 
 import dao.AdminRepository;
+import dao.ProvinceRepository;
 import dao.StoreRepository;
 import dao.UserAccountRepository;
 import entity.Administration;
+import entity.Province;
 import entity.Store;
 import entity.UserAccount;
 import entity.enum_package.StoreStatus;
@@ -18,11 +20,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
+import java.util.List;
 
 @SpringBootApplication
 @EntityScan(basePackages = {"entity"})
 @EnableJpaRepositories(basePackages = {"dao"})
-@ComponentScan(basePackages = {"security","service","admin_controller","user_controller","dto"})
+@ComponentScan(basePackages = {"security","service","admin_controller","user_controller","dto","common_controller"})
 public class FpolycomApplication implements CommandLineRunner {
 
 	@Autowired
@@ -30,6 +33,9 @@ public class FpolycomApplication implements CommandLineRunner {
 
 	@Autowired
 	AdminRepository adminRepository;
+
+	@Autowired
+	ProvinceRepository provinceRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -53,6 +59,10 @@ public class FpolycomApplication implements CommandLineRunner {
 
 		Administration administration = Administration.builder().id(1L).userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		adminRepository.save(administration);
+
+		Province province = Province.builder().id(1).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Bình Dương").build();
+		Province province2 = Province.builder().id(2).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Đồng Nai").build();
+		provinceRepository.saveAll(List.of(province,province2));
 	}
 
 }
