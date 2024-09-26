@@ -38,7 +38,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try {
+//        try {
             String authHeader= request.getHeader("Authorization");
             String token = null;
             String username = null;
@@ -73,9 +73,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             }
             filterChain.doFilter(request,response);
-        }catch (Exception e){
-            response.sendRedirect("/error/access-denied");
-        }
+//        }catch (Exception e){
+//            response.sendRedirect("/error/access-denied");
+//        }
 
     }
 }
