@@ -2,6 +2,7 @@ package service.province;
 
 import dao.ProvinceRepository;
 import dto.province.AdminProvinceResponseDTO;
+import dto.province.BaseProvinceResponseDTO;
 import dto.province.ProvinceCreateRequestDTO;
 import dto.province.ProvinceMapper;
 import entity.Province;
@@ -20,7 +21,7 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Override
     public AdminProvinceResponseDTO postData(ProvinceCreateRequestDTO provinceCreateRequestDTO) {
         Province saved = provinceRepository.save(ProvinceMapper.INSTANCE.toEnity(provinceCreateRequestDTO));
-        return ProvinceMapper.INSTANCE.toAdminDTO(saved);
+        return ProvinceMapper.INSTANCE.toAdminProvinceResponseDto(saved);
     }
 
     @Override
@@ -35,6 +36,10 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     public List<AdminProvinceResponseDTO> getAllData() {
-        return ProvinceMapper.INSTANCE.toDTOList(provinceRepository.findAll());
+        return ProvinceMapper.INSTANCE.toAdminProvinceResponseDtos(provinceRepository.findAll());
+    }
+
+    public List<BaseProvinceResponseDTO> getAllDataCommon() {
+        return ProvinceMapper.INSTANCE.toBaseProvinceResponseDtos(provinceRepository.findAll());
     }
 }

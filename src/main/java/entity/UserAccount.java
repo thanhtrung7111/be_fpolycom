@@ -98,4 +98,7 @@ public class UserAccount extends EntityCommon {
 
     @OneToMany(mappedBy = "userAccount")
     List<Orders> ordersList;
+
+    @OneToMany(mappedBy = "userAccount")
+    List<Followed> followedList;
 }

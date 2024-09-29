@@ -26,9 +26,6 @@ public class Orders extends EntityCommon {
 
 
     @Temporal(TemporalType.DATE)
-    Date deliveryDate;
-
-    @Temporal(TemporalType.DATE)
     Date pickupDate;
 
     Double totalAmount;

@@ -80,4 +80,7 @@ public class Store extends EntityCommon {
 
     @OneToMany(mappedBy = "store")
     List<Discount> discountList;
+
+    @OneToMany(mappedBy = "store")
+    List<Followed> followedList;
 }
