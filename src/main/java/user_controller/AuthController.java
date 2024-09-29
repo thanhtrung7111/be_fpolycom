@@ -82,10 +82,6 @@ public class AuthController {
         return ResponseEntity.ok().body("Success admin");
     }
 
-    @GetMapping("/error/access-denied")
-    public ResponseEntity<Object> errorDenied(){
-        return ResponseEntity.ok().body("Bạn khoong co quyen truy cap vao enpoint này!");
-    }
 
 
     @GetMapping("/hello")

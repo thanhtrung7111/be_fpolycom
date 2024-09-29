@@ -18,10 +18,14 @@ public interface ProvinceMapper {
 
     @Mapping(target = "provinceCode",source = "id")
     @Mapping(target = "numberOfDistricts",source = "districtList",qualifiedByName = "calculateNumberOfDistricts")
-    AdminProvinceResponseDTO toAdminDTO(Province entity);
+    AdminProvinceResponseDTO toAdminProvinceResponseDto(Province entity);
 
-    List<AdminProvinceResponseDTO> toDTOList(List<Province> list);
+    @Mapping(target = "provinceCode",source = "id")
+    BaseProvinceResponseDTO toBaseProvinceResponseDto(Province entity);
 
+    List<AdminProvinceResponseDTO> toAdminProvinceResponseDtos(List<Province> list);
+
+    List<BaseProvinceResponseDTO> toBaseProvinceResponseDtos(List<Province> list);
 
     @Named("calculateNumberOfDistricts")
     default Integer calculateNumberOfDistricts(List<District> districts) {

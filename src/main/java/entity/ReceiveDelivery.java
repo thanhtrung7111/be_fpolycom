@@ -22,6 +22,8 @@ public class ReceiveDelivery extends EntityCommon{
     @Temporal(TemporalType.DATE)
     Date deliveryDate;
 
+    boolean statusDelivery;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shipperCode")
     Shipper shipper;
