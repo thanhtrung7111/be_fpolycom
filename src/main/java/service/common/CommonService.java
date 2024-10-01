@@ -2,7 +2,7 @@ package service.common;
 
 import java.util.List;
 
-public interface CommonService<DTORequest,DTOResponse> {
+public interface CommonService<DTORequest,DTOResponse,ID> {
 
     public DTOResponse postData(DTORequest request);
 
@@ -11,4 +11,6 @@ public interface CommonService<DTORequest,DTOResponse> {
     public DTOResponse deleteData(DTORequest request);
 
     public List<DTOResponse> getAllData();
+
+    public DTOResponse getDetailData(ID id);
 }

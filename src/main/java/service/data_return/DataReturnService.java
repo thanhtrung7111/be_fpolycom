@@ -15,6 +15,15 @@ public class DataReturnService {
         return DataReturn.builder().code("00").errorMessage("").status(true).data(object).timestamp(LocalDateTime.now()).build();
     }
 
+    public DataReturn failure(String message){
+        return DataReturn.builder().code("03").errorMessage(message).status(false).data(null).timestamp(LocalDateTime.now()).build();
+    }
+
+    public DataReturn notFoundObject(String message){
+        return DataReturn.builder().code("04").errorMessage(message).status(false).data(null).timestamp(LocalDateTime.now()).build();
+    }
+
+
     public DataReturn authorization(){
         return DataReturn.builder().code("01").errorMessage("Bạn không có quyền truy cập vào endpoint này!").status(false).data(null).timestamp(LocalDateTime.now()).build();
     }

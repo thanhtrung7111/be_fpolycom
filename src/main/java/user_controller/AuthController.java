@@ -2,6 +2,7 @@ package user_controller;
 
 import dto.authLoginUser.AuthLoginRequest;
 import entity.enum_package.RoleType;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -41,7 +42,6 @@ public class AuthController {
 
     @PostMapping("/generateTokenAdmin")
     public ResponseEntity<Object> authenticateAndGetTokenAdmin(@RequestBody AuthLoginRequest authRequest) {
-        System.out.println(authRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername()+"&"+RoleType.ADMIN.name(), authRequest.getPassword())
         );
@@ -53,7 +53,7 @@ public class AuthController {
     }
 
     @PostMapping("/generateTokenStore")
-    public ResponseEntity<Object> authenticateAndGetTokenStore(@RequestBody AuthLoginRequest authRequest) {
+    public ResponseEntity<Object> authenticateAndGetTokenStore(@Valid @RequestBody AuthLoginRequest authRequest) {
         System.out.println(authRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername()+"&"+RoleType.STORE.name(), authRequest.getPassword())

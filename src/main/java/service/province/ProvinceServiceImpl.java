@@ -6,12 +6,14 @@ import dto.province.BaseProvinceResponseDTO;
 import dto.province.ProvinceCreateRequestDTO;
 import dto.province.ProvinceMapper;
 import entity.Province;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class ProvinceServiceImpl implements ProvinceService {
 
     @Autowired
@@ -26,7 +28,9 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     public AdminProvinceResponseDTO updateData(ProvinceCreateRequestDTO provinceCreateRequestDTO) {
-        return null;
+        Province province = ProvinceMapper.INSTANCE.toEnity(provinceCreateRequestDTO);
+        Province provinceSaved = provinceRepository.save(province);
+        return ProvinceMapper.INSTANCE.toAdminProvinceResponseDto(provinceSaved);
     }
 
     @Override
@@ -37,6 +41,11 @@ public class ProvinceServiceImpl implements ProvinceService {
     @Override
     public List<AdminProvinceResponseDTO> getAllData() {
         return ProvinceMapper.INSTANCE.toAdminProvinceResponseDtos(provinceRepository.findAll());
+    }
+
+    @Override
+    public AdminProvinceResponseDTO getDetailData(Long aLong) {
+        return null;
     }
 
     public List<BaseProvinceResponseDTO> getAllDataCommon() {
