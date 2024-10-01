@@ -7,7 +7,7 @@ import service.common.CommonService;
 
 import java.util.List;
 
-public interface ProvinceService extends  CommonService<ProvinceCreateRequestDTO, AdminProvinceResponseDTO> {
+public interface ProvinceService extends  CommonService<ProvinceCreateRequestDTO, AdminProvinceResponseDTO,Long> {
 
 
     public List<BaseProvinceResponseDTO> getAllDataCommon();
