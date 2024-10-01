@@ -14,7 +14,6 @@ import service.province.ProvinceService;
 @CrossOrigin("*")
 public class CategoryController {
 
-
     @Autowired
     DataReturnService dataReturnService;
 
