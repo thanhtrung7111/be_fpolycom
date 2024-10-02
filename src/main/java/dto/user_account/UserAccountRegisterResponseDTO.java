@@ -1,5 +1,7 @@
 package dto.user_account;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,14 +9,9 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserAccountRequestDTO {
-
-    String userLogin;
-
-    String password;
-
+@AllArgsConstructor
+public class UserAccountRegisterResponseDTO {
 
     String name;
 
@@ -30,12 +27,10 @@ public class UserAccountRequestDTO {
 
     Boolean gender;
 
-    String provinceCode;
+    String provinceName;
 
-    String districtCode;
+    String districtName;
 
-    String wardCode;
-
-
+    String wardName;
 
 }

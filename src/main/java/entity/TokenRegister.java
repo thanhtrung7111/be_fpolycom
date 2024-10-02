@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -12,6 +13,7 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
 @EqualsAndHashCode(callSuper = false)
+@Builder
 public class TokenRegister {
 
     @Id
@@ -20,9 +22,10 @@ public class TokenRegister {
 
     Date createdDate;
 
-    Date expiredDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    LocalDateTime expiredDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="userCode",referencedColumnName = "userCode")
     UserAccount userAccount;
 }

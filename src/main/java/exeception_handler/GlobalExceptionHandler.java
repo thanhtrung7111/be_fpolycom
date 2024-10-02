@@ -34,15 +34,21 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<Object> handleAccessDeniedException(
-            AccessDeniedException ex, HttpServletRequest request) {
+            AccessDeniedException ex) {
         return  ResponseEntity.ok(dataReturnService.authorization());
     }
 
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<Object> handleRuntimeException(Exception ex) {
+    public ResponseEntity<Object> handleuserNameNotFoundException(UsernameNotFoundException ex) {
         return  ResponseEntity.ok(dataReturnService.notFoundObject(ex.getMessage()));
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Object> handleuserNameNotFoundException(RuntimeException ex) {
+        return  ResponseEntity.ok(dataReturnService.notFoundObject(ex.getMessage()));
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {

@@ -2,8 +2,11 @@ package user_controller;
 
 import dto.auth_user.AuthUserLoginRequestDTO;
 import dto.auth_user.AuthUserLoginResponseDTO;
-import dto.user_account.UserAccountRequestDTO;
+import dto.user_account.UserAccountRegisterRequestDTO;
+import dto.user_account.UserAccountRegisterResponseDTO;
 import entity.enum_package.RoleType;
+import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import service.auth_user.AuthUserService;
 import service.common.JWTService;
 import service.UserAccountService;
+import service.common.MailService;
 import service.data_return.DataReturnService;
 
 @RestController
@@ -24,7 +28,7 @@ public class AuthController {
     DataReturnService dataReturnService;
 
     @Autowired
-    private UserAccountService service;
+    private UserAccountService userAccountService;
 
     @Autowired
     private JWTService jwtService;
@@ -37,6 +41,9 @@ public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    MailService mailService;
 
 
     @PostMapping("/user-login")
@@ -56,9 +63,16 @@ public class AuthController {
     }
 
     @PostMapping("/user-register")
-    public ResponseEntity<Object> userRegister(@RequestBody UserAccountRequestDTO accountRequestDTO) {
+    public ResponseEntity<Object> userRegister(@Valid @RequestBody UserAccountRegisterRequestDTO accountRequestDTO) throws MessagingException {
+        UserAccountRegisterResponseDTO result=userAccountService.registerAccount(accountRequestDTO);
+        mailService.sendMail(result.getEmail(),"Xac nhan dang nhạp","Dang ki thanh cong");
+        return ResponseEntity.ok().body(dataReturnService.success(result));
+    }
 
-        return ResponseEntity.ok().body("Fail");
+    @GetMapping("/user-confirm/{token}")
+    public ResponseEntity<Object> userRegister(@PathVariable("token") String token) throws MessagingException {
+        UserAccountRegisterResponseDTO result=userAccountService.confirmAccount(token);
+        return ResponseEntity.ok().body(dataReturnService.success(result));
     }
 
 

@@ -36,6 +36,9 @@ public class FpolycomApplication implements CommandLineRunner {
 	DistrictRepository districtRepository;
 
 	@Autowired
+	WardRepository wardRepository;
+
+	@Autowired
 	PasswordEncoder encoder;
 
 	@Autowired
@@ -66,6 +69,8 @@ public class FpolycomApplication implements CommandLineRunner {
 		District district2= District.builder().id(2).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Di An").province(province).build();
 		districtRepository.saveAll(List.of(district2,district));
 
+		Ward ward = Ward.builder().id(1).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Binh An").district(district).build();
+		wardRepository.saveAll(List.of(ward));
 
 	}
 
