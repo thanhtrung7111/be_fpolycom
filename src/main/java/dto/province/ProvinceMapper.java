@@ -29,6 +29,9 @@ public interface ProvinceMapper {
 
     @Named("calculateNumberOfDistricts")
     default Integer calculateNumberOfDistricts(List<District> districts) {
+        if(districts == null){
+            return 0;
+        }
         return  districts.size();
     }
 }

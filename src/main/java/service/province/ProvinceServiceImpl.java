@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,7 +36,10 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     public AdminProvinceResponseDTO deleteData(ProvinceCreateRequestDTO provinceCreateRequestDTO) {
-        return null;
+        Province province = ProvinceMapper.INSTANCE.toEnity(provinceCreateRequestDTO);
+        province.setDeleted(true);
+        province.setDeletedDate(new Date());
+        return ProvinceMapper.INSTANCE.toAdminProvinceResponseDto(provinceRepository.save(province));
     }
 
     @Override

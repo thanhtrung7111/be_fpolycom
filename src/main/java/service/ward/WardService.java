@@ -1,6 +1,12 @@
 package service.ward;
 
+import org.springframework.stereotype.Service;
 import service.common.CommonService;
 
-public interface WardService{
+import java.util.List;
+
+
+public interface WardService  {
+
+
 }
