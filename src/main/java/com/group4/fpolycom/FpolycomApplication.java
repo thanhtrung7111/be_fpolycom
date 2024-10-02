@@ -1,13 +1,7 @@
 package com.group4.fpolycom;
 
-import dao.AdminRepository;
-import dao.ProvinceRepository;
-import dao.StoreRepository;
-import dao.UserAccountRepository;
-import entity.Administration;
-import entity.Province;
-import entity.Store;
-import entity.UserAccount;
+import dao.*;
+import entity.*;
 import entity.enum_package.StoreStatus;
 import entity.enum_package.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +12,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import service.district.DistrictService;
 
 import java.util.Date;
 import java.util.List;
@@ -36,6 +31,9 @@ public class FpolycomApplication implements CommandLineRunner {
 
 	@Autowired
 	ProvinceRepository provinceRepository;
+
+	@Autowired
+	DistrictRepository districtRepository;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -63,6 +61,12 @@ public class FpolycomApplication implements CommandLineRunner {
 		Province province = Province.builder().id(1).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Bình Dương").build();
 		Province province2 = Province.builder().id(2).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Đồng Nai").build();
 		provinceRepository.saveAll(List.of(province,province2));
+
+		District district = District.builder().id(1).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Thuan an").province(province).build();
+		District district2= District.builder().id(2).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Di An").province(province).build();
+		districtRepository.saveAll(List.of(district2,district));
+
+
 	}
 
 }
