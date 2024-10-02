@@ -1,4 +1,4 @@
-package dto.authLoginUser;
+package dto.auth_user;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthLoginRequest {
+public class AuthUserLoginRequestDTO {
     @NotBlank(message = "Sai thông thin dăng nhập")
     private String username;
 

@@ -43,6 +43,7 @@ public class Store extends EntityCommon {
     @Lob
     String bannerImage;
 
+    @Enumerated(EnumType.STRING)
     StoreStatus storeStatus;
 
 

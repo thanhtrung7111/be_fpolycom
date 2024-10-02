@@ -38,10 +38,6 @@ public class GlobalExceptionHandler {
         return  ResponseEntity.ok(dataReturnService.authorization());
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleOtherExceptions(Exception ex) {
-        return  ResponseEntity.ok(dataReturnService.failure(ex.getMessage()));
-    }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<Object> handleRuntimeException(Exception ex) {
@@ -59,5 +55,11 @@ public class GlobalExceptionHandler {
         });
 
         return  ResponseEntity.ok(dataReturnService.failure(errors.toString()));
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleOtherExceptions(Exception ex) {
+        return  ResponseEntity.ok(dataReturnService.failure(ex.getMessage()));
     }
 }

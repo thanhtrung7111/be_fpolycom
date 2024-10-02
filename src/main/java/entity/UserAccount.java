@@ -56,7 +56,6 @@ public class UserAccount extends EntityCommon {
 
     Boolean gender;
 
-    String tokenConfirm;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provinceCode")
@@ -101,4 +100,7 @@ public class UserAccount extends EntityCommon {
 
     @OneToMany(mappedBy = "userAccount")
     List<Followed> followedList;
+
+    @OneToOne(mappedBy = "userAccount")
+    TokenRegister tokenRegister;
 }

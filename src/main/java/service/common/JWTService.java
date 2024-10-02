@@ -38,7 +38,11 @@ public class JWTService {
     }
 
     public String extractUsername(String token){
-        return encodingService.decode(extractClaim(token,Claims::getSubject));
+        return encodingService.decode(extractClaim(token,Claims::getSubject)).split("&")[0];
+    }
+
+    public String extractRoleLogin(String token){
+        return encodingService.decode(extractClaim(token,Claims::getSubject)).split("&")[1];
     }
 
     public Date extractExpiration(String token){

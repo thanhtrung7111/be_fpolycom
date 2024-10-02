@@ -49,10 +49,10 @@ public class FpolycomApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		UserAccount userAccount = UserAccount.builder().id(1L).userLogin("thanhtrung").password(encoder.encode("thanhtrung")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		UserAccount userAccount = UserAccount.builder().id(1L).userLogin("thanhtrung").name("Thành Trung").password(encoder.encode("thanhtrung")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		userAccountRepository.save(userAccount);
 
-		Store store = Store.builder().id(1L).userAccount(userAccount).password(encoder.encode("thanhtrung")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		Store store = Store.builder().id(1L).name("Cuawr hang thu cng").userAccount(userAccount).password(encoder.encode("thanhtrung")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		storeRepository.save(store);
 
 		Administration administration = Administration.builder().id(1L).userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
