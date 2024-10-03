@@ -26,7 +26,10 @@ public class ProvinceController {
     }
 
     @PostMapping(value = "/province/new")
-    public ResponseEntity<Object> getNew(@Valid @RequestBody ProvinceCreateRequestDTO request) {
+    public ResponseEntity<Object> getNew( @RequestBody ProvinceCreateRequestDTO request,Errors errors) {
+        if(errors.hasFieldErrors("name")){
+            return ResponseEntity.ok(dataReturnService.dataNotFound("name is empty"));
+        }
         return ResponseEntity.ok(dataReturnService.success(provinceService.postData(request)));
     }
 
