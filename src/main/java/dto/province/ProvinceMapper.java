@@ -14,7 +14,7 @@ public interface ProvinceMapper {
     ProvinceMapper INSTANCE = Mappers.getMapper(ProvinceMapper.class);
 
     @Mapping(target = "id",source = "provinceCode")
-    Province toEnity(ProvinceCreateRequestDTO dto);
+    Province toProvince(ProvinceCreateRequestDTO dto);
 
     @Mapping(target = "provinceCode",source = "id")
     @Mapping(target = "numberOfDistricts",source = "districtList",qualifiedByName = "calculateNumberOfDistricts")

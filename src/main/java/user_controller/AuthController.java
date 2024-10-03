@@ -75,6 +75,19 @@ public class AuthController {
         return ResponseEntity.ok().body(dataReturnService.success(result));
     }
 
+    @PostMapping("/generateTokenAdmin")
+    public ResponseEntity<Object> authenticateAndGetTokenAdmin(@RequestBody AuthUserLoginRequestDTO authRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getUsername()+"&"+RoleType.ADMIN.name(), authRequest.getPassword())
+        );
+        if (authentication.isAuthenticated()) {
+            return ResponseEntity.ok().body(jwtService.generateToken(authentication.getName()+"&"+ RoleType.ADMIN.name()));
+        } else {
+            return ResponseEntity.ok().body("Fail");
+        }
+    }
+
+
 
 
 }

@@ -49,6 +49,17 @@ public class GlobalExceptionHandler {
         return  ResponseEntity.ok(dataReturnService.notFoundObject(ex.getMessage()));
     }
 
+    @ExceptionHandler(TokenExpiredException.class)
+    public ResponseEntity<Object> handleTokenExpiredException(TokenExpiredException ex) {
+        return  ResponseEntity.ok(dataReturnService.tokenExpired(ex.getMessage()));
+    }
+
+    @ExceptionHandler(DataNotFoundException.class)
+    public ResponseEntity<Object> handleDataNotFoundException(DataNotFoundException ex) {
+        return  ResponseEntity.ok(dataReturnService.dataNotFound(ex.getMessage()));
+    }
+
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
