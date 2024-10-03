@@ -1,11 +1,10 @@
 package admin_controller;
 
 
+import dto.province.ProvinceCreateRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import service.data_return.DataReturnService;
 import service.province.ProvinceService;
 
@@ -22,6 +21,24 @@ public class ProvinceController {
     @GetMapping(value = "/province/all")
     public ResponseEntity<Object> getAll() {
         return ResponseEntity.ok(dataReturnService.success(provinceService.getAllData()));
+    }
+
+    @PostMapping(value = "/province/new")
+    public ResponseEntity<Object> getNew(@RequestBody ProvinceCreateRequestDTO request) {
+
+        return ResponseEntity.ok(dataReturnService.success(provinceService.postData(request)));
+    }
+
+    @PostMapping(value = "/province/update")
+    public ResponseEntity<Object> getUpdate(@RequestBody ProvinceCreateRequestDTO request) {
+        System.out.println(request.getName());
+        return ResponseEntity.ok(dataReturnService.success(provinceService.updateData(request)));
+    }
+
+    @PostMapping(value = "/province/delete")
+    public ResponseEntity<Object> getDelete(@RequestBody ProvinceCreateRequestDTO request) {
+        System.out.println(request.getProvinceCode());
+        return ResponseEntity.ok(dataReturnService.success(provinceService.deleteData(request)));
     }
 
 

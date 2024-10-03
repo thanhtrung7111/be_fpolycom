@@ -5,4 +5,5 @@ import dto.district.AdminDistrictResponseDTO;
 import service.common.CommonService;
 
 public interface DistrictService extends CommonService<AdminDistrictRequestDTO, AdminDistrictResponseDTO,Long> {
+
 }
