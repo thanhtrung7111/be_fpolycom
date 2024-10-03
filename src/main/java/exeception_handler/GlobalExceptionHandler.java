@@ -44,6 +44,11 @@ public class GlobalExceptionHandler {
         return  ResponseEntity.ok(dataReturnService.notFoundObject(ex.getMessage()));
     }
 
+    @ExceptionHandler(NotRightException.class)
+    public ResponseEntity<Object> handleuserNameNotFoundException(NotRightException ex) {
+        return  ResponseEntity.ok(dataReturnService.notRight(ex.getMessage()));
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Object> handleuserNameNotFoundException(RuntimeException ex) {
         return  ResponseEntity.ok(dataReturnService.notFoundObject(ex.getMessage()));

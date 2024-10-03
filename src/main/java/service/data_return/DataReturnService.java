@@ -27,6 +27,10 @@ public class DataReturnService {
         return DataReturn.builder().code("05").errorMessage(message).status(false).data(null).timestamp(LocalDateTime.now()).build();
     }
 
+    public DataReturn notRight(String message){
+        return DataReturn.builder().code("07").errorMessage(message).status(false).data(null).timestamp(LocalDateTime.now()).build();
+    }
+
     public DataReturn dataNotFound(String message){
         return DataReturn.builder().code("06").errorMessage(message).status(false).data(null).timestamp(LocalDateTime.now()).build();
     }

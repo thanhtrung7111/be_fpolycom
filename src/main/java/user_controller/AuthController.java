@@ -2,6 +2,7 @@ package user_controller;
 
 import dto.auth_user.AuthUserLoginRequestDTO;
 import dto.auth_user.AuthUserLoginResponseDTO;
+import dto.auth_user.ChangePasswordRequestDTO;
 import dto.user_account.UserAccountRegisterRequestDTO;
 import dto.user_account.UserAccountRegisterResponseDTO;
 import entity.enum_package.RoleType;
@@ -75,11 +76,7 @@ public class AuthController {
         return ResponseEntity.ok().body(dataReturnService.success(result));
     }
 
-    @GetMapping("/user-change-password")
-    public ResponseEntity<Object> userChangePassword(@PathVariable("token") String token) throws MessagingException {
-        UserAccountRegisterResponseDTO result=userAccountService.confirmAccount(token);
-        return ResponseEntity.ok().body(dataReturnService.success(result));
-    }
+
 
     @PostMapping("/generateTokenAdmin")
     public ResponseEntity<Object> authenticateAndGetTokenAdmin(@RequestBody AuthUserLoginRequestDTO authRequest) {
