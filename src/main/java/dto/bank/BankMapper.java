@@ -1,7 +1,7 @@
 package dto.bank;
 
 import entity.Bank;
-import entity.enum_package.BankBranch;
+import entity.BankBranch;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

@@ -1,4 +1,4 @@
-package entity.enum_package;
+package entity;
 
 import entity.Bank;
 import entity.EntityCommon;
