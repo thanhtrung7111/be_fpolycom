@@ -194,8 +194,7 @@ public class UserAccountService implements UserDetailsService {
         }
         userAccountRepository.saveAndFlush(userAccount);
 
-        UserAccount userAccount1 = userAccountRepository.findByUserLogin(userAccount.getUserLogin()).orElseThrow(() -> new UsernameNotFoundException("Tai khoan nguoi dung khong ton tai!"));
-        System.out.println(userAccount1.getProvince().getName());
-        return UserAccountMapper.INSTANCE.toUserAccountChangeResponseDto(userAccount1);
+
+        return UserAccountMapper.INSTANCE.toUserAccountChangeResponseDto(userAccount);
     }
 }
