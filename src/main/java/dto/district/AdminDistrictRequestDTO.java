@@ -1,6 +1,7 @@
 package dto.district;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +15,7 @@ public class AdminDistrictRequestDTO {
 
     @NotBlank(message = "Khong de trong ten")
     String name;
-
-    @NotBlank(message = "Khong de trong tinh")
-    Long provinceCode;
+    @NotBlank(message = "Khong de trong thanh pho / tinh")
+    String provinceCode;
 
 }

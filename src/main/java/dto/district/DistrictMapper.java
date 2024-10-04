@@ -31,6 +31,9 @@ public interface DistrictMapper {
 
     @Named("numberOfWards")
     default Integer numberOfWards(List<Ward> wardList){
+        if(wardList == null){
+            return 0;
+        }
         return wardList.size();
     }
 }
