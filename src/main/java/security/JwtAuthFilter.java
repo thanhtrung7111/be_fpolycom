@@ -1,6 +1,8 @@
 package security;
 
 import entity.enum_package.RoleType;
+import exeception_handler.TokenExpiredException;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import service.AdministrationService;
 import service.common.JWTService;
 import service.StoreService;
 import service.UserAccountService;
+import service.data_return.DataReturnService;
 
 import java.io.IOException;
 @Component
@@ -29,6 +32,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Autowired
     AdministrationService administrationService;
+
+
+    @Autowired
+    DataReturnService dataReturnService;
 
     @Autowired
     StoreService storeService;
@@ -67,13 +74,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }else{
-                    response.sendRedirect("/error/access-denied");
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // Token không hợp lệ
+                    return;
                 }
 
             }
             filterChain.doFilter(request,response);
-        }catch (Exception e){
-            response.sendRedirect("/error/access-denied");
+        }catch (ExpiredJwtException e){
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token da het han!");
         }
 
     }

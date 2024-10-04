@@ -5,27 +5,24 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @EqualsAndHashCode(callSuper = false)
 @Builder
-public class TokenRegister {
+public class PasswordRecover {
 
     @Id
-    String token;
+    String tokenRecover;
 
-
-    Date createdDate;
 
     @Temporal(TemporalType.TIMESTAMP)
     LocalDateTime expiredDate;
 
     @OneToOne
-    @JoinColumn(name="userCode",referencedColumnName = "userCode")
+    @JoinColumn(name = "userCode",referencedColumnName = "userCode")
     UserAccount userAccount;
 }

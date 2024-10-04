@@ -103,4 +103,7 @@ public class UserAccount extends EntityCommon {
 
     @OneToOne(mappedBy = "userAccount")
     TokenRegister tokenRegister;
+
+    @OneToOne(mappedBy = "userAccount")
+    PasswordRecover passwordRecover;
 }

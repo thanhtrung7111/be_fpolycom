@@ -3,6 +3,7 @@ package user_controller;
 import dto.auth_user.AuthUserLoginRequestDTO;
 import dto.auth_user.AuthUserLoginResponseDTO;
 import dto.auth_user.ChangePasswordRequestDTO;
+import dto.auth_user.ForgotPasswordRequestDTO;
 import dto.user_account.UserAccountRegisterRequestDTO;
 import dto.user_account.UserAccountRegisterResponseDTO;
 import entity.enum_package.RoleType;
@@ -20,6 +21,9 @@ import service.common.JWTService;
 import service.UserAccountService;
 import service.common.MailService;
 import service.data_return.DataReturnService;
+
+import java.util.HashMap;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -74,6 +78,29 @@ public class AuthController {
     public ResponseEntity<Object> userRegister(@PathVariable("token") String token) throws MessagingException {
         UserAccountRegisterResponseDTO result=userAccountService.confirmAccount(token);
         return ResponseEntity.ok().body(dataReturnService.success(result));
+    }
+
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Object> forgotPassword(@RequestBody Optional<HashMap<String,String>> request) throws MessagingException {
+        if(request.isEmpty() || request.get().get("email").isBlank()){
+            return ResponseEntity.ok().body(dataReturnService.dataNotFound("Email bi trong!"));
+        }
+        return ResponseEntity.ok().body(dataReturnService.success(userAccountService.forgotPassword(request.get().get("email"))));
+    }
+
+
+    @PostMapping("/getAccount-forgot")
+    public ResponseEntity<Object> getAccountForgot(@RequestBody Optional<HashMap<String,String>> request) throws MessagingException {
+        if(request.isEmpty() || request.get().get("tokenRecover").isBlank()){
+            return ResponseEntity.ok().body(dataReturnService.dataNotFound("User not found!"));
+        }
+        return ResponseEntity.ok().body(dataReturnService.success(userAccountService.getForgotPassword(request.get().get("tokenRecover"))));
+    }
+
+    @PostMapping("/changePassword-forgot")
+    public ResponseEntity<Object> getAccountForgot(@Valid @RequestBody ForgotPasswordRequestDTO request) throws MessagingException {
+        return ResponseEntity.ok().body(dataReturnService.success(userAccountService.changePasswordForgot(request)));
     }
 
 

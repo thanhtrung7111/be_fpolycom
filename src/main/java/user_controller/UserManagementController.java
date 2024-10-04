@@ -1,6 +1,8 @@
 package user_controller;
 
 import dto.auth_user.ChangePasswordRequestDTO;
+import dto.user_account.UserAccountChangeRequestDTO;
+import dto.user_account.UserAccountChangeResponseDTO;
 import dto.user_account.UserAccountRegisterResponseDTO;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,12 @@ public class UserManagementController {
     @PostMapping("/change-password")
     public ResponseEntity<Object> userChangePassword(@RequestBody ChangePasswordRequestDTO requestDTO) throws MessagingException {
         UserAccountRegisterResponseDTO result=userAccountService.changePassword(requestDTO);
+        return ResponseEntity.ok().body(dataReturnService.success(result));
+    }
+
+    @PostMapping("/change-info")
+    public ResponseEntity<Object> userChangeInfo(@RequestBody UserAccountChangeRequestDTO requestDTO) throws MessagingException {
+        UserAccountChangeResponseDTO result=userAccountService.changeInfomationUser(requestDTO);
         return ResponseEntity.ok().body(dataReturnService.success(result));
     }
 }

@@ -1,6 +1,7 @@
 package exeception_handler;
 
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,12 +32,6 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<Object> handleAccessDeniedException(
-            AccessDeniedException ex) {
-        return  ResponseEntity.ok(dataReturnService.authorization());
-    }
 
 
     @ExceptionHandler(UsernameNotFoundException.class)
@@ -56,6 +51,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(TokenExpiredException.class)
     public ResponseEntity<Object> handleTokenExpiredException(TokenExpiredException ex) {
+        System.out.println("sai");
         return  ResponseEntity.ok(dataReturnService.tokenExpired(ex.getMessage()));
     }
 
