@@ -6,25 +6,25 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
 
-import java.util.List;
-
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AttributeOverride(name = "id",column = @Column(name = "typeGoodCode"))
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
-public class TypeGood extends EntityCommon{
+@AttributeOverride(name = "id", column = @Column(name = "productAttrCode"))
+public class ProductAttr {
 
     @Lob
     @Nationalized
-    String name;
+    String attrValue;
 
-    @OneToMany(mappedBy = "typeGood")
-    List<Product> productList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "productCode")
+    Product product;
 
-    @OneToMany(mappedBy = "typeGood")
-    List<TypeGoodAttr> typeGoodAttrList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "typeGoodAttrCode")
+    TypeGoodAttr typeGoodAttr;
 }
