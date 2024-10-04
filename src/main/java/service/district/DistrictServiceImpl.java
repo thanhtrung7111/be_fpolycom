@@ -22,7 +22,6 @@ public class DistrictServiceImpl implements DistrictService{
     @Override
     public AdminDistrictResponseDTO postData(AdminDistrictRequestDTO adminDistrictRequestDTO) {
         District district = districtRepository.save(DistrictMapper.INSTANCE.toDistrict(adminDistrictRequestDTO));
-
         return DistrictMapper.INSTANCE.toAdminDistrictResponseDto(district);
     }
 
