@@ -14,7 +14,7 @@ import org.hibernate.annotations.Nationalized;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 @AttributeOverride(name = "id", column = @Column(name = "productAttrCode"))
-public class ProductAttr {
+public class ProductAttr extends  EntityCommon{
 
     @Lob
     @Nationalized
