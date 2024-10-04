@@ -5,6 +5,7 @@ import dto.district.AdminDistrictRequestDTO;
 import dto.district.AdminDistrictResponseDTO;
 import dto.district.DistrictMapper;
 import entity.District;
+import entity.Province;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -29,6 +30,7 @@ public class DistrictServiceImpl implements DistrictService{
     public AdminDistrictResponseDTO updateData(AdminDistrictRequestDTO adminDistrictRequestDTO) {
         District district = districtRepository.findById(adminDistrictRequestDTO.getDistrictCode()).orElseThrow(() -> new DataNotFoundException("Khong tim thay du lieu"));
         district.setName(adminDistrictRequestDTO.getName());
+        district.setProvince(Province.builder().id(adminDistrictRequestDTO.getProvinceCode()).build());
         district.setUpdatedDate(new Date());
         return DistrictMapper.INSTANCE.toAdminDistrictResponseDto(districtRepository.save(district));
     }

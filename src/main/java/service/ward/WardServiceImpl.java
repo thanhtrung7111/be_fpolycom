@@ -4,6 +4,7 @@ import dao.WardRepository;
 import dto.ward.AdminWardResponseDTO;
 import dto.ward.WardCreateRequestDTO;
 import dto.ward.WardMapper;
+import entity.District;
 import entity.Ward;
 import exeception_handler.DataNotFoundException;
 import jakarta.transaction.Transactional;
@@ -30,6 +31,7 @@ public class WardServiceImpl implements WardService {
     public AdminWardResponseDTO updateData(WardCreateRequestDTO wardCreateRequestDTO) {
         Ward ward = wardRepository.findById(Long.valueOf(wardCreateRequestDTO.getWardCode())).orElseThrow(() -> new DataNotFoundException("Khong tim thay du lieu"));
         ward.setName(wardCreateRequestDTO.getName());
+        ward.setDistrict(District.builder().id(wardCreateRequestDTO.getWardCode()).build());
         ward.setUpdatedDate(new Date());
         return WardMapper.INSTANCE.adminWardToAdminWardDTO(wardRepository.save(ward));
     }

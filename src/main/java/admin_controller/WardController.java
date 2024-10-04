@@ -33,7 +33,7 @@ public class WardController {
         return ResponseEntity.ok(dataReturnService.success(wardService.postData(wardCreateRequestDTO)));
     }
     @PostMapping(value="/ward/update")
-    public ResponseEntity<Object> getUpdate(@Valid @RequestBody WardCreateRequestDTO request, Errors errors) {
+    public ResponseEntity<Object> getUpdate(@RequestBody WardCreateRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("wardCode")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("wardCode is empty"));
         }

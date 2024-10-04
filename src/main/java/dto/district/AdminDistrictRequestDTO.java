@@ -11,11 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdminDistrictRequestDTO {
 
+    @NotNull(message = "Khong de trong districtCode")
     Long districtCode;
 
     @NotBlank(message = "Khong de trong ten")
     String name;
-    @NotBlank(message = "Khong de trong thanh pho / tinh")
-    String provinceCode;
+    @NotNull(message = "Khong de trong thanh pho / tinh")
+    Long provinceCode;
 
 }

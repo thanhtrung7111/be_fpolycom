@@ -36,7 +36,7 @@ public class DistrictController {
         return ResponseEntity.ok(dataReturnService.success(districtService.postData(request)));
     }
     @PostMapping(value="/district/update")
-    public ResponseEntity<Object> getUpdate(@Valid @RequestBody AdminDistrictRequestDTO request, Errors errors) {
+    public ResponseEntity<Object> getUpdate(@RequestBody AdminDistrictRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("districtCode")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
         }
