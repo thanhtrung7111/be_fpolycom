@@ -1,5 +1,6 @@
 package entity;
 
+import entity.enum_package.BankBranch;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -21,9 +22,13 @@ public class Bank extends EntityCommon{
     @Nationalized
     String name;
 
+
+    @Nationalized
+    String shortName;
+
     @Lob
     @Nationalized
-    String desciption;
+    String description;
 
     @Lob
     String image;
@@ -33,4 +38,9 @@ public class Bank extends EntityCommon{
 
     @OneToMany(mappedBy = "bank")
     List<BankUser> bankUserList;
+
+    @OneToMany(mappedBy = "bank")
+    List<BankBranch> bankBranchList;
+
+
 }
