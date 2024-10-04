@@ -32,7 +32,6 @@ public class UserAccountChangeRequestDTO {
 
     String bannerImage;
 
-    String email;
 
     Date dateOfBirth;
 

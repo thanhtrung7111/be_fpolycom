@@ -144,59 +144,5 @@ public class UserAccountService implements UserDetailsService {
         return UserAccountMapper.INSTANCE.toUserAccountRegisterResponseDto(userAccount);
     }
 
-    public UserAccountChangeResponseDTO changeInfomationUser(UserAccountChangeRequestDTO request) {
-
-        UserAccount userAccount = userAccountRepository.findByUserLogin(encodingService.decode(request.getUserLogin())).orElseThrow(() -> new UsernameNotFoundException("Tai khoan nguoi dung khong ton tai!"));
-        if (request.getName() != null && !request.getName().isBlank()) {
-            userAccount.setName(request.getName());
-        }
-
-        if (request.getPhone() != null && !request.getPhone().isBlank()) {
-            userAccount.setPhone(request.getPhone());
-        }
-
-        if (request.getAddressDetail() != null && !request.getAddressDetail().isBlank()) {
-            userAccount.setAddressDetail(request.getAddressDetail());
-        }
-
-        if (request.getAddress() != null && !request.getAddress().isBlank()) {
-            userAccount.setAddress(request.getAddress());
-        }
-
-        if (request.getImage() != null && !request.getImage().isBlank()) {
-            userAccount.setImage(request.getImage());
-        }
-
-        if (request.getBannerImage() != null && !request.getBannerImage().isBlank()) {
-            userAccount.setBannerImage(request.getBannerImage());
-        }
-
-        if (request.getDateOfBirth() != null) {
-            userAccount.setDateOfBirth(request.getDateOfBirth());
-        }
-
-        if (request.getGender() != null) {
-            userAccount.setGender(request.getGender());
-        }
-
-        if (request.getProvinceCode() != null) {
-            userAccount.setProvince(Province.builder().id(request.getProvinceCode()).build());
-        }
-
-        if (request.getDistrictCode() != null) {
-            userAccount.setDistrict(District.builder().id(request.getDistrictCode()).build());
-        }
-
-
-        if (request.getWardCode() != null) {
-            userAccount.setWard(Ward.builder().id(request.getWardCode()).build());
-        }
-        userAccountRepository.saveAndFlush(userAccount);
-
-        UserAccount userAccount1 = userAccountRepository.findByUserLogin(userAccount.getUserLogin()).orElseThrow(() -> new UsernameNotFoundException("Tai khoan nguoi dung khong ton tai!"));
-        System.out.println(userAccount1.getProvince().getName());
-        return UserAccountMapper.INSTANCE.toUserAccountChangeResponseDto(userAccount1);
-    }
-
 
 }

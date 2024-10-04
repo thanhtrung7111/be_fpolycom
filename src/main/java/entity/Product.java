@@ -53,4 +53,7 @@ public class Product extends EntityCommon{
 
     @OneToMany(mappedBy = "product")
     List<Evaluate> evaluateList;
+
+    @OneToMany(mappedBy = "product")
+    List<ProductAttr> productAttrList;
 }
