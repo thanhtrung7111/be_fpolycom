@@ -1,6 +1,6 @@
 package user_controller;
 
-import dto.auth_user.ChangePasswordRequestDTO;
+import dto.user_auth.ChangePasswordRequestDTO;
 import dto.user_account.UserAccountChangeRequestDTO;
 import dto.user_account.UserAccountChangeResponseDTO;
 import dto.user_account.UserAccountRegisterResponseDTO;

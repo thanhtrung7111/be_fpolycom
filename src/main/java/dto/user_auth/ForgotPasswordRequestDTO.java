@@ -1,4 +1,4 @@
-package dto.auth_user;
+package dto.user_auth;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,6 @@
 package service.auth_user;
 
-import dto.auth_user.AuthUserLoginResponseDTO;
+import dto.user_auth.AuthUserLoginResponseDTO;
 
 public interface AuthUserService  {
 

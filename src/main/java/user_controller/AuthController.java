@@ -1,9 +1,8 @@
 package user_controller;
 
-import dto.auth_user.AuthUserLoginRequestDTO;
-import dto.auth_user.AuthUserLoginResponseDTO;
-import dto.auth_user.ChangePasswordRequestDTO;
-import dto.auth_user.ForgotPasswordRequestDTO;
+import dto.user_auth.AuthUserLoginRequestDTO;
+import dto.user_auth.AuthUserLoginResponseDTO;
+import dto.user_auth.ForgotPasswordRequestDTO;
 import dto.user_account.UserAccountRegisterRequestDTO;
 import dto.user_account.UserAccountRegisterResponseDTO;
 import entity.enum_package.RoleType;

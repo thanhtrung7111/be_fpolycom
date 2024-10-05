@@ -1,4 +1,4 @@
-package dto.auth_user;
+package dto.user_auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -31,6 +31,8 @@ public class NotifycationStore extends EntityCommon {
     @Lob
     String image;
 
+    Boolean readed;
+
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     TypeNotifycationStore typeNotifycationStore;
