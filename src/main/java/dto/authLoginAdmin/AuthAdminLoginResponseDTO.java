@@ -8,4 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthAdminLoginResponseDTO {
+
+
+    String userLogin;
 }

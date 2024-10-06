@@ -1,4 +1,4 @@
-package dto.user_notify;
+package dto.store_follow;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserNotifycationRequestDTO {
+public class StoreFollowRequestDTO {
 
-    @NotBlank(message = "Khong de trong userLogn!")
+    @NotBlank(message = "Khong de trong userLogin!")
     String userLogin;
 
-    @NotBlank(message = "Khong de trong userNotifyCode")
-    String userNotifyCode;
+    @NotBlank(message = "Khong de trong id cua hang!")
+    Long storeCode;
+
+
 }

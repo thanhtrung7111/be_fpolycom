@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import security.UserInfoDetails;
+import service.auth_user.AuthUserService;
 import service.common.EncodingService;
 import service.common.MailService;
 
@@ -43,9 +44,8 @@ public class UserAccountService implements UserDetailsService {
     @Autowired
     EncodingService encodingService;
 
-    @Autowired
-    @Lazy
-    AuthenticationManager authenticationManager;
+   @Autowired
+    AuthUserService authUserService;
 
     @Autowired
     MailService mailService;
@@ -60,19 +60,7 @@ public class UserAccountService implements UserDetailsService {
         return userDetail.map(UserInfoDetails::new).orElseThrow(() -> new UsernameNotFoundException("Thoong tin dang nhap sai hoac nguoi dung chua xac thuc email!"));
     }
 
-    public String getUserLogin() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            Object principal = authentication.getPrincipal();
 
-            if (principal instanceof UserDetails) {
-                return ((UserDetails) principal).getUsername();
-            } else {
-                return principal.toString();  // Trong một số trường hợp có thể là chuỗi username trực tiếp
-            }
-        }
-        throw new UsernameNotFoundException("Nguoi dung chua xac thuc!");
-    }
 
 
     public UserAccountRegisterResponseDTO registerAccount(UserAccountRegisterRequestDTO request) {
@@ -102,10 +90,8 @@ public class UserAccountService implements UserDetailsService {
     }
 
     public UserAccountRegisterResponseDTO changePassword(ChangePasswordRequestDTO changePasswordRequestDTO) {
-        String username = encodingService.decode(changePasswordRequestDTO.getUserLogin());
-        System.out.println(username);
-        System.out.println(getUserLogin());
-        if (!username.equals(getUserLogin())) {
+        String username = authUserService.extractUserlogin(changePasswordRequestDTO.getUserLogin());
+        if (authUserService.isValidUserLogin(changePasswordRequestDTO.getUserLogin())) {
             throw new NotRightException("Bạn khong có quyền truy cập thao tác treen nguoiw dung nay!");
         }
         UserAccount userAccount = userAccountRepository.findByUserLogin(username).orElseThrow(() -> new UsernameNotFoundException("Khong ton tai nguoi dung!"));
@@ -144,7 +130,9 @@ public class UserAccountService implements UserDetailsService {
 
 
     public UserAccountChangeResponseDTO changeInfomationUser(UserAccountChangeRequestDTO request) {
-
+        if (!authUserService.isValidUserLogin(request.getUserLogin())) {
+            throw new NotRightException("Bạn khong có quyền truy cập thao tác treen nguoiw dung nay!");
+        }
         UserAccount userAccount = userAccountRepository.findByUserLogin(encodingService.decode(request.getUserLogin())).orElseThrow(() -> new UsernameNotFoundException("Tai khoan nguoi dung khong ton tai!"));
         if (request.getName() != null && !request.getName().isBlank()) {
             userAccount.setName(request.getName());
