@@ -37,7 +37,7 @@ public class BankController {
         if(errors.hasFieldErrors("bankCode")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
         }
-        return ResponseEntity.ok(dataReturnService.success(bankService.postData(request)));
+        return ResponseEntity.ok(dataReturnService.success(bankService.updateData(request)));
     }
 
     @PostMapping(value = "/bank/delete")
