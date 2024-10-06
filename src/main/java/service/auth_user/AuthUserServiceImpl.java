@@ -1,8 +1,8 @@
 package service.auth_user;
 
 import dao.UserAccountRepository;
-import dto.auth_user.AuthUserLoginResponseDTO;
-import dto.auth_user.AuthUserMapper;
+import dto.user_auth.AuthUserLoginResponseDTO;
+import dto.user_auth.AuthUserMapper;
 import entity.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

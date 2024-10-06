@@ -3,8 +3,8 @@ package service;
 import dao.PasswordRecoverRepository;
 import dao.TokenRegisterRepository;
 import dao.UserAccountRepository;
-import dto.auth_user.ChangePasswordRequestDTO;
-import dto.auth_user.ForgotPasswordRequestDTO;
+import dto.user_auth.ChangePasswordRequestDTO;
+import dto.user_auth.ForgotPasswordRequestDTO;
 import dto.user_account.*;
 import entity.*;
 import entity.enum_package.UserStatus;
@@ -20,9 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import security.SecurityConfig;
 import security.UserInfoDetails;
 import service.common.EncodingService;
 import service.common.MailService;
@@ -144,6 +142,7 @@ public class UserAccountService implements UserDetailsService {
         return UserAccountMapper.INSTANCE.toUserAccountRegisterResponseDto(userAccount);
     }
 
+
     public UserAccountChangeResponseDTO changeInfomationUser(UserAccountChangeRequestDTO request) {
 
         UserAccount userAccount = userAccountRepository.findByUserLogin(encodingService.decode(request.getUserLogin())).orElseThrow(() -> new UsernameNotFoundException("Tai khoan nguoi dung khong ton tai!"));
@@ -193,10 +192,7 @@ public class UserAccountService implements UserDetailsService {
         }
         userAccountRepository.saveAndFlush(userAccount);
 
-        UserAccount userAccount1 = userAccountRepository.findByUserLogin(userAccount.getUserLogin()).orElseThrow(() -> new UsernameNotFoundException("Tai khoan nguoi dung khong ton tai!"));
-        System.out.println(userAccount1.getProvince().getName());
-        return UserAccountMapper.INSTANCE.toUserAccountChangeResponseDto(userAccount1);
+
+        return UserAccountMapper.INSTANCE.toUserAccountChangeResponseDto(userAccount);
     }
-
-
 }

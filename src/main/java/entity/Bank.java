@@ -1,6 +1,5 @@
 package entity;
 
-import entity.enum_package.BankBranch;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

@@ -34,6 +34,8 @@ public class NotifycationUser extends EntityCommon {
     @Lob
     String linkContent;
 
+    Boolean readed;
+
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)

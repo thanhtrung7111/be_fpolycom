@@ -1,7 +1,7 @@
 package dto.bank;
 
-import entity.AdminRole;
 import entity.Bank;
+import entity.BankBranch;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -24,7 +24,7 @@ public interface BankMapper {
     List<BankResponseDTO> toBankResponseDTO(List<Bank> banks);
 
     @Named("Branchs")
-    default Integer toBankBranch(List<AdminRole.BankBranch> branchs) {
+    default Integer toBankBranch(List<BankBranch> branchs) {
         if(branchs == null){
             return 0;
         }

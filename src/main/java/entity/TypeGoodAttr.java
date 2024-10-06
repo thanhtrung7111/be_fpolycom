@@ -9,22 +9,24 @@ import org.hibernate.annotations.Nationalized;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AttributeOverride(name = "id",column = @Column(name = "typeGoodCode"))
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
-public class TypeGood extends EntityCommon{
+@AttributeOverride(name = "id", column = @Column(name = "typeGoodAttrCode"))
+public class TypeGoodAttr extends EntityCommon {
 
     @Lob
     @Nationalized
     String name;
 
-    @OneToMany(mappedBy = "typeGood")
-    List<Product> productList;
 
-    @OneToMany(mappedBy = "typeGood")
-    List<TypeGoodAttr> typeGoodAttrList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "typeGoodCode")
+    TypeGood typeGood;
+
+    @OneToMany(mappedBy = "typeGoodAttr")
+    List<ProductAttr> productAttrList;
 }

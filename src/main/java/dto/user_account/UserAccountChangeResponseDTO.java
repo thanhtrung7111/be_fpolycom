@@ -31,13 +31,15 @@ public class UserAccountChangeResponseDTO {
 
     Long provinceCode;
 
-    String provinceName;
 
     Long districtCode;
 
-    String districtName;
 
     Long wardCode;
+
+    String provinceName;
+
+    String districtName;
 
     String wardName;
 }

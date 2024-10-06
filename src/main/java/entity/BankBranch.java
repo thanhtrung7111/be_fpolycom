@@ -1,30 +1,28 @@
 package entity;
 
+import entity.Bank;
+import entity.EntityCommon;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
 
-import java.util.List;
-
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AttributeOverride(name = "id",column = @Column(name = "typeGoodCode"))
+@AttributeOverride(name="id",column = @Column(name = "bankBranchCode"))
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
-public class TypeGood extends EntityCommon{
-
-    @Lob
+public class BankBranch extends EntityCommon {
     @Nationalized
     String name;
 
-    @OneToMany(mappedBy = "typeGood")
-    List<Product> productList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bankCode")
+    Bank bank;
 
-    @OneToMany(mappedBy = "typeGood")
-    List<TypeGoodAttr> typeGoodAttrList;
+
 }
