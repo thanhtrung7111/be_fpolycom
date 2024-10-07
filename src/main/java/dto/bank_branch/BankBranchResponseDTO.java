@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BankBranchRequestDTO {
+public class BankBranchResponseDTO {
     String bankBranchCode;
 
     String name;
