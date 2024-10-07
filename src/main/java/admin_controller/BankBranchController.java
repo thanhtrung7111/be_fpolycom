@@ -28,12 +28,12 @@ public class BankBranchController {
         this.dataReturnService = dataReturnService;
     }
 
-    @GetMapping(value = "/bank/all")
+    @GetMapping(value = "/bankbranch/all")
     public ResponseEntity<Object> getAllBank() {
         return ResponseEntity.ok(dataReturnService.success(bankBranchService.getAllData()));
     }
 
-    @PostMapping(value = "/bank/new")
+    @PostMapping(value = "/bankbranch/new")
     public ResponseEntity<Object> newBank(@RequestBody BankBranchRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("name") && errors.hasFieldErrors("shortName")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
@@ -42,7 +42,7 @@ public class BankBranchController {
     }
 
 
-    @PostMapping(value = "/bank/update")
+    @PostMapping(value = "/bankbranch/update")
     public ResponseEntity<Object> updateBank(@RequestBody BankBranchRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("bankCode")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
@@ -50,7 +50,7 @@ public class BankBranchController {
         return ResponseEntity.ok(dataReturnService.success(bankBranchService.updateData(request)));
     }
 
-    @PostMapping(value = "/bank/delete")
+    @PostMapping(value = "/bankbranch/delete")
     public ResponseEntity<Object> deleteBank(@RequestBody BankBranchRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("bankCode")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));

@@ -1,11 +1,9 @@
 package dto.bank_branch;
 
 
-import entity.Bank;
 import entity.BankBranch;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
