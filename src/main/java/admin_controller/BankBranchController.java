@@ -1,50 +1,60 @@
 package admin_controller;
 
-import dao.BankRepository;
 import dto.bank.BankRequestDTO;
+import dto.bank_branch.BankBranchRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import service.bank.BankService;
+import service.bank_branch.BankBranchService;
 import service.data_return.DataReturnService;
 
 @RestController
 @RequestMapping(value = "/admin")
-public class BankController {
+
+public class BankBranchController {
     @Autowired
-    DataReturnService dataReturnService;
+    DataReturnService dataService;
 
     @Autowired
-    BankService bankService;
+    BankBranchService bankBranchService;
+
+
+
+    private final DataReturnService dataReturnService;
+
+    public BankBranchController(DataReturnService dataReturnService) {
+        this.dataReturnService = dataReturnService;
+    }
 
     @GetMapping(value = "/bank/all")
     public ResponseEntity<Object> getAllBank() {
-        return ResponseEntity.ok(dataReturnService.success(bankService.getAllData()));
+        return ResponseEntity.ok(dataReturnService.success(bankBranchService.getAllData()));
     }
 
     @PostMapping(value = "/bank/new")
-    public ResponseEntity<Object> newBank(@RequestBody BankRequestDTO request, Errors errors) {
+    public ResponseEntity<Object> newBank(@RequestBody BankBranchRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("name") && errors.hasFieldErrors("shortName")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
         }
-        return ResponseEntity.ok(dataReturnService.success(bankService.postData(request)));
+        return ResponseEntity.ok(dataReturnService.success(bankBranchService.postData(request)));
     }
 
 
     @PostMapping(value = "/bank/update")
-    public ResponseEntity<Object> updateBank(@RequestBody BankRequestDTO request, Errors errors) {
+    public ResponseEntity<Object> updateBank(@RequestBody BankBranchRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("bankCode")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
         }
-        return ResponseEntity.ok(dataReturnService.success(bankService.updateData(request)));
+        return ResponseEntity.ok(dataReturnService.success(bankBranchService.updateData(request)));
     }
 
     @PostMapping(value = "/bank/delete")
-    public ResponseEntity<Object> deleteBank(@RequestBody BankRequestDTO request, Errors errors) {
+    public ResponseEntity<Object> deleteBank(@RequestBody BankBranchRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("bankCode")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
         }
-        return ResponseEntity.ok(dataReturnService.success(bankService.deleteData(request)));
+        return ResponseEntity.ok(dataReturnService.success(bankBranchService.deleteData(request)));
     }
 }
