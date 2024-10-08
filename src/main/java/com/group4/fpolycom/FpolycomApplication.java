@@ -2,10 +2,7 @@ package com.group4.fpolycom;
 
 import dao.*;
 import entity.*;
-import entity.enum_package.FriendshipStatus;
-import entity.enum_package.StoreStatus;
-import entity.enum_package.TypeNotifycationUser;
-import entity.enum_package.UserStatus;
+import entity.enum_package.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import service.district.DistrictService;
 
+import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +52,15 @@ public class FpolycomApplication implements CommandLineRunner {
 
 	@Autowired
 	FollowedRepository followedRepository;
+
+	@Autowired
+	ProductRepository productRepository;
+
+	@Autowired
+	TypeGoodRepository typeGoodRepository;
+
+	@Autowired
+	LikedRepository likedRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(FpolycomApplication.class, args);
@@ -100,6 +107,16 @@ public class FpolycomApplication implements CommandLineRunner {
 		NotifycationUser notifycationUser2 = NotifycationUser.builder().id(2).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 2").userAccount(userAccount).build();
 
 		userNotifycationRepository.saveAll(List.of(notifycationUser,notifycationUser2));
+
+
+		TypeGood typeGood = TypeGood.builder().id(1).name("Laptop").build();
+		typeGoodRepository.save(typeGood);
+
+		Product product = Product.builder().id(1).createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active).name("San pharm 01").store(store).typeGood(typeGood).build();
+		productRepository.save(product);
+
+		Liked liked = Liked.builder().id(1).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).userAccount(userAccount).product(product).build();
+		likedRepository.save(liked);
 	}
 
 }
