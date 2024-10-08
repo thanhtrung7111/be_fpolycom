@@ -62,6 +62,12 @@ public class FpolycomApplication implements CommandLineRunner {
 	@Autowired
 	LikedRepository likedRepository;
 
+	@Autowired
+	ProductDetailRepository productDetailRepository;
+
+	@Autowired
+	ShoppingCartRepository shoppingCartRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(FpolycomApplication.class, args);
 	}
@@ -114,6 +120,12 @@ public class FpolycomApplication implements CommandLineRunner {
 
 		Product product = Product.builder().id(1).createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active).name("San pharm 01").store(store).typeGood(typeGood).build();
 		productRepository.save(product);
+
+		ProductDetail productDetail = ProductDetail.builder().price(50000.0).id(1).name("RAM").product(product).build();
+		productDetailRepository.save(productDetail);
+
+		ShoppingCart shoppingCart = ShoppingCart.builder().id(1).productDetail(productDetail).userAccount(userAccount).quantity(5).build();
+		shoppingCartRepository.save(shoppingCart);
 
 		Liked liked = Liked.builder().id(1).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).userAccount(userAccount).product(product).build();
 		likedRepository.save(liked);
