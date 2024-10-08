@@ -19,9 +19,13 @@ public class UserEvaluateResponseDTO {
 
     Integer quality;
 
-    List<EvaluateImageRequestDTO> imageList;
+    List<EvaluateImageResponseDTO> imageList;
 
     String userCode;
+
+    String username;
+
+    String userImage;
 
     Date dateEvaluate;
 

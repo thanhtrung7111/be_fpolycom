@@ -15,8 +15,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @SuperBuilder
-@AttributeOverride(name = "id",column = @Column(name = "evaluateCode"))
-public class Evaluate extends EntityCommon{
+@AttributeOverride(name = "id", column = @Column(name = "evaluateCode"))
+public class Evaluate extends EntityCommon {
 
     @Lob
     @Nationalized
@@ -28,8 +28,9 @@ public class Evaluate extends EntityCommon{
 
     Integer quality;
 
-   @OneToMany(mappedBy = "evaluate")
-   List<EvaluateImage> evaluateImageList;
+    @OneToMany(mappedBy = "evaluate", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "evaluateCode", referencedColumnName = "evaluateCode")
+    List<EvaluateImage> evaluateImageList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userCode")
