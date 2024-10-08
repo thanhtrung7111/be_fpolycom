@@ -6,6 +6,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,8 +15,8 @@ import org.hibernate.annotations.Nationalized;
 @EqualsAndHashCode(callSuper = false)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @SuperBuilder
-@AttributeOverride(name = "id",column = @Column(name = "evaluateCode"))
-public class Evaluate extends EntityCommon{
+@AttributeOverride(name = "id", column = @Column(name = "evaluateCode"))
+public class Evaluate extends EntityCommon {
 
     @Lob
     @Nationalized
@@ -26,8 +28,9 @@ public class Evaluate extends EntityCommon{
 
     Integer quality;
 
-    @Lob
-    String image;
+    @OneToMany(mappedBy = "evaluate", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JoinColumn(name = "evaluateCode", referencedColumnName = "evaluateCode")
+    List<EvaluateImage> evaluateImageList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userCode")

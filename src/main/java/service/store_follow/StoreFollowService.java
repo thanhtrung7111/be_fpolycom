@@ -9,4 +9,8 @@ public interface StoreFollowService {
 
 
     public List<StoreFollowResponseDTO> getAllStoreFollowed(StoreFollowRequestDTO requestDTO);
+
+
+    public StoreFollowResponseDTO postStoreFollow(StoreFollowRequestDTO requestDTO);
+    public StoreFollowResponseDTO postStoreUnFollow(StoreFollowRequestDTO requestDTO);
 }
