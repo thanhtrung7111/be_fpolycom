@@ -41,6 +41,13 @@ public class ProvinceController {
         return ResponseEntity.ok(dataReturnService.success(provinceService.updateData(request)));
     }
 
+    @PostMapping(value = "/province/delete")
+    public ResponseEntity<Object> getDelete(@RequestBody ProvinceCreateRequestDTO request, Errors errors) {
+        if(errors.hasFieldErrors("provinceCode")){
+            return ResponseEntity.ok(dataReturnService.dataNotFound("Provincecode is empty"));
+        }
+        return ResponseEntity.ok(dataReturnService.success(provinceService.deleteData(request)));
+    }
 
 
 }
