@@ -1,11 +1,9 @@
 package dao;
 
-import entity.TypeGood;
+import entity.TypeGoodAttr;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TypeGoodRepository extends JpaRepository<TypeGood, Long> {
-
+public interface TypeGoodAttrRepository extends JpaRepository<TypeGoodAttr, Long> {
 }
