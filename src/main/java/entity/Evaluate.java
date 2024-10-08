@@ -6,6 +6,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
 
+import java.util.List;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,8 +28,8 @@ public class Evaluate extends EntityCommon{
 
     Integer quality;
 
-    @Lob
-    String image;
+   @OneToMany(mappedBy = "evaluate")
+   List<EvaluateImage> evaluateImageList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userCode")

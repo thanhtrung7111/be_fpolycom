@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommonEvaluateRequestDTO {
-    String mage;
+public class UserEvaluateResponseDTO {
+    String image;
 }
