@@ -44,16 +44,16 @@ public class BankBranchController {
 
     @PostMapping(value = "/bankbranch/update")
     public ResponseEntity<Object> updateBank(@RequestBody BankBranchRequestDTO request, Errors errors) {
-        if(errors.hasFieldErrors("bankCode")){
-            return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
+        if(errors.hasFieldErrors("bankBranchCode")){
+            return ResponseEntity.ok(dataReturnService.dataNotFound("bankCode is empty"));
         }
         return ResponseEntity.ok(dataReturnService.success(bankBranchService.updateData(request)));
     }
 
     @PostMapping(value = "/bankbranch/delete")
     public ResponseEntity<Object> deleteBank(@RequestBody BankBranchRequestDTO request, Errors errors) {
-        if(errors.hasFieldErrors("bankCode")){
-            return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
+        if(errors.hasFieldErrors("bankBranchCode")){
+            return ResponseEntity.ok(dataReturnService.dataNotFound("bankCode is empty"));
         }
         return ResponseEntity.ok(dataReturnService.success(bankBranchService.deleteData(request)));
     }

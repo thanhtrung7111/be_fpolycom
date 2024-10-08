@@ -24,7 +24,6 @@ public class TypeGoodController {
     public ResponseEntity<Object> getAll() {
         return ResponseEntity.ok(dataReturnService.success(typeGoodService.getAllData()));
     }
-
     @PostMapping(value="/typegood/new")
     public ResponseEntity<Object> getNew(@Valid @RequestBody TypeGoodRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("name")){
@@ -34,14 +33,14 @@ public class TypeGoodController {
     }
     @PostMapping(value="/typegood/update")
     public ResponseEntity<Object> getUpdate(@RequestBody TypeGoodRequestDTO request, Errors errors) {
-        if(errors.hasFieldErrors("districtCode")){
+        if(errors.hasFieldErrors("typeGoodCode")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
         }
         return ResponseEntity.ok(dataReturnService.success(typeGoodService.updateData(request)));
     }
     @PostMapping(value="/typegood/delete")
     public ResponseEntity<Object> getDelete(@RequestBody TypeGoodRequestDTO request, Errors errors) {
-        if(errors.hasFieldErrors("districtCode")){
+        if(errors.hasFieldErrors("typeGoodCode")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
         }
         return ResponseEntity.ok(dataReturnService.success(typeGoodService.deleteData(request)));

@@ -34,14 +34,14 @@ public class TypeGoodAttrController {
     }
     @PostMapping(value="/typegoodattr/update")
     public ResponseEntity<Object> getUpdate(@RequestBody TypeGoodAttrRequestDTO request, Errors errors) {
-        if(errors.hasFieldErrors("districtCode")){
+        if(errors.hasFieldErrors("typeGoodAttr")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
         }
         return ResponseEntity.ok(dataReturnService.success(typeGoodAttrService.updateData(request)));
     }
     @PostMapping(value="/typegoodattr/delete")
     public ResponseEntity<Object> getDelete(@RequestBody TypeGoodAttrRequestDTO request, Errors errors) {
-        if(errors.hasFieldErrors("districtCode")){
+        if(errors.hasFieldErrors("typeGoodAttr")){
             return ResponseEntity.ok(dataReturnService.dataNotFound("districtCode is empty"));
         }
         return ResponseEntity.ok(dataReturnService.success(typeGoodAttrService.deleteData(request)));
