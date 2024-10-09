@@ -26,8 +26,8 @@ public class BankStore extends EntityCommon{
     BankStatus bankStoreStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bankCode")
-    Bank bank;
+    @JoinColumn(name = "bankBranchCode")
+    BankBranch bankBranch;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,5 +35,5 @@ public class BankStore extends EntityCommon{
     Store store;
 
     @OneToMany(mappedBy = "bankStore")
-    List<StoreWithdrawalMoney> storeWithdrawalMoneyList;
+    List<StoreTransaction> storeTransactionList;
 }

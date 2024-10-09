@@ -31,9 +31,9 @@ public class BankUser extends EntityCommon {
     UserAccount userAccount;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bankCode")
-    Bank bank;
+    @JoinColumn(name = "bankBranchCode")
+    BankBranch bankBranch;
 
     @OneToMany(mappedBy = "bankUser")
-    List<UserWithdrawalMoney> userWithdrawalMoneyList;
+    List<UserTransaction> userTransactionList;
 }

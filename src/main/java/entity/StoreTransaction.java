@@ -1,6 +1,7 @@
 package entity;
 
-import entity.enum_package.WithdrawalStatus;
+import entity.enum_package.TransactionStatus;
+import entity.enum_package.TypeTransaction;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,12 +16,15 @@ import org.hibernate.annotations.Nationalized;
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AttributeOverride(name = "id",column = @Column(name = "withdrawalCode"))
-public class StoreWithdrawalMoney extends EntityCommon{
+public class StoreTransaction extends EntityCommon{
 
     Double totalAmount;
 
     @Enumerated(EnumType.STRING)
-    WithdrawalStatus withdrawalStatus;
+    TransactionStatus transactionStatus;
+
+    @Enumerated(EnumType.STRING)
+    TypeTransaction typeTransaction;
 
     @Lob
     @Nationalized
@@ -30,6 +34,6 @@ public class StoreWithdrawalMoney extends EntityCommon{
     @JoinColumn(name = "bankStoreCode")
     BankStore bankStore;
 
-    @OneToOne(mappedBy = "storeWithdrawalMoney")
-    StoreWithdrawalReceipt storeWithdrawalReceipt;
+    @OneToOne(mappedBy = "storeTransaction")
+    StoreTransactionReceipt storeTransactionReceipt;
 }

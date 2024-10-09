@@ -26,4 +26,16 @@ public class UserRelationStoreController {
         return ResponseEntity.ok(dataReturnService.success(storeFollowService.getAllStoreFollowed(requestDTO)));
     }
 
+    @PostMapping(value = "/store/follow")
+    public ResponseEntity<Object> postStoreFollow(@Valid @RequestBody StoreFollowRequestDTO requestDTO){
+        return ResponseEntity.ok(dataReturnService.success(storeFollowService.postStoreFollow(requestDTO)));
+    }
+
+    @PostMapping(value = "/store/unfollow")
+    public ResponseEntity<Object> postStoreUnFollow(@Valid @RequestBody StoreFollowRequestDTO requestDTO){
+        return ResponseEntity.ok(dataReturnService.success(storeFollowService.postStoreUnFollow(requestDTO)));
+    }
+
+
+
 }

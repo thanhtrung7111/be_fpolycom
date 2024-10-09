@@ -1,6 +1,6 @@
 package entity.enum_package;
 
-public enum WithdrawalStatus {
+public enum TransactionStatus {
     pending,
     complete,
 }

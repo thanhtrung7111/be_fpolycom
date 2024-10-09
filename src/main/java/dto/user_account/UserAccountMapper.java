@@ -9,6 +9,8 @@ import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 import service.common.EncodingService;
 
+import java.util.List;
+
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,componentModel = "spring")
 public interface UserAccountMapper {
 
@@ -38,6 +40,20 @@ public interface UserAccountMapper {
     @Mapping(target = "wardName",source = "ward.name")
     UserAccountChangeResponseDTO toUserAccountChangeResponseDto(UserAccount userAccount);
 
+    @Mapping(target = "province.id",source = "provinceCode")
+    @Mapping(target = "ward.id",source = "wardCode")
+    @Mapping(target = "district.id",source = "districtCode")
+    @Mapping(target = "id", source = "userAccountID")
+    UserAccount toAdminUserAccount(AdminUserAccountRequestDTO adminUserAccountRequestDTO);
+
+
+    @Mapping(target = "userAccountID", source = "id")
+    @Mapping(target = "provinceName",source = "province.name")
+    @Mapping(target = "districtName",source = "district.name")
+    @Mapping(target = "wardName",source = "ward.name")
+    AdminUserAccountResponseDTO toAdminUserAccountResponseDto(UserAccount userAccount);
+
+    List<AdminUserAccountResponseDTO> toList (List<UserAccount> userAccounts);
 
 
 }

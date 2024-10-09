@@ -33,7 +33,7 @@ public class BankBranchServiceImpl implements BankBranchService {
 
     @Override
     public BankBranchResponseDTO deleteData(BankBranchRequestDTO bankBranchRequestDTO) {
-        BankBranch bankBranch = bankBranchRepository.findById(Long.valueOf(bankBranchRequestDTO.getBankCode())).orElseThrow(()->new DataNotFoundException("data not found"));
+        BankBranch bankBranch = bankBranchRepository.findById(Long.valueOf(bankBranchRequestDTO.getBankBranchCode())).orElseThrow(()->new DataNotFoundException("data not found"));
         bankBranch.setDeleted(true);
         bankBranch.setUpdatedDate(new Date());
         bankBranch.setDeletedDate(new Date());
