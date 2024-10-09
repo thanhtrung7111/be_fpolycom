@@ -68,6 +68,12 @@ public class FpolycomApplication implements CommandLineRunner {
 	@Autowired
 	ShoppingCartRepository shoppingCartRepository;
 
+	@Autowired
+	BankRepository bankRepository;
+
+	@Autowired
+	BankBranchRepository bankBranchRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(FpolycomApplication.class, args);
 	}
@@ -76,7 +82,7 @@ public class FpolycomApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		UserAccount userAccount =  UserAccount.builder().id(1L).email("thanhtrung711199@gmail.com").userLogin("thanhtrung").name("Thành Trung").password(encoder.encode("thanhtrung")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		UserAccount userAccount =  UserAccount.builder().id(1L).passwordBank("123456").email("thanhtrung711199@gmail.com").userLogin("thanhtrung").name("Thành Trung").password(encoder.encode("thanhtrung")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		UserAccount userAccount2 = UserAccount.builder().id(2L).email("thanhtrung7199@gmail.com").userLogin("thanhtrung1").name("Thành Trung 2").password(encoder.encode("thanhtrung1")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		UserAccount userAccount3 = UserAccount.builder().id(3L).email("ngocchau@gmail.com").userLogin("ngocchau").name("Ngọc Châu").password(encoder.encode("ngocchau")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 
@@ -129,6 +135,15 @@ public class FpolycomApplication implements CommandLineRunner {
 
 		Liked liked = Liked.builder().id(1).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).userAccount(userAccount).product(product).build();
 		likedRepository.save(liked);
+
+		Bank bank	 = Bank.builder().id(1).name("Ngan hang bidv").shortName("BIDV").build();
+		Bank bank2	 = Bank.builder().id(2).name("Ngan hang mb bank").shortName("MB").build();
+		bankRepository.saveAll(List.of(bank,bank2));
+
+		BankBranch bankBranch = BankBranch.builder().id(1).name("chi nhanh binh duong").bank(bank).build();
+		BankBranch bankBranch2 = BankBranch.builder().id(2).name("chi nhanh binh duong mien bac").bank(bank).build();
+		bankBranchRepository.saveAll(List.of(bankBranch,bankBranch2));
+
 	}
 
 }

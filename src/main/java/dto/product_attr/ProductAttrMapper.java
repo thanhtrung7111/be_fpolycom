@@ -19,12 +19,12 @@ public interface ProductAttrMapper {
 
 
     @Mapping(target = "id", source = "productAttrCode")
-    @Mapping(target = "typeGood.id", source = "typeGoodCode")
+    @Mapping(target = "typeGoodAttr.id", source = "typeGoodAttrCode")
     @Mapping(target = "product.id", source = "productCode")
     ProductAttr toProductAttr(ProductAttrRequestDTO dto);
 
     @Mapping(target = "productAttrCode", source = "id")
-    @Mapping(target = "typeGoodCode", source = "typeGood.id")
+    @Mapping(target = "typeGoodAttrCode", source = "typeGoodAttr.id")
     @Mapping(target = "productCode",source = "product.id")
     ProductAttrResponseDTO toProductAttrResponseDTO(ProductAttr productAttr);
 

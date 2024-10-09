@@ -8,6 +8,8 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
 
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -24,5 +26,10 @@ public class BankBranch extends EntityCommon {
     @JoinColumn(name = "bankCode")
     Bank bank;
 
+    @OneToMany(mappedBy = "bankBranch")
+    List<BankUser> bankUserList;
+
+    @OneToMany(mappedBy = "bankBranch")
+    List<BankStore> bankStoreList;
 
 }
