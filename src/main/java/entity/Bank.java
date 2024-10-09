@@ -32,11 +32,6 @@ public class Bank extends EntityCommon{
     @Lob
     String image;
 
-    @OneToMany(mappedBy = "bank")
-    List<BankStore> bankStoreList;
-
-    @OneToMany(mappedBy = "bank")
-    List<BankUser> bankUserList;
 
     @OneToMany(mappedBy = "bank")
     List<BankBranch> bankBranchList;

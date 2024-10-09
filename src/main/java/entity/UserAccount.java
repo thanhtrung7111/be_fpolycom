@@ -24,6 +24,8 @@ public class UserAccount extends EntityCommon {
 
     String password;
 
+    String passwordBank;
+
     @Lob
     @Nationalized
     String name;
