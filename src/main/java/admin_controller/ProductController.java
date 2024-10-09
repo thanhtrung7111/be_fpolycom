@@ -1,10 +1,13 @@
 package admin_controller;
 
+import dto.product.ProductApproveRequestDTO;
 import dto.product.ProductApproveResponeDTO;
+import dto.user_account.AdminUserAccountRequestDTO;
 import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import service.data_return.DataReturn;
 import service.data_return.DataReturnService;
 import service.product.ProductService;
 
@@ -22,15 +25,17 @@ public class ProductController {
 
     @GetMapping(value = "product/approve/all")
     public ResponseEntity<Object> getAll() {
-        List<ProductApproveResponeDTO> products = productService.getAllData();
-        return ResponseEntity.ok(dataReturnService.success(products));
-    }
-    @PostMapping(value="/product/approve/update")
-    public ResponseEntity<Object> updatePendingToActive() {
-        List<ProductApproveResponeDTO> updatedProducts = productService.updatePendingProductsToActive();
-        return ResponseEntity.ok(dataReturnService.success(updatedProducts));
+        return ResponseEntity.ok(dataReturnService.success(productService.getAll()));
     }
 
+    @PostMapping("/product/approve/lock")
+    public ResponseEntity<DataReturn> lockProduct(@RequestBody ProductApproveRequestDTO request) {
+        return ResponseEntity.ok(dataReturnService.success(productService.lockProduct(request)));
+    }
+    @PostMapping("/product/approve/unlock")
+    public ResponseEntity<DataReturn> unlockProduct(@RequestBody ProductApproveRequestDTO request) {
+        return ResponseEntity.ok(dataReturnService.success(productService.unlockProduct(request)));
+    }
 
 
 }

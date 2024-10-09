@@ -16,4 +16,5 @@ public class ProductApproveRequestDTO {
     @NotBlank(message = "Truong du lieu ProductStatusCode trong")
     String productStatusCode;
 
+
 }

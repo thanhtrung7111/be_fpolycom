@@ -29,9 +29,7 @@ public interface ProductMapper {
     @Mapping(target = "productStatusCode", source = "productStatus")
     ProductApproveResponeDTO toProductResponseDto(Product entity);
 
-    // Tùy chỉnh ánh xạ cho status
-    @Named("mapProductStatus")
-    default String mapProductStatus(ProductStatus status) {
-        return status == null ? "Unknown" : status.name();
-    }
+//chuyển đổi danh sách các Product sang danh sách các ProductApproveResponeDTO.
+    List<ProductApproveResponeDTO> toProductApproveResponseDTO(List<Product> products);
+
 }

@@ -2,12 +2,17 @@ package service.product;
 
 import dto.product.ProductApproveRequestDTO;
 import dto.product.ProductApproveResponeDTO;
+import dto.user_account.AdminUserAccountRequestDTO;
+import dto.user_account.AdminUserAccountResponseDTO;
 import service.common.CommonService;
 
 import java.util.List;
 
-public interface ProductService extends CommonService<ProductApproveRequestDTO, ProductApproveResponeDTO,Long> {
+public interface ProductService <DTORequest,DTOResponse> {
+    public List<DTORequest> getAll();
 
 
-    List<ProductApproveResponeDTO> updatePendingProductsToActive();
+    ProductApproveResponeDTO lockProduct(ProductApproveRequestDTO request);
+
+    ProductApproveResponeDTO unlockProduct(ProductApproveRequestDTO request);
 }
