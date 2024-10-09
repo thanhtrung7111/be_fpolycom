@@ -8,16 +8,12 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface StoreMapper {
+public interface StoreDocumentMapper {
 
-    StoreMapper INSTANCE = Mappers.getMapper(StoreMapper.class);
-
+    StoreDocumentMapper INSTANCE = Mappers.getMapper(StoreDocumentMapper.class);
 
     StoreDocument toStoreDocument(StoreDocumentRequestDTO requestDTO);
 
     List<StoreDocument> toStoreDocumentList(List<StoreDocumentRequestDTO> storeDocumentRequestDTOList);
-
-
-
 
 }
