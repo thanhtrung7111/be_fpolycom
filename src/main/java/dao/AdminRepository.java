@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface AdminRepository extends JpaRepository<Administration,Long> {
 
     Optional<Administration> findByUserLogin(String userLogin);
-    asdweqweq
+
 }
