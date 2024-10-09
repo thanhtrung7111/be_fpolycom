@@ -24,5 +24,6 @@ public class Relationship extends EntityCommon {
     @JoinColumn(name = "userCodeSecondary")
     UserAccount userAccountSecondary;
 
+    @Enumerated(EnumType.STRING)
     FriendshipStatus friendshipStatus;
 }

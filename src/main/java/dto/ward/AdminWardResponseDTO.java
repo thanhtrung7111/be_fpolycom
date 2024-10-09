@@ -1,0 +1,19 @@
+package dto.ward;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class AdminWardResponseDTO {
+
+    String wardCode;
+
+    String name;
+
+    String districtCode;
+
+
+}

@@ -21,16 +21,20 @@ public class Bank extends EntityCommon{
     @Nationalized
     String name;
 
+
+    @Nationalized
+    String shortName;
+
     @Lob
     @Nationalized
-    String desciption;
+    String description;
 
     @Lob
     String image;
 
-    @OneToMany(mappedBy = "bank")
-    List<BankStore> bankStoreList;
 
     @OneToMany(mappedBy = "bank")
-    List<BankUser> bankUserList;
+    List<BankBranch> bankBranchList;
+
+
 }

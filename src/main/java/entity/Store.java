@@ -43,6 +43,7 @@ public class Store extends EntityCommon {
     @Lob
     String bannerImage;
 
+    @Enumerated(EnumType.STRING)
     StoreStatus storeStatus;
 
 
@@ -80,4 +81,7 @@ public class Store extends EntityCommon {
 
     @OneToMany(mappedBy = "store")
     List<Discount> discountList;
+
+    @OneToMany(mappedBy = "store")
+    List<Followed> followedList;
 }

@@ -24,6 +24,8 @@ public class UserAccount extends EntityCommon {
 
     String password;
 
+    String passwordBank;
+
     @Lob
     @Nationalized
     String name;
@@ -56,7 +58,6 @@ public class UserAccount extends EntityCommon {
 
     Boolean gender;
 
-    String tokenConfirm;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "provinceCode")
@@ -98,4 +99,13 @@ public class UserAccount extends EntityCommon {
 
     @OneToMany(mappedBy = "userAccount")
     List<Orders> ordersList;
+
+    @OneToMany(mappedBy = "userAccount")
+    List<Followed> followedList;
+
+    @OneToOne(mappedBy = "userAccount")
+    TokenRegister tokenRegister;
+
+    @OneToOne(mappedBy = "userAccount")
+    PasswordRecover passwordRecover;
 }

@@ -24,4 +24,7 @@ public class TypeGood extends EntityCommon{
 
     @OneToMany(mappedBy = "typeGood")
     List<Product> productList;
+
+    @OneToMany(mappedBy = "typeGood")
+    List<TypeGoodAttr> typeGoodAttrList;
 }
