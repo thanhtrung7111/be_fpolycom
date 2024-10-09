@@ -44,7 +44,7 @@ public class DistrictServiceImpl implements DistrictService{
 
     @Override
     public List<AdminDistrictResponseDTO> getAllData() {
-        return DistrictMapper.INSTANCE.toAdminDistrictResponseDtoList(districtRepository.findAll());
+        return DistrictMapper.INSTANCE.toAdminDistrictResponseDtoList(districtRepository.findAllNotDeleted());
     }
 
     @Override
