@@ -10,16 +10,15 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AttributeOverride(name = "id",column = @Column(name = "withdrawalReceiptCode"))
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
-public class StoreWithdrawalReceipt extends  EntityCommon{
+@AttributeOverride(name = "id",column = @Column(name = "withdrawalReceiptCode"))
+public class UserTransactionReceipt extends EntityCommon{
 
     Double totalAmount;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="withdrawalCode",referencedColumnName = "withdrawalCode")
-    StoreWithdrawalMoney storeWithdrawalMoney;
 
-
+    @OneToOne
+    @JoinColumn(name = "withdrawalCode",referencedColumnName = "withdrawalCode")
+    UserTransaction userTransaction;
 }

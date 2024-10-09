@@ -24,7 +24,6 @@ public class UserAccount extends EntityCommon {
 
     String password;
 
-    String passwordBank;
 
     @Lob
     @Nationalized
@@ -108,4 +107,7 @@ public class UserAccount extends EntityCommon {
 
     @OneToOne(mappedBy = "userAccount")
     PasswordRecover passwordRecover;
+
+    @OneToOne(mappedBy = "userAccount")
+    PaymentWalletUser paymentWalletUser;
 }

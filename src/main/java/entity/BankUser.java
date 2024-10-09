@@ -35,5 +35,5 @@ public class BankUser extends EntityCommon {
     BankBranch bankBranch;
 
     @OneToMany(mappedBy = "bankUser")
-    List<UserWithdrawalMoney> userWithdrawalMoneyList;
+    List<UserTransaction> userTransactionList;
 }

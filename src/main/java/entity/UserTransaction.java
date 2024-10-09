@@ -1,6 +1,7 @@
 package entity;
 
-import entity.enum_package.WithdrawalStatus;
+import entity.enum_package.TransactionStatus;
+import entity.enum_package.TypeTransaction;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -15,7 +16,7 @@ import org.hibernate.annotations.Nationalized;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 @AttributeOverride(name = "id",column = @Column(name = "withdrawalCode"))
-public class UserWithdrawalMoney extends EntityCommon{
+public class UserTransaction extends EntityCommon{
 
     Double totalAmount;
 
@@ -24,13 +25,15 @@ public class UserWithdrawalMoney extends EntityCommon{
     String content;
 
     @Enumerated(EnumType.STRING)
-    WithdrawalStatus withdrawalStatus;
+    TransactionStatus transactionStatus;
 
+    @Enumerated(EnumType.STRING)
+    TypeTransaction typeTransaction;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bankUserCode")
     BankUser bankUser;
 
-    @OneToOne(mappedBy = "userWithdrawalMoney")
-    UserWithdrawalReceipt userWithdrawalReceipt;
+    @OneToOne(mappedBy = "userTransaction")
+    UserTransactionReceipt userTransactionReceipt;
 }

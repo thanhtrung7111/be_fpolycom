@@ -11,5 +11,6 @@ public class VoucherUserRequestDTO {
 
     Long voucherCode;
 
+    String userLogin;
 
 }
