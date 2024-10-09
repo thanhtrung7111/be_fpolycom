@@ -50,9 +50,6 @@ public class UserBankServiceImpl implements UserBankService{
         }
         String userLoginExtract = authUserService.extractUserlogin(requestDTO.getUserLogin());
         UserAccount userAccount = userAccountRepository.findByUserLogin(userLoginExtract).orElseThrow(()->new UsernameNotFoundException("Tai khoan nguoi dung khong ton tai!"));
-        if(requestDTO.getPasswordBank().equals(userAccount.getPasswordBank())){
-            throw new DataNotFoundException("Ban khong co quyen truy cap vao ngan hang!");
-        }
         Optional<BankUser> bankUserFind = bankUserRepository.findBankUserByAccountAndBranch(requestDTO.getAccountNumber(),requestDTO.getBankCode());
         if(bankUserFind.isPresent()) throw new DataNotFoundException("Tai khoan ngan hang da ton tai!");
 
