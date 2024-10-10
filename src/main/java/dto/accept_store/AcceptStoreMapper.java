@@ -1,8 +1,7 @@
 package dto.accept_store;
 
-import dto.user_account.AdminUserAccountResponseDTO;
+
 import entity.Store;
-import entity.UserAccount;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

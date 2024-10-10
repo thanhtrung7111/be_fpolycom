@@ -1,7 +1,6 @@
 package admin_controller;
 
 import dto.accept_store.AcceptStoreRequestDTO;
-import dto.user_account.AdminUserAccountRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
