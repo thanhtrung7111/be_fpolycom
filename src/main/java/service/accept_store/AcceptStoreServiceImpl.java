@@ -14,9 +14,11 @@ import entity.enum_package.StoreStatus;
 import entity.enum_package.UserStatus;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AcceptStoreServiceImpl implements AcceptStoreService {
 
     @Autowired

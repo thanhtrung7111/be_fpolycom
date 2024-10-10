@@ -18,15 +18,11 @@ public class AcceptStoreController {
     @Autowired
     AcceptStoreService acceptStoreService;
 
-    @GetMapping("/accept-store/all")
-    public ResponseEntity<DataReturn> getAllAcceptStore() {
-        return ResponseEntity.ok(dataReturnService.success(acceptStoreService.getAll()));
-    }
-    @PostMapping("/accept-store/lock")
+    @PostMapping("/store/lock")
     public ResponseEntity<DataReturn> lockStore(@RequestBody AcceptStoreRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(acceptStoreService.lockStore(request)));
     }
-    @PostMapping("/user-account/unlock")
+    @PostMapping("/store/approve")
     public ResponseEntity<DataReturn> unlockStore(@RequestBody AcceptStoreRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(acceptStoreService.unlockStore(request)));
     }

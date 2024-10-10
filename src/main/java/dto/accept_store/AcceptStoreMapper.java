@@ -16,10 +16,10 @@ public interface AcceptStoreMapper {
     @Mapping(target = "province.id",source = "provinceCode")
     @Mapping(target = "ward.id",source = "wardCode")
     @Mapping(target = "district.id",source = "districtCode")
-    @Mapping(target = "id", source = "userAccountID")
+    @Mapping(target = "id", source = "storeID")
     Store toStore(AcceptStoreRequestDTO acceptStoreRequestDTO);
 
-    @Mapping(target = "userAccountID", source = "id")
+    @Mapping(target = "storeID", source = "id")
     @Mapping(target = "provinceName",source = "province.name")
     @Mapping(target = "districtName",source = "district.name")
     @Mapping(target = "wardName",source = "ward.name")
