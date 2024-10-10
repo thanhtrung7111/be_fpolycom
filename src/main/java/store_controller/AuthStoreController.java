@@ -1,31 +1,26 @@
-package admin_controller;
+package store_controller;
 
-import dto.auth_admin.AuthAdminRequestDTO;
-import dto.auth_admin.AuthAdminResponseDTO;
 import dto.auth_store.AuthStoreLoginRequestDTO;
 import dto.auth_store.AuthStoreLoginResponseDTO;
-import dto.user_account.AdminUserAccountRequestDTO;
+import dto.user_auth.AuthUserLoginRequestDTO;
+import dto.user_auth.AuthUserLoginResponseDTO;
 import entity.enum_package.RoleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
-import service.UserAccountService;
-import service.auth_admin.AuthAdminService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import service.auth_store.AuthStoreService;
+import service.auth_user.AuthUserService;
 import service.common.JWTService;
-import service.data_return.DataReturn;
 import service.data_return.DataReturnService;
-import service.user_account.AdminUserAccountService;
-
 
 @RestController
-public class AuthAdminController {
+public class AuthStoreController {
 
-
-    @Autowired
-    DataReturnService dataReturnService;
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -34,22 +29,26 @@ public class AuthAdminController {
     JWTService jwtService;
 
     @Autowired
-    AuthAdminService authAdminService;
+    DataReturnService dataReturnService;
 
-    @PostMapping("/admin-login")
-    public ResponseEntity<Object> authenticateAndGetToken(@RequestBody AuthAdminRequestDTO authRequest) {
+    @Autowired
+    AuthStoreService authStoreService;
+
+
+
+    @PostMapping("/user/store-login")
+    public ResponseEntity<Object> authenticateAndGetToken(@RequestBody AuthStoreLoginRequestDTO authRequest) {
         System.out.println(authRequest.getUserLogin()+"check controller");
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUserLogin()+"&"+ RoleType.ADMIN.name(), authRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(authRequest.getUserLogin()+"&"+ RoleType.STORE.name(), authRequest.getPassword())
         );
         if (authentication.isAuthenticated()) {
-            AuthAdminResponseDTO rs = authAdminService.getAdmin(authRequest.getUserLogin());
-            String token = jwtService.generateToken(authentication.getName()+"&"+ RoleType.ADMIN.name());
+            AuthStoreLoginResponseDTO rs = authStoreService.getStoreByUser(authRequest.getUserLogin());
+            String token = jwtService.generateToken(authentication.getName()+"&"+ RoleType.STORE.name());
             rs.setToken(token);
             return ResponseEntity.ok().body(dataReturnService.success(rs));
         } else {
             return ResponseEntity.ok().body("Fail");
         }
     }
-
 }

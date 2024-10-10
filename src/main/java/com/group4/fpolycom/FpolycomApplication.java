@@ -20,7 +20,7 @@ import java.util.List;
 @SpringBootApplication
 @EntityScan(basePackages = {"entity"})
 @EnableJpaRepositories(basePackages = {"dao"})
-@ComponentScan(basePackages = {"security","service","admin_controller","user_controller","dto","common_controller","exeception_handler","notifycation_controller","configuration"})
+@ComponentScan(basePackages = {"security","service","admin_controller","user_controller","dto","common_controller","exeception_handler","notifycation_controller","store_controller","configuration"})
 public class FpolycomApplication implements CommandLineRunner {
 
 	@Autowired
@@ -74,6 +74,12 @@ public class FpolycomApplication implements CommandLineRunner {
 	@Autowired
 	BankBranchRepository bankBranchRepository;
 
+	@Autowired
+	VoucherRepository voucherRepository;
+
+	@Autowired
+	DiscountRepository discountRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(FpolycomApplication.class, args);
 	}
@@ -88,61 +94,70 @@ public class FpolycomApplication implements CommandLineRunner {
 
 		userAccountRepository.saveAll(List.of(userAccount,userAccount2,userAccount3));
 
-		Relationship relationship = Relationship.builder().id(1).userAccountPrimary(userAccount).userAccountSecondary(userAccount2).friendshipStatus(FriendshipStatus.accepted).build();
-		Relationship relationship2 = Relationship.builder().id(2).userAccountPrimary(userAccount3).userAccountSecondary(userAccount).friendshipStatus(FriendshipStatus.accepted).build();
-		Relationship relationship3 = Relationship.builder().id(3).userAccountPrimary(userAccount2).userAccountSecondary(userAccount).friendshipStatus(FriendshipStatus.accepted).build();
-		Relationship relationship4 = Relationship.builder().id(4).userAccountPrimary(userAccount).userAccountSecondary(userAccount3).friendshipStatus(FriendshipStatus.accepted).build();
+		Relationship relationship = Relationship.builder().id(1L).userAccountPrimary(userAccount).userAccountSecondary(userAccount2).friendshipStatus(FriendshipStatus.accepted).build();
+		Relationship relationship2 = Relationship.builder().id(2L).userAccountPrimary(userAccount3).userAccountSecondary(userAccount).friendshipStatus(FriendshipStatus.accepted).build();
+		Relationship relationship3 = Relationship.builder().id(3L).userAccountPrimary(userAccount2).userAccountSecondary(userAccount).friendshipStatus(FriendshipStatus.accepted).build();
+		Relationship relationship4 = Relationship.builder().id(4L).userAccountPrimary(userAccount).userAccountSecondary(userAccount3).friendshipStatus(FriendshipStatus.accepted).build();
 		relationshipRepository.saveAll(List.of(relationship,relationship2,relationship3,relationship4));
 
-		Store store = Store.builder().id(1).name("Cuawr hang thu cng").storeStatus(StoreStatus.active).userAccount(userAccount).password(encoder.encode("thanhtrung")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		Store store = Store.builder().id(1L).userAccount(userAccount).name("Cuawr hang thu cng").storeStatus(StoreStatus.active).userAccount(userAccount).password(encoder.encode("thanhtrung")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		storeRepository.save(store);
-		Followed followed = Followed.builder().id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).statusFollow(true).userAccount(userAccount2).store(store).build();
+		Followed followed = Followed.builder().id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).statusFollow(true).userAccount(userAccount2).store(store).build();
 		followedRepository.save(followed);
 
 
 
-		Administration administration = Administration.builder().id(1).userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		Administration administration = Administration.builder().id(1L).name("Thaành Trung").image("sdfsdf").userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		adminRepository.save(administration);
 
-		Province province = Province.builder().id(1).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Bình Dương").build();
-		Province province2 = Province.builder().id(2).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Đồng Nai").build();
+		Province province = Province.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Bình Dương").build();
+		Province province2 = Province.builder().id(2L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Đồng Nai").build();
 		provinceRepository.saveAll(List.of(province,province2));
 
-		District district = District.builder().id(1).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Thuan an").province(province).build();
-		District district2= District.builder().id(2).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Di An").province(province).build();
+		District district = District.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Thuan an").province(province).build();
+		District district2= District.builder().id(2L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Di An").province(province).build();
 		districtRepository.saveAll(List.of(district2,district));
 
-		Ward ward = Ward.builder().id(1).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Binh An").district(district).build();
+		Ward ward = Ward.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Binh An").district(district).build();
 		wardRepository.saveAll(List.of(ward));
 
-		NotifycationUser notifycationUser = NotifycationUser.builder().id(1).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 1").userAccount(userAccount).build();
-		NotifycationUser notifycationUser2 = NotifycationUser.builder().id(2).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 2").userAccount(userAccount).build();
+		NotifycationUser notifycationUser = NotifycationUser.builder().id(1L).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 1").userAccount(userAccount).build();
+		NotifycationUser notifycationUser2 = NotifycationUser.builder().id(2L).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 2").userAccount(userAccount).build();
 
 		userNotifycationRepository.saveAll(List.of(notifycationUser,notifycationUser2));
 
 
-		TypeGood typeGood = TypeGood.builder().id(1).name("Laptop").build();
+		TypeGood typeGood = TypeGood.builder().id(1L).name("Laptop").build();
 		typeGoodRepository.save(typeGood);
 
-		Product product = Product.builder().id(1).createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active).name("San pharm 01").store(store).typeGood(typeGood).build();
+		Product product = Product.builder().id(1L).createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active).name("San pharm 01").store(store).typeGood(typeGood).build();
 		productRepository.save(product);
 
-		ProductDetail productDetail = ProductDetail.builder().price(50000.0).id(1).name("RAM").product(product).build();
-		productDetailRepository.save(productDetail);
+		Discount discount = Discount.builder().id(1L).percentDecrease(10).build();
+		discountRepository.save(discount);
 
-		ShoppingCart shoppingCart = ShoppingCart.builder().id(1).productDetail(productDetail).userAccount(userAccount).quantity(5).build();
+		ProductDetail productDetail = ProductDetail.builder().discount(discount).quantity(30).image("asdsad").price(50000.0).id(1L).name("RAM").product(product).build();
+
+		ProductDetail productDetail2 = ProductDetail.builder().discount(discount).quantity(20).image("ádsad").price(500000.0).id(2L).name("RAM2").product(product).build();
+		productDetailRepository.saveAll(List.of(productDetail,productDetail2));
+
+		ShoppingCart shoppingCart = ShoppingCart.builder().id(1L).productDetail(productDetail).userAccount(userAccount).quantity(5).build();
 		shoppingCartRepository.save(shoppingCart);
 
-		Liked liked = Liked.builder().id(1).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).userAccount(userAccount).product(product).build();
+		Liked liked = Liked.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).userAccount(userAccount).product(product).build();
 		likedRepository.save(liked);
 
-		Bank bank	 = Bank.builder().id(1).name("Ngan hang bidv").shortName("BIDV").build();
-		Bank bank2	 = Bank.builder().id(2).name("Ngan hang mb bank").shortName("MB").build();
+		Bank bank	 = Bank.builder().id(1L).name("Ngan hang bidv").shortName("BIDV").build();
+		Bank bank2	 = Bank.builder().id(2L).name("Ngan hang mb bank").shortName("MB").build();
 		bankRepository.saveAll(List.of(bank,bank2));
 
-		BankBranch bankBranch = BankBranch.builder().id(1).name("chi nhanh binh duong").bank(bank).build();
-		BankBranch bankBranch2 = BankBranch.builder().id(2).name("chi nhanh binh duong mien bac").bank(bank).build();
+		BankBranch bankBranch = BankBranch.builder().id(1L).name("chi nhanh binh duong").bank(bank).build();
+		BankBranch bankBranch2 = BankBranch.builder().id(2L).name("chi nhanh binh duong mien bac").bank(bank).build();
 		bankBranchRepository.saveAll(List.of(bankBranch,bankBranch2));
+
+
+		Voucher voucher = Voucher.builder().id(1L).voucherType(VoucherType.store).store(store).beginDate(new Date()).endDate(new Date()).percentDecrease(10).priceApply(100000.0).name("Khuye mai thang 10").beginDate(new Date()).endDate(new Date()).build();
+		voucherRepository.save(voucher);
 
 	}
 
