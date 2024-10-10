@@ -32,6 +32,8 @@ public class Administration extends EntityCommon {
 
     private String image;
 
+
+
     @OneToMany(mappedBy = "administration")
     List<AdminRole> adminRoleList;
 
