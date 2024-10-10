@@ -14,5 +14,4 @@ import lombok.NoArgsConstructor;
 public class StoreDocumentRequestDTO {
     String documentUrl;
 
-    String documentType;
 }

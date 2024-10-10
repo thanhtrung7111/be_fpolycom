@@ -5,10 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class StoreRegisterRequestDTO {
+
+    String userLogin;
+
+    String storeRegisterCode;
 
     String image;
 
@@ -20,11 +26,11 @@ public class StoreRegisterRequestDTO {
 
     String phone;
 
+    String bannerImage;
+
     String email;
 
     String password;
-
-    String userLogin;
 
     Long provinceCode;
 
@@ -32,6 +38,8 @@ public class StoreRegisterRequestDTO {
 
     Long wardCode;
 
+
+    List<StoreDocumentRequestDTO> documentList;
 
 
 }

@@ -36,6 +36,8 @@ public class Orders extends EntityCommon {
 
     Double finalTotal;
 
+    String orderBillCode;
+
     @Lob
     @Nationalized
     String noteContent;
