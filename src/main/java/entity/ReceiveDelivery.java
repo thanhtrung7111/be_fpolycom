@@ -1,5 +1,7 @@
 package entity;
 
+import entity.enum_package.StatusDelivery;
+import entity.enum_package.TypeDelivery;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -14,15 +16,18 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
-@AttributeOverride(name = "id",column = @Column(name = "receiveShippingCode"))
-public class ReceiveDelivery extends EntityCommon{
+@AttributeOverride(name = "id", column = @Column(name = "receiveShippingCode"))
+public class ReceiveDelivery extends EntityCommon {
 
     String image;
 
     @Temporal(TemporalType.DATE)
     Date deliveryDate;
 
-    boolean statusDelivery;
+    @Enumerated(EnumType.STRING)
+    TypeDelivery typeDelivery;
+
+    StatusDelivery statusDelivery;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shipperCode")

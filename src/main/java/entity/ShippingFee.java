@@ -1,5 +1,6 @@
 package entity;
 
+import entity.enum_package.TypeShipping;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -19,16 +20,8 @@ public class ShippingFee extends EntityCommon{
 
     Double fee;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "provinceCodeBegin")
-    Province provinceBegin;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "provinceCodeEnd")
-    Province provinceEnd;
-
+    TypeShipping typeShipping;
 
     @OneToMany(mappedBy = "shippingFee")
     List<Orders> ordersList;
-
 }

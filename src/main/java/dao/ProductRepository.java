@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Long> {
@@ -18,4 +19,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     @Query(value = "select o from Product o where o.store.id = :storeCode" )
     List<Product> getAllProductByStore(@Param("storeCode") Long storeCode);
+
+
+    @Query(value = "select o from Product o where o.id = :productCode and o.productStatus = :productStatus" )
+    Optional<Product> findByProductByStatus(@Param("productCode") Long productCode,@Param("productStatus") ProductStatus productStatus);
 }
