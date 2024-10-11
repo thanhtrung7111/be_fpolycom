@@ -35,6 +35,7 @@ public class Discount extends EntityCommon{
     Date beginDate;
 
 
+
     @OneToMany(mappedBy = "discount")
     List<ProductDetail> productDetailList;
 

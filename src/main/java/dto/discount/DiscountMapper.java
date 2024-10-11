@@ -17,7 +17,6 @@ public interface DiscountMapper {
     Discount toDiscount (DiscountRequestDTO request);
 
     @Mapping(target = "discountCode", source = "id")
-    @Mapping(target = "storeCode", source = "store.id")
     @Mapping(target = "numberOfProductDetail",source = "productDetailList",qualifiedByName = "numberOfProductDetail")
     @Mapping(target = "numberOfOrderDetail",source = "orderDetailList", qualifiedByName = "numberOfOrderDetail")
     DiscountResponseDTO toDiscountResponseDTO(Discount discount);

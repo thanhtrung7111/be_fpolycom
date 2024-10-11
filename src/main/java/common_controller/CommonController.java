@@ -46,24 +46,24 @@ public class CommonController {
         return ResponseEntity.ok(dataReturnService.success(voucherService.getVoucherByStore(Long.valueOf(request.get("storeCode")))));
     }
 
-    @GetMapping(value = "/common/product/all")
-    public ResponseEntity<Object> getAllProduct() {
-        return ResponseEntity.ok(dataReturnService.success(productService.getALlProductByStatus(ProductStatus.active)));
-    }
-
-    @PostMapping(value = "/common/store/all-product")
-    public ResponseEntity<Object> getALlProductByStore(@RequestBody HashMap<String,String> request) {
-        if( request.get("storeCode") == null || request.get("storeCode").isBlank()){
-            throw new DataNotFoundException("Khong de trong ma cua hang!");
-        }
-        return ResponseEntity.ok(dataReturnService.success(productService.getALlProductByStatus(ProductStatus.active)));
-    }
-
-    @PostMapping(value = "/common/product/detail")
-    public ResponseEntity<Object> getProductById(@RequestBody HashMap<String,String> request) {
-        if( request.get("productCode") == null || request.get("productCode").isBlank()){
-            throw new DataNotFoundException("Khong de trong ma cua hang!");
-        }
-        return ResponseEntity.ok(dataReturnService.success(productService.getProductById(Long.valueOf(request.get("productCode")),request.get("userLogin"))));
-    }
+//    @GetMapping(value = "/common/product/all")
+//    public ResponseEntity<Object> getAllProduct() {
+//        return ResponseEntity.ok(dataReturnService.success(productService.getALlProductByStatus(ProductStatus.active)));
+//    }
+//
+//    @PostMapping(value = "/common/store/all-product")
+//    public ResponseEntity<Object> getALlProductByStore(@RequestBody HashMap<String,String> request) {
+//        if( request.get("storeCode") == null || request.get("storeCode").isBlank()){
+//            throw new DataNotFoundException("Khong de trong ma cua hang!");
+//        }
+//        return ResponseEntity.ok(dataReturnService.success(productService.getALlProductByStatus(ProductStatus.active)));
+//    }
+//
+//    @PostMapping(value = "/common/product/detail")
+//    public ResponseEntity<Object> getProductById(@RequestBody HashMap<String,String> request) {
+//        if( request.get("productCode") == null || request.get("productCode").isBlank()){
+//            throw new DataNotFoundException("Khong de trong ma cua hang!");
+//        }
+//        return ResponseEntity.ok(dataReturnService.success(productService.getProductById(Long.valueOf(request.get("productCode")),request.get("userLogin"))));
+//    }
 }
