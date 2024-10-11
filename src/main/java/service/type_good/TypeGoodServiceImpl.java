@@ -31,6 +31,7 @@ TypeGoodRepository typeGoodRepository;
         TypeGood typeGood = typeGoodRepository.findById(Long.valueOf(typeGoodRequestDTO.getTypeGoodCode())).orElseThrow(() -> new DataNotFoundException("Khong tim thay du lieu"));
         typeGood.setName(typeGoodRequestDTO.getName());
         typeGood.setUpdatedDate(new Date());
+        typeGood.setImage(typeGoodRequestDTO.getImage());
         return TypeGoodMapper.INSTANCE.toTypeGoodResponseDto(typeGoodRepository.save(typeGood));
     }
 
