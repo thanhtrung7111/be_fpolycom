@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class TypeGoodResponseDTO {
     String name;
 
+    String image;
+
     String typeGoodCode;
 
     Integer NumberOfProduct;
