@@ -34,9 +34,6 @@ public class Discount extends EntityCommon{
     @Temporal(TemporalType.DATE)
     Date beginDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "storeCode")
-    Store store;
 
     @OneToMany(mappedBy = "discount")
     List<ProductDetail> productDetailList;

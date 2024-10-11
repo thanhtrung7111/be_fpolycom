@@ -1,6 +1,7 @@
 package service;
 
 import dao.PasswordRecoverRepository;
+import dao.PaymentWalletUserRepository;
 import dao.TokenRegisterRepository;
 import dao.UserAccountRepository;
 import dto.user_auth.ChangePasswordRequestDTO;
@@ -13,6 +14,8 @@ import exeception_handler.NotRightException;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,6 +56,10 @@ public class UserAccountService implements UserDetailsService {
     @Autowired
     PasswordRecoverRepository passwordRecoverRepository;
 
+    @Autowired
+    PaymentWalletUserRepository paymentWalletUserRepository;
+
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -63,7 +70,7 @@ public class UserAccountService implements UserDetailsService {
 
 
 
-    public UserAccountRegisterResponseDTO registerAccount(UserAccountRegisterRequestDTO request) {
+    public UserAccountRegisterResponseDTO registerAccount(UserAccountRegisterRequestDTO request) throws MessagingException {
         UserAccount userAccount = UserAccountMapper.INSTANCE.toUserAccount(request);
         userAccount.setPassword(new BCryptPasswordEncoder().encode(userAccount.getPassword()));
         userAccount.setUserStatus(UserStatus.pending);
@@ -73,6 +80,7 @@ public class UserAccountService implements UserDetailsService {
         LocalDateTime expiredDateTime = curentDateTime.plusMinutes(15);
         TokenRegister tokenRegister = TokenRegister.builder().token(UUID.randomUUID().toString()).userAccount(saved).createdDate(new Date()).expiredDate(expiredDateTime).build();
         tokenRegisterRepository.save(tokenRegister);
+        mailService.sendMail(request.getEmail(),"Xac nhan dang ki","Dang ki thanh cong!"+tokenRegister.getToken());
         return UserAccountMapper.INSTANCE.toUserAccountRegisterResponseDto(saved);
     }
 
@@ -82,12 +90,15 @@ public class UserAccountService implements UserDetailsService {
             tokenRegisterRepository.delete(userAccount.getTokenRegister());
             throw new UsernameNotFoundException("Token đã hết hạn");
         }
-        userAccount.setUserStatus(UserStatus.active);
-        userAccountRepository.save(userAccount);
         tokenRegisterRepository.delete(userAccount.getTokenRegister());
-
+        userAccount.setUserStatus(UserStatus.active);
+        userAccount.setTokenRegister(null);
+        userAccountRepository.save(userAccount);
+        paymentWalletUserRepository.save(PaymentWalletUser.builder().createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).userAccount(userAccount).balance(0.0).build());
         return UserAccountMapper.INSTANCE.toUserAccountRegisterResponseDto(userAccount);
     }
+
+
 
     public UserAccountRegisterResponseDTO changePassword(ChangePasswordRequestDTO changePasswordRequestDTO) {
         String username = authUserService.extractUserlogin(changePasswordRequestDTO.getUserLogin());
@@ -183,4 +194,6 @@ public class UserAccountService implements UserDetailsService {
 
         return UserAccountMapper.INSTANCE.toUserAccountChangeResponseDto(userAccount);
     }
+
+
 }

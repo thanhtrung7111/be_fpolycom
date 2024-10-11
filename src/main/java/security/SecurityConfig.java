@@ -39,7 +39,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChainUser(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf(csrf -> csrf.disable()).cors(cor->cor.disable()).authorizeHttpRequests(auth -> auth.requestMatchers("/user/**").hasAuthority("USER").requestMatchers("/admin/**").hasAuthority("ADMIN").requestMatchers("/auth/store/**").hasAuthority("STORE").anyRequest().permitAll()).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authenticationProvider(customAuthenticationProvider)
+        httpSecurity.csrf(csrf -> csrf.disable()).cors(cor->cor.disable()).authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/user/**").hasAuthority("USER")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN").requestMatchers("/auth/store/**").hasAuthority("STORE").anyRequest().permitAll()).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authenticationProvider(customAuthenticationProvider)
                     .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling(x -> x.accessDeniedHandler(customAccessDeniedHandler));
         return httpSecurity.build();
     }
