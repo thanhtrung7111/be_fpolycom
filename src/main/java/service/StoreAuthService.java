@@ -11,10 +11,8 @@ import org.springframework.stereotype.Service;
 import security.UserInfoDetails;
 import service.auth_user.AuthUserService;
 
-import java.util.Optional;
-
 @Service
-public class StoreService  implements UserDetailsService {
+public class StoreAuthService implements UserDetailsService {
 
     @Autowired
     StoreRepository storeRepository;

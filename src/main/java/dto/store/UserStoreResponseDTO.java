@@ -4,13 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StoreRegisterResponseDTO {
-
+public class UserStoreResponseDTO {
     String storeRegisterCode;
 
     String image;
@@ -23,18 +20,20 @@ public class StoreRegisterResponseDTO {
 
     String phone;
 
+    String status;
+
     String bannerImage;
 
     String email;
 
     String userRegister;
 
-    Long provinceCode;
+   String provinceName;
 
-    Long districtCode;
+    String districtName;
 
-    Long wardCode;
+    String wardName;
 
+    String  numberOfFollowed;
 
-    List<StoreDocumentRequestDTO> documentList;
 }

@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import service.StoreAuthService;
 import service.data_return.DataReturnService;
 import service.evaluate.EvaluateService;
 import service.product.ProductService;
+import service.store.StoreService;
 import service.voucher.VoucherService;
 
 import java.util.HashMap;
@@ -29,6 +31,9 @@ public class CommonController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    StoreService storeService;
 
     @PostMapping(value = "/product/evaluate/all")
     public ResponseEntity<Object> getAllProvince(@RequestBody HashMap<String,String> request) {
@@ -65,5 +70,13 @@ public class CommonController {
             throw new DataNotFoundException("Khong de trong ma cua hang!");
         }
         return ResponseEntity.ok(dataReturnService.success(productService.getProductById(Long.valueOf(request.get("productCode")),request.get("userLogin"))));
+    }
+
+    @PostMapping(value = "/common/store/detail")
+    public ResponseEntity<Object> getStoreById(@RequestBody HashMap<String,String> request) {
+        if( request.get("storeCode") == null || request.get("storeCode").isBlank()){
+            throw new DataNotFoundException("Khong de trong ma cua hang!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(storeService.getStoreByCode(Long.valueOf(request.get("storeCode")))));
     }
 }

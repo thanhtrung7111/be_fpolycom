@@ -24,9 +24,11 @@ public class Orders extends EntityCommon {
     @Enumerated(EnumType.STRING)
     OrderStatus orderStatus;
 
-
     @Temporal(TemporalType.DATE)
     Date pickupDate;
+
+    @Temporal(TemporalType.DATE)
+    Date deliveryDate;
 
     Double totalAmount;
 

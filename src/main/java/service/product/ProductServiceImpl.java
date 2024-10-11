@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductInfoResponseDTO getProductById(Long productCode, String userLogin) {
         String userLoginExtract = null;
-        ProductInfoResponseDTO responseDTO = ProductMapper.INSTANCE.toProductInfoResponseDto(productRepository.findById(productCode).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai")));
+        ProductInfoResponseDTO responseDTO = ProductMapper.INSTANCE.toProductInfoResponseDto(productRepository.findByProductByStatus(productCode,ProductStatus.active).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai")));
         if (userLogin != null && !userLogin.isBlank()) {
             userLoginExtract = authUserService.extractUserlogin(userLogin);
             Optional<Liked> liked = likedRepository.findLikedByUserLoginAndProduct(userLoginExtract, responseDTO.getProductCode());

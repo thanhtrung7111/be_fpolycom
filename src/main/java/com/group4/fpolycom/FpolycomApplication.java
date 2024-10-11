@@ -3,6 +3,7 @@ package com.group4.fpolycom;
 import dao.*;
 import entity.*;
 import entity.enum_package.*;
+import org.hibernate.query.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -80,6 +81,13 @@ public class FpolycomApplication implements CommandLineRunner {
 	@Autowired
 	DiscountRepository discountRepository;
 
+
+	@Autowired
+	OrdersRepository ordersRepository;
+
+	@Autowired
+	DeliveryTypeRepository deliveryTypeRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(FpolycomApplication.class, args);
 	}
@@ -100,10 +108,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		Relationship relationship4 = Relationship.builder().id(4L).userAccountPrimary(userAccount).userAccountSecondary(userAccount3).friendshipStatus(FriendshipStatus.accepted).build();
 		relationshipRepository.saveAll(List.of(relationship,relationship2,relationship3,relationship4));
 
-		Store store = Store.builder().id(1L).userAccount(userAccount).name("Cuawr hang thu cng").storeStatus(StoreStatus.active).userAccount(userAccount).password(encoder.encode("thanhtrung")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
-		storeRepository.save(store);
-		Followed followed = Followed.builder().id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).statusFollow(true).userAccount(userAccount2).store(store).build();
-		followedRepository.save(followed);
+
 
 
 
@@ -121,6 +126,10 @@ public class FpolycomApplication implements CommandLineRunner {
 		Ward ward = Ward.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Binh An").district(district).build();
 		wardRepository.saveAll(List.of(ward));
 
+		Store store = Store.builder().id(1L).userAccount(userAccount).district(district).province(province).ward(ward).name("Cuawr hang thu cng").storeStatus(StoreStatus.active).userAccount(userAccount).password(encoder.encode("thanhtrung")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		storeRepository.save(store);
+		Followed followed = Followed.builder().id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).statusFollow(true).userAccount(userAccount2).store(store).build();
+		followedRepository.save(followed);
 		NotifycationUser notifycationUser = NotifycationUser.builder().id(1L).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 1").userAccount(userAccount).build();
 		NotifycationUser notifycationUser2 = NotifycationUser.builder().id(2L).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 2").userAccount(userAccount).build();
 
@@ -158,6 +167,12 @@ public class FpolycomApplication implements CommandLineRunner {
 
 		Voucher voucher = Voucher.builder().id(1L).voucherType(VoucherType.store).store(store).beginDate(new Date()).endDate(new Date()).percentDecrease(10).priceApply(100000.0).name("Khuye mai thang 10").beginDate(new Date()).endDate(new Date()).build();
 		voucherRepository.save(voucher);
+
+		DeliveryType deliveryType = DeliveryType.builder().id(1L).name("Ship hang sieu toc").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(20000.0).build();
+		deliveryTypeRepository.save(deliveryType);
+
+		Orders orders = Orders.builder().orderStatus(OrderStatus.complete).createdDate(new Date()).deleted(false).address("35 Tran dai nghia").addressDetail("35 Trai Dai Nghiax kp noi hoa 2 ").updatedDate(null).deletedDate(null).id(1L).pickupDate(new Date()).noteContent("Content").store(store).deliveryType(deliveryType).userAccount(userAccount).finalTotal(50000.0).totalAmount(60000.0).totalAmountShip(80000.0).totalAmountVoucher(30000.0).deliveryDate(new Date()).build();
+		ordersRepository.save(orders);
 
 	}
 
