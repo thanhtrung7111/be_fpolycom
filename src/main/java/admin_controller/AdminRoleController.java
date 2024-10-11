@@ -23,13 +23,5 @@ public class AdminRoleController {
     }
 
 
-    @PostMapping(value = "/adminrole/update")
-    public ResponseEntity<Object> updateRole(@RequestBody AdminRoleRequestDTO request, Errors errors) {
-        if(errors.hasFieldErrors("adminRoleCode")){
-            return ResponseEntity.ok(dataReturnService.dataNotFound("adminRoleCode is empty"));
-        }
-        return ResponseEntity.ok(dataReturnService.success(adminRoleService.updateData(request)));
-    }
-
 
 }
