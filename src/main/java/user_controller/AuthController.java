@@ -69,7 +69,6 @@ public class AuthController {
     @PostMapping("/user-register")
     public ResponseEntity<Object> userRegister(@Valid @RequestBody UserAccountRegisterRequestDTO accountRequestDTO) throws MessagingException {
         UserAccountRegisterResponseDTO result=userAccountService.registerAccount(accountRequestDTO);
-        mailService.sendMail(result.getEmail(),"Xac nhan dang nhạp","Dang ki thanh cong");
         return ResponseEntity.ok().body(dataReturnService.success(result));
     }
 

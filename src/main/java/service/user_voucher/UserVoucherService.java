@@ -8,5 +8,5 @@ import java.util.List;
 public interface UserVoucherService {
 
     public List<VoucherUserResponseDTO> getAllVoucherByUser(VoucherUserRequestDTO requestDTO);
-
+    public VoucherUserResponseDTO postUserVoucher(VoucherUserRequestDTO requestDTO);
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import service.AdministrationService;
 import service.StoreService;
 import service.UserAccountService;
+import service.auth_user.AuthUserService;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -29,6 +30,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     StoreService storeService;
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
