@@ -58,6 +58,7 @@ public class JWTService {
     }
 
     private Claims extractAllClaim(String token) {
+        System.out.println(token);
         return Jwts.parser().setSigningKey(getSignKey()).setAllowedClockSkewSeconds(60).build().parseClaimsJws(token).getBody();
 
     }
