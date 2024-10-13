@@ -13,13 +13,13 @@ public interface VoucherMapper {
 
     VoucherMapper INSTANCE = Mappers.getMapper(VoucherMapper.class);
 
+
     @Mapping(target = "storeCode",source = "store.id")
     @Mapping(target = "voucherCode",source = "id")
-    @Mapping(target = "storeName",source = "store.name")
     VoucherResponseDTO toVoucherResponseDto(Voucher voucher);
 
 
-
+    @Mapping(target = "store.id", source = "storeCode")
     @Mapping(target = "id",source = "voucherCode")
     Voucher toVoucher (VoucherRequestDTO requestDTO);
 

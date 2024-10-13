@@ -12,13 +12,13 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VoucherResponseDTO {
+
     Long storeCode;
 
     Long voucherCode;
 
     String name;
 
-    String storeName;
 
     Double priceApply;
 
