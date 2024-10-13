@@ -27,8 +27,7 @@ DiscountRepository discountRepository;
     @Override
     public DiscountResponseDTO updateData(DiscountRequestDTO discountRequestDTO) {
         Discount discount = discountRepository.findById(Long.valueOf(discountRequestDTO.getDiscountCode())).orElseThrow(()-> new DataNotFoundException("Data not found"));
-        discount.setBeginDate(new Date());
-
+        discount.setUpdatedDate(new Date());
         return DiscountMapper.INSTANCE.toDiscountResponseDTO(discountRepository.save(discount));
     }
 
