@@ -13,6 +13,7 @@ import service.ward.WardService;
 
 @RestController
 @RequestMapping(value = "/admin")
+@CrossOrigin("*")
 public class WardController {
 
     @Autowired

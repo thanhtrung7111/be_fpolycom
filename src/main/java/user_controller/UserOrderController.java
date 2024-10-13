@@ -1,6 +1,8 @@
 package user_controller;
 
 import dto.liked_product.LikedProductRequestDTO;
+import dto.order.UserOrderRequestDTO;
+import dto.order_detail.OrderDetailRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +14,7 @@ import service.data_return.DataReturnService;
 import service.orders.OrderService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -31,5 +34,11 @@ public class UserOrderController {
             throw new UsernameNotFoundException("Truong du lieu userLogin trong!");
         }
         return ResponseEntity.ok(dataReturnService.success(orderService.getAllOrderByUser( requestDTO.get().get("userLogin"))));
+    }
+
+
+    @PostMapping(value = "/orders/new")
+    public ResponseEntity<Object> postNewOrder(@RequestBody List<UserOrderRequestDTO> requestDTO) {
+        return ResponseEntity.ok(dataReturnService.success(orderService.postNewOrder( requestDTO)));
     }
 }

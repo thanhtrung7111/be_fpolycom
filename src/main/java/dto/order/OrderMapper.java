@@ -1,5 +1,7 @@
 package dto.order;
 
+import dto.order_detail.OrderDetailMapper;
+import dto.order_detail.OrderDetailRequestDTO;
 import entity.Orders;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -8,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {OrderDetailMapper.class})
 public interface OrderMapper {
 
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
@@ -21,5 +23,16 @@ public interface OrderMapper {
     OrderResponseDTO toOrderResponseDto(Orders order);
 
 
+    @Mapping(target = "shippingFee.id",source ="shippingFeeCode" )
+    @Mapping(target = "province.id",source = "provinceCode")
+    @Mapping(target = "ward.id",source = "wardCode")
+    @Mapping(target = "deliveryType.id",source = "deliveryTypeCode")
+    @Mapping(target = "orderDetailList",source = "orderDetailList")
+    @Mapping(target = "store.id",source = "storeCode")
+    Orders toOrders (UserOrderRequestDTO requestDTO);
+
     List<OrderResponseDTO> toOrderResponseDtoList(List<Orders> ordersList);
+
+
+    List<Orders> toOrdersList(List<UserOrderRequestDTO> orderRequestDTOList);
 }
