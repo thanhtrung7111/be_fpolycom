@@ -105,6 +105,10 @@ public class FpolycomApplication implements CommandLineRunner {
 	TypeGoodAttrRepository typeGoodAttrRepository;
 
 
+	@Autowired
+	BankStoreRepository bankStoreRepository;
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(FpolycomApplication.class, args);
 	}
@@ -195,6 +199,8 @@ public class FpolycomApplication implements CommandLineRunner {
 		BankBranch bankBranch2 = BankBranch.builder().id(2L).name("chi nhanh binh duong mien bac").bank(bank).build();
 		bankBranchRepository.saveAll(List.of(bankBranch,bankBranch2));
 
+		BankStore bankStore = BankStore.builder().id(1L).bankStoreStatus(BankStatus.active).bankBranch(bankBranch).accountName("THANH TRUNG").accountNumber("123213").build();
+		bankStoreRepository.save(bankStore);
 
 		Voucher voucher = Voucher.builder().id(1L).voucherType(VoucherType.store).store(store).beginDate(new Date()).endDate(new Date()).percentDecrease(10).priceApply(100000.0).name("Khuye mai thang 10").beginDate(new Date()).endDate(new Date()).build();
 		voucherRepository.save(voucher);
@@ -202,8 +208,6 @@ public class FpolycomApplication implements CommandLineRunner {
 		DeliveryType deliveryType = DeliveryType.builder().id(1L).name("Ship hang sieu toc").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(20000.0).build();
 		deliveryTypeRepository.save(deliveryType);
 
-		ShippingFee shippingFee = ShippingFee.builder().id(1L).fee(40000.0).typeShipping(TypeShipping.inner).build();
-		shippingFeeRepository.save(shippingFee);
 
 		PaymentType paymentType = PaymentType.builder().id(1L).name("Thanh toasn viet qr").image("sfsdf").build();
 		paymentTypeRepository.save(paymentType);
