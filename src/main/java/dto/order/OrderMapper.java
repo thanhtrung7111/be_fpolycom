@@ -3,6 +3,7 @@ package dto.order;
 import dto.order_detail.OrderDetailMapper;
 import dto.order_detail.OrderDetailRequestDTO;
 import entity.Orders;
+import org.hibernate.query.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -30,6 +31,14 @@ public interface OrderMapper {
     @Mapping(target = "orderDetailList",source = "orderDetailList")
     @Mapping(target = "store.id",source = "storeCode")
     Orders toOrders (UserOrderRequestDTO requestDTO);
+
+    @Mapping(target = "shippingFee.id",source ="shippingFeeCode" )
+    @Mapping(target = "province.id",source = "provinceCode")
+    @Mapping(target = "ward.id",source = "wardCode")
+    @Mapping(target = "deliveryType.id",source = "deliveryTypeCode")
+    @Mapping(target = "orderDetailList",source = "orderDetailList")
+    @Mapping(target = "store.id",source = "storeCode")
+    OrderInfoResponseDTO toOrderInfoResponseDto (Orders orders);
 
     List<OrderResponseDTO> toOrderResponseDtoList(List<Orders> ordersList);
 
