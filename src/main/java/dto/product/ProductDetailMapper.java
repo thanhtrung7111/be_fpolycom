@@ -19,5 +19,12 @@ public interface ProductDetailMapper {
     @Mapping(target = "percentDecrease",source = "discount.percentDecrease")
     ProductDetailResponseDTO toProductDetailResponseDTO(ProductDetail productDetail);
 
+
+    @Mapping(target = "id",source = "productDetailCode")
+    @Mapping(target = "discount.id",source = "discountCode")
+    ProductDetail toProductDetail(ProductDetailRequestDTO productDetailRequestDTO);
+
     List<ProductDetailResponseDTO> toProductDetailResponseDtoList(List<ProductDetail> productDetailList);
+
+    List<ProductDetail> toProductDetailList(List<ProductDetailRequestDTO> productDetailRequestDTOList);
 }

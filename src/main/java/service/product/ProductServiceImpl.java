@@ -1,17 +1,19 @@
 package service.product;
 
-import dao.FollowedRepository;
 import dao.LikedRepository;
 import dao.ProductRepository;
 import dto.product.ProductInfoResponseDTO;
 import dto.product.ProductMapper;
+import dto.product.ProductRequestDTO;
 import dto.product.UserProductResponseDTO;
-import entity.Followed;
 import entity.Liked;
+import entity.Product;
 import entity.enum_package.ProductStatus;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import service.auth_store.AuthStoreService;
 import service.auth_user.AuthUserService;
 
 import java.util.List;
@@ -29,6 +31,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     LikedRepository likedRepository;
 
+    @Autowired
+    AuthStoreService authStoreService;
+
     @Override
     public List<UserProductResponseDTO> getALlProductByStatus(ProductStatus productStatus) {
         return ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.getAllProductByStatus(productStatus));
@@ -42,14 +47,42 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductInfoResponseDTO getProductById(Long productCode, String userLogin) {
         String userLoginExtract = null;
-        ProductInfoResponseDTO responseDTO = ProductMapper.INSTANCE.toProductInfoResponseDto(productRepository.findByProductByStatus(productCode,ProductStatus.active).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai")));
+        ProductInfoResponseDTO responseDTO = ProductMapper.INSTANCE.toProductInfoResponseDto(productRepository.findByProductByStatus(productCode, ProductStatus.active).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai")));
         if (userLogin != null && !userLogin.isBlank()) {
             userLoginExtract = authUserService.extractUserlogin(userLogin);
             Optional<Liked> liked = likedRepository.findLikedByUserLoginAndProduct(userLoginExtract, responseDTO.getProductCode());
-            if(liked.isPresent()){
+            if (liked.isPresent()) {
                 responseDTO.setLiked(true);
             }
         }
         return responseDTO;
+    }
+
+    @Override
+    public ProductInfoResponseDTO postNew(ProductRequestDTO requestDTO) {
+        if (authStoreService.isValidStore(requestDTO.getStoreCode())) {
+            throw new UsernameNotFoundException("Ban khong co quyen tren du lieu nay!");
+        }
+        Product product = ProductMapper.INSTANCE.toProduct(requestDTO);
+        product.getProductDetailList().forEach(item -> item.setProduct(product));
+        product.getProductAttrList().forEach(item -> item.setProduct(product));
+        Product productSaved = productRepository.saveAndFlush(product);
+//        Product product1 = productRepository.findById(productSaved.getId()).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai"));
+        return ProductMapper.INSTANCE.toProductInfoResponseDto(productSaved);
+    }
+
+    @Override
+    public ProductInfoResponseDTO updateData(ProductRequestDTO requestDTO) {
+        if (authStoreService.isValidStore(requestDTO.getStoreCode())) {
+            throw new UsernameNotFoundException("Ban khong co quyen tren du lieu nay!");
+        }
+        Product product = ProductMapper.INSTANCE.toProduct(requestDTO);
+        product.getProductDetailList().forEach(item -> item.setProduct(product));
+        product.getProductAttrList().forEach(item -> item.setProduct(product));
+        product.setProductStatus(ProductStatus.active);
+        productRepository.save(product);
+        System.out.println(product.getProductStatus()+"---------------------------");
+        Product product1 = productRepository.findById(requestDTO.getProductCode()).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai"));
+        return ProductMapper.INSTANCE.toProductInfoResponseDto(product1);
     }
 }

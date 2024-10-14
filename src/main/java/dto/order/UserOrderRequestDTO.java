@@ -36,6 +36,8 @@ public class UserOrderRequestDTO {
 
     Long provinceCode;
 
+    Long paymentTypeCode;
+
     Long districtCode;
     Long wardCode;
 

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductAttrRequestDTO {
-    String attr_name;
+    String attrValue;
 
     String typeGoodAttrCode;
 

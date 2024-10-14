@@ -1,5 +1,6 @@
 package dto.product;
 
+import dto.product_attr.ProductAttrMapper;
 import entity.Evaluate;
 import entity.Liked;
 import entity.Product;
@@ -13,7 +14,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {ProductDetailMapper.class})
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {ProductDetailMapper.class, ProductAttrMapper.class})
 public interface ProductMapper {
 
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
@@ -40,36 +41,45 @@ public interface ProductMapper {
     @Mapping(target = "pointEvaluate", source = "evaluateList", qualifiedByName = "pointEvaluate")
     @Mapping(target = "maxPrice", source = "productDetailList", qualifiedByName = "maxPrice")
     @Mapping(target = "minPrice", source = "productDetailList", qualifiedByName = "minPrice")
+    @Mapping(target = "productAttrList", source = "productAttrList")
+    @Mapping(target = "storeCode", source = "store.id")
+    @Mapping(target = "storeName", source = "store.name")
     ProductInfoResponseDTO toProductInfoResponseDto(Product product);
-
 
 
     List<UserProductResponseDTO> toUserProductResponseDtoList(List<Product> productList);
 
 
+    @Mapping(target = "typeGood.id", source = "typeGoodCode")
+    @Mapping(target = "store.id", source = "storeCode")
+    @Mapping(target = "productDetailList", source = "productDetailList")
+    @Mapping(target = "productAttrList", source = "productAttrList")
+    @Mapping(target = "id", source = "productCode")
+    Product toProduct(ProductRequestDTO requestDTO);
+
     @Named("numberOfLikes")
     default Integer numberOfLikes(List<Liked> likedList) {
-        return likedList.size();
+        return likedList != null ? likedList.size() : 0;
     }
 
     @Named("numberOfEvaluates")
     default Integer numberOfEvaluates(List<Evaluate> evaluateList) {
-        return evaluateList.size();
+        return evaluateList != null ? evaluateList.size() : 0;
     }
 
     @Named("pointEvaluate")
     default Double pointEvaluate(List<Evaluate> evaluateList) {
-        return !evaluateList.isEmpty() ? evaluateList.stream().mapToInt(Evaluate::getQuality).average().orElseThrow(()->new DataNotFoundException("Khong ton tai du lieu")) : 0;
+        return evaluateList != null && !evaluateList.isEmpty() ? evaluateList.stream().mapToInt(Evaluate::getQuality).average().orElseThrow(() -> new DataNotFoundException("Khong ton tai du lieu")) : 0;
     }
 
     @Named("maxPrice")
     default Double maxPrice(List<ProductDetail> productDetailList) {
-        return !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(ProductDetail::getPrice).max().orElseThrow(()->new DataNotFoundException("Khong ton tai du lieu")) : 0;
+        return productDetailList != null && !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(ProductDetail::getPrice).max().orElseThrow(() -> new DataNotFoundException("Khong ton tai du lieu")) : 0;
     }
 
     @Named("minPrice")
     default Double minPrice(List<ProductDetail> productDetailList) {
-        return !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(ProductDetail::getPrice).min().orElseThrow(()->new DataNotFoundException("Khong ton tai du lieu")) : 0;
+        return productDetailList != null && !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(ProductDetail::getPrice).min().orElseThrow(() -> new DataNotFoundException("Khong ton tai du lieu")) : 0;
     }
 
 

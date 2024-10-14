@@ -57,6 +57,10 @@ public class Orders extends EntityCommon {
     ShippingFee shippingFee;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paymentTypeCode")
+    PaymentType paymentType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userCode")
     UserAccount userAccount;
 
@@ -87,7 +91,7 @@ public class Orders extends EntityCommon {
     @Enumerated(EnumType.STRING)
     TypeOrder typeOrder;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "orders",cascade = CascadeType.PERSIST)
     List<OrderDetail> orderDetailList;
 
     @OneToMany(mappedBy = "orders")
@@ -95,4 +99,7 @@ public class Orders extends EntityCommon {
 
     @OneToMany(mappedBy = "orders")
     List<ReceiveDelivery> receiveShippingList;
+
+    @OneToMany(mappedBy = "orders")
+    List<Gift> giftList;
 }

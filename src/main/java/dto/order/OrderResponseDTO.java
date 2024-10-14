@@ -31,6 +31,8 @@ public class OrderResponseDTO {
 
     Double totalAmount;
 
+    String paymentTypeName;
+
     Double totalAmountVoucher;
 
     Double totalAmountShip;
@@ -38,4 +40,6 @@ public class OrderResponseDTO {
     Double finalTotal;
 
     String deliveryType;
+
+    Boolean paymentSuccess;
 }
