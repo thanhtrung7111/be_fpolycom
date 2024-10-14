@@ -51,8 +51,6 @@ public class VoucherServiceImpl implements VoucherService{
     @Override
     public List<VoucherResponseDTO> getAllVoucherByStoreID(VoucherRequestDTO request) {
         UserDetails userDetails = storeAuthService.loadUserByUsername(request.getUserLogin());
-        System.out.println(userDetails.getUsername());
-        System.out.println(request.getUserLogin());
         if(userDetails.getUsername().isBlank()){
           throw new DataNotFoundException("Cua hang khong ton tai hoac chua dang nhap");
         }
