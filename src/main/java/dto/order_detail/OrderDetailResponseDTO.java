@@ -22,4 +22,12 @@ public class OrderDetailResponseDTO {
 
     Long discountCode;
 
+    String image;
+
+    String productDetailName;
+
+    String productName;
+
+    Double productDetailPrice;
+
 }

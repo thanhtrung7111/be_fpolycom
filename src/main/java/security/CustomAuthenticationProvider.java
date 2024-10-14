@@ -13,7 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import service.AdministrationService;
-import service.StoreAuthService;
+import service.StoreDetailService;
 import service.UserAccountService;
 
 @Component
@@ -28,7 +28,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     UserAccountService userAccountService;
 
     @Autowired
-    StoreAuthService storeAuthService;
+    StoreDetailService storeDetailService;
 
 
 
@@ -50,9 +50,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         } else if(username[1].equals(RoleType.ADMIN.name())) {
             userDetails = administrationService.loadUserByUsername(username[0]); // Lấy thông tin user
         }else if(username[1].equals(RoleType.STORE.name())) {
-            userDetails = storeAuthService.loadUserByUsername(username[0]); // Lấy thông tin user
+            userDetails = storeDetailService.loadUserByUsername(username[0]); // Lấy thông tin user
         }else if(username[1].equals(RoleType.SHIPPER.name())) {
-            userDetails = storeAuthService.loadUserByUsername(username[0]); // Lấy thông tin user
+            userDetails = storeDetailService.loadUserByUsername(username[0]); // Lấy thông tin user
         }
 
         // Kiểm tra mật khẩu

@@ -1,5 +1,7 @@
 package dto.product;
 
+import dto.product_attr.ProductAttrResponseDTO;
+import entity.ProductAttr;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,10 @@ public class ProductInfoResponseDTO {
     Long productCode;
 
     String name;
+
+    String description;
+
+    String shortDescription;
 
     String image;
 
@@ -34,5 +40,11 @@ public class ProductInfoResponseDTO {
 
     Boolean liked;
 
+    Long storeCode;
+
+    String storeName;
+
     List<ProductDetailResponseDTO> productDetailList;
+
+    List<ProductAttrResponseDTO> productAttrList;
 }

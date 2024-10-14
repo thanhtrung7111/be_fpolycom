@@ -88,6 +88,22 @@ public class FpolycomApplication implements CommandLineRunner {
 	@Autowired
 	DeliveryTypeRepository deliveryTypeRepository;
 
+	@Autowired
+	ShippingFeeRepository shippingFeeRepository;
+
+	@Autowired
+	PaymenReceiptRepository paymenReceiptRepository;
+
+	@Autowired
+	PaymentTypeRepository paymentTypeRepository;
+
+	@Autowired
+	ProductAttrRepository productAttrRepository;
+
+	@Autowired
+	TypeGoodAttrRepository typeGoodAttrRepository;
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(FpolycomApplication.class, args);
 	}
@@ -139,8 +155,19 @@ public class FpolycomApplication implements CommandLineRunner {
 		TypeGood typeGood = TypeGood.builder().id(1L).name("Laptop").build();
 		typeGoodRepository.save(typeGood);
 
+		TypeGoodAttr typeGoodAttr = TypeGoodAttr.builder().id(1L).name("NSX").typeGood(typeGood).build();
+		TypeGoodAttr typeGoodAttr2 = TypeGoodAttr.builder().id(2L).name("Hangx").typeGood(typeGood).build();
+		typeGoodAttrRepository.saveAll(List.of(typeGoodAttr,typeGoodAttr2));
+
+
+
+
 		Product product = Product.builder().id(1L).createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active).name("San pharm 01").store(store).typeGood(typeGood).build();
 		productRepository.save(product);
+
+		ProductAttr productAttr = ProductAttr.builder().id(1L).attrValue("Trung Quoc").typeGoodAttr(typeGoodAttr).product(product).build();
+		ProductAttr productAttr2 = ProductAttr.builder().id(2L).attrValue("Trung Quoc").typeGoodAttr(typeGoodAttr).product(product).build();
+		productAttrRepository.saveAll(List.of(productAttr,productAttr2));
 
 		Discount discount = Discount.builder().id(1L).percentDecrease(10).build();
 		discountRepository.save(discount);
@@ -171,9 +198,17 @@ public class FpolycomApplication implements CommandLineRunner {
 		DeliveryType deliveryType = DeliveryType.builder().id(1L).name("Ship hang sieu toc").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(20000.0).build();
 		deliveryTypeRepository.save(deliveryType);
 
-		Orders orders = Orders.builder().orderStatus(OrderStatus.complete).createdDate(new Date()).deleted(false).address("35 Tran dai nghia").addressDetail("35 Trai Dai Nghiax kp noi hoa 2 ").updatedDate(null).deletedDate(null).id(1L).pickupDate(new Date()).noteContent("Content").store(store).deliveryType(deliveryType).userAccount(userAccount).finalTotal(50000.0).totalAmount(60000.0).totalAmountShip(80000.0).totalAmountVoucher(30000.0).deliveryDate(new Date()).build();
+		ShippingFee shippingFee = ShippingFee.builder().id(1L).fee(40000.0).typeShipping(TypeShipping.inner).build();
+		shippingFeeRepository.save(shippingFee);
+
+		PaymentType paymentType = PaymentType.builder().id(1L).name("Thanh toasn viet qr").image("sfsdf").build();
+		paymentTypeRepository.save(paymentType);
+
+		Orders orders = Orders.builder().paymentType(paymentType).shippingFee(shippingFee).orderStatus(OrderStatus.complete).createdDate(new Date()).deleted(false).address("35 Tran dai nghia").addressDetail("35 Trai Dai Nghiax kp noi hoa 2 ").updatedDate(null).deletedDate(null).id(1L).pickupDate(new Date()).noteContent("Content").store(store).deliveryType(deliveryType).userAccount(userAccount).finalTotal(50000.0).totalAmount(60000.0).totalAmountShip(80000.0).totalAmountVoucher(30000.0).deliveryDate(new Date()).build();
 		ordersRepository.save(orders);
 
+		PaymentReceipt paymentReceipt = PaymentReceipt.builder().id(1L).paymentType(null).finalTotal(800000.0).totalAmount(900000.0).totalAmountVoucher(200000.0).totalAmountPaid(400000.0).totalAmountShip(30000.0).orders(orders).build();
+		paymenReceiptRepository.save(paymentReceipt);
 	}
 
 }
