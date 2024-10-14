@@ -102,6 +102,9 @@ public class UserAccount extends EntityCommon {
     @OneToMany(mappedBy = "userAccount")
     List<Followed> followedList;
 
+    @OneToMany(mappedBy = "userAccount")
+    List<Gift> giftList;
+
     @OneToOne(mappedBy = "userAccount")
     TokenRegister tokenRegister;
 

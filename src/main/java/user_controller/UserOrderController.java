@@ -3,13 +3,11 @@ package user_controller;
 import dto.liked_product.LikedProductRequestDTO;
 import dto.order.UserOrderRequestDTO;
 import dto.order_detail.OrderDetailRequestDTO;
+import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import service.data_return.DataReturnService;
 import service.orders.OrderService;
 
@@ -18,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/user")
 public class UserOrderController {
 
     @Autowired
@@ -28,7 +25,7 @@ public class UserOrderController {
     OrderService orderService;
 
 
-    @PostMapping(value = "/orders/all")
+    @PostMapping(value = "/user/orders/all")
     public ResponseEntity<Object> getAllLikedAll(@RequestBody Optional<HashMap<String, String>> requestDTO) {
         if (requestDTO.isEmpty() || requestDTO.get().get("userLogin") == null) {
             throw new UsernameNotFoundException("Truong du lieu userLogin trong!");
@@ -37,8 +34,24 @@ public class UserOrderController {
     }
 
 
-    @PostMapping(value = "/orders/new")
+    @PostMapping(value = "/user/orders/new")
     public ResponseEntity<Object> postNewOrder(@RequestBody List<UserOrderRequestDTO> requestDTO) {
         return ResponseEntity.ok(dataReturnService.success(orderService.postNewOrder( requestDTO)));
     }
+
+    @PostMapping(value = "/user/orders/detail")
+    public ResponseEntity<Object> detailOrder(@RequestBody Optional<HashMap<String,String>> requestDTO) {
+        if(requestDTO.isEmpty() || requestDTO.get().get("orderCode").isBlank()){
+            throw new DataNotFoundException("Du lieu khong ton tai!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(orderService.getOrderById(Long.valueOf(requestDTO.get().get("orderCode")))));
+    }
+
+
+    @PostMapping(value = "/order-confirm/{orderBillCode}")
+    public ResponseEntity<Object> postNewOrder(@PathVariable("orderBillCode") String orderBillCode) {
+        return ResponseEntity.ok(dataReturnService.success(orderService.confirmOrder(orderBillCode)));
+    }
+
+
 }

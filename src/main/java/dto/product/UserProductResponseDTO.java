@@ -13,6 +13,8 @@ public class UserProductResponseDTO {
 
     String name;
 
+
+
     String image;
 
     String status;
