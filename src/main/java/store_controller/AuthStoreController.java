@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import service.auth_store.AuthStoreService;
 import service.auth_user.AuthUserService;
+import service.common.EncodingService;
 import service.common.JWTService;
 import service.data_return.DataReturnService;
 
@@ -34,16 +35,20 @@ public class AuthStoreController {
     @Autowired
     AuthStoreService authStoreService;
 
+    @Autowired
+    EncodingService encodingService;
+
 
 
     @PostMapping("/user/store-login")
     public ResponseEntity<Object> authenticateAndGetToken(@RequestBody AuthStoreLoginRequestDTO authRequest) {
         System.out.println(authRequest.getUserLogin()+"check controller");
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUserLogin()+"&"+ RoleType.STORE.name(), authRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(encodingService.decode(authRequest.getUserLogin())+"&"+ RoleType.STORE.name(), authRequest.getPassword())
         );
         if (authentication.isAuthenticated()) {
             AuthStoreLoginResponseDTO rs = authStoreService.getStoreByUser(authRequest.getUserLogin());
+            System.out.println(rs.getStoreName()+"auth sotre controller");
             String token = jwtService.generateToken(authentication.getName()+"&"+ RoleType.STORE.name());
             rs.setToken(token);
             return ResponseEntity.ok().body(dataReturnService.success(rs));

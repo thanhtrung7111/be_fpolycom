@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import service.AdministrationService;
 import service.common.JWTService;
-import service.StoreAuthService;
+import service.StoreDetailService;
 import service.UserAccountService;
 import service.data_return.DataReturnService;
 
@@ -37,7 +37,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     DataReturnService dataReturnService;
 
     @Autowired
-    StoreAuthService storeAuthService;
+    StoreDetailService storeDetailService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -65,7 +65,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 } else if (roleLogin.equals(RoleType.SHIPPER.name())) {
                     userDetails = administrationService.loadUserByUsername(username);
                 }else if (roleLogin.equals(RoleType.STORE.name())) {
-                    userDetails = storeAuthService.loadUserByUsername(username);
+                    userDetails = storeDetailService.loadUserByUsername(username);
                 }
 
                 if(userDetails != null && jwtService.validateToken(token,userDetails)){
