@@ -3,6 +3,7 @@ package user_controller;
 import dto.liked_product.LikedProductRequestDTO;
 import dto.order.UserOrderRequestDTO;
 import dto.order_detail.OrderDetailRequestDTO;
+import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -36,6 +37,14 @@ public class UserOrderController {
     @PostMapping(value = "/user/orders/new")
     public ResponseEntity<Object> postNewOrder(@RequestBody List<UserOrderRequestDTO> requestDTO) {
         return ResponseEntity.ok(dataReturnService.success(orderService.postNewOrder( requestDTO)));
+    }
+
+    @PostMapping(value = "/user/orders/detail")
+    public ResponseEntity<Object> detailOrder(@RequestBody Optional<HashMap<String,String>> requestDTO) {
+        if(requestDTO.isEmpty() || requestDTO.get().get("orderCode").isBlank()){
+            throw new DataNotFoundException("Du lieu khong ton tai!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(orderService.getOrderById(Long.valueOf(requestDTO.get().get("orderCode")))));
     }
 
 

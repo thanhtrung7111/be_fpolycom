@@ -7,6 +7,7 @@ import dto.order.OrderInfoResponseDTO;
 import dto.order.OrderMapper;
 import dto.order.OrderResponseDTO;
 import dto.order.UserOrderRequestDTO;
+import dto.product.ProductMapper;
 import entity.Orders;
 import entity.PaymentReceipt;
 import entity.PaymentType;
@@ -88,5 +89,10 @@ public class OrderServiceImpl implements OrderService {
         });
 
         return OrderMapper.INSTANCE.toOrderInfoResponseDtoList(ordersList);
+    }
+
+    @Override
+    public OrderInfoResponseDTO getOrderById(Long orderCode) {
+        return OrderMapper.INSTANCE.toOrderInfoResponseDto(ordersRepository.findById(orderCode).orElseThrow(()->new DataNotFoundException("Du lieu khong ton tai!")));
     }
 }
