@@ -51,5 +51,5 @@ public class OrderInfoResponseDTO {
 
     List<OrderDetailResponseDTO> orderDetailList;
 
-    List<OrderDetailRequestDTO> orderDetailList;
+
 }
