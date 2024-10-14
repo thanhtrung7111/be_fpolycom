@@ -15,7 +15,7 @@ import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import service.StoreAuthService;
+//import service.StoreAuthService;
 import service.auth_store.AuthStoreService;
 import service.store.StoreService;
 
@@ -34,8 +34,8 @@ public class VoucherServiceImpl implements VoucherService{
     @Autowired
     AuthStoreService authStoreService;
 
-    @Autowired
-    StoreAuthService storeAuthService;
+//    @Autowired
+//    StoreAuthService storeAuthService;
 
     @Autowired
     StoreRepository storeRepository;
@@ -50,10 +50,10 @@ public class VoucherServiceImpl implements VoucherService{
 
     @Override
     public List<VoucherResponseDTO> getAllVoucherByStoreID(VoucherRequestDTO request) {
-        UserDetails userDetails = storeAuthService.loadUserByUsername(request.getUserLogin());
-        if(userDetails.getUsername().isBlank()){
-          throw new DataNotFoundException("Cua hang khong ton tai hoac chua dang nhap");
-        }
+//        UserDetails userDetails = storeAuthService.loadUserByUsername(request.getUserLogin());
+//        if(userDetails.getUsername().isBlank()){
+//          throw new DataNotFoundException("Cua hang khong ton tai hoac chua dang nhap");
+//        }
         List<Voucher> voucherList = voucherRepository.findAllVoucherByStore(request.getStoreCode());
         return VoucherMapper.INSTANCE.toVoucherResponseDtoList(voucherList);
     }
