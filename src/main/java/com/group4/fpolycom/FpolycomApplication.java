@@ -91,6 +91,7 @@ public class FpolycomApplication implements CommandLineRunner {
 	@Autowired
 	ShippingFeeRepository shippingFeeRepository;
 
+
 	@Autowired
 	PaymenReceiptRepository paymenReceiptRepository;
 
@@ -142,7 +143,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		Ward ward = Ward.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Binh An").district(district).build();
 		wardRepository.saveAll(List.of(ward));
 
-		Store store = Store.builder().id(1L).userAccount(userAccount).district(district).province(province).ward(ward).name("Cuawr hang thu cng").storeStatus(StoreStatus.active).userAccount(userAccount).password(encoder.encode("thanhtrung")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		Store store = Store.builder().id(1L).userAccount(userAccount).district(district).province(province).ward(ward).name("Cuawr hang thu cng").storeStatus(StoreStatus.active).userAccount(userAccount).password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		storeRepository.save(store);
 		Followed followed = Followed.builder().id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).statusFollow(true).userAccount(userAccount2).store(store).build();
 		followedRepository.save(followed);
@@ -179,6 +180,9 @@ public class FpolycomApplication implements CommandLineRunner {
 
 		ShoppingCart shoppingCart = ShoppingCart.builder().id(1L).productDetail(productDetail).userAccount(userAccount).quantity(5).build();
 		shoppingCartRepository.save(shoppingCart);
+
+		ShippingFee shippingFee = ShippingFee.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.inner).fee(50000.0).build();
+		shippingFeeRepository.save(shippingFee);
 
 		Liked liked = Liked.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).userAccount(userAccount).product(product).build();
 		likedRepository.save(liked);

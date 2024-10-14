@@ -13,8 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderInfoResponseDTO {
 
-    String orderCode;
 
+    String orderCode;
     String userLogin;
 
     Double totalAmount;
@@ -44,9 +44,12 @@ public class OrderInfoResponseDTO {
 
     Long deliveryTypeCode;
 
+
     Long paymentTypeCode;
 
     Boolean paymentSuccess;
 
     List<OrderDetailResponseDTO> orderDetailList;
+
+    List<OrderDetailRequestDTO> orderDetailList;
 }
