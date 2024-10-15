@@ -21,7 +21,7 @@ public class StoreTransactionController {
     StoreTransactionService storeTransactionService;
 
     @PostMapping(value = "/store-transaction/withdraw")
-    public ResponseEntity<Object> withdraw (@RequestBody @Valid WithdrawTransactionRequestDTO request) {
+    public ResponseEntity<Object> withdraw (@RequestBody WithdrawTransactionRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(storeTransactionService.withdrawTransaction(request)));
     }
 }

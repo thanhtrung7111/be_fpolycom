@@ -94,7 +94,10 @@ public class FpolycomApplication implements CommandLineRunner {
 	BankStoreRepository bankStoreRepository;
 
 	@Autowired
-	BankStoreRepository bankStoreRepository;
+	PaymentTypeRepository paymentTypeRepository;
+
+	@Autowired
+	ShippingFeeRepository shippingFeeRepository;
 
 
 	public static void main(String[] args) {
@@ -164,6 +167,9 @@ public class FpolycomApplication implements CommandLineRunner {
 
 		Liked liked = Liked.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).userAccount(userAccount).product(product).build();
 		likedRepository.save(liked);
+
+		ShippingFee shippingFee = ShippingFee.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.inner).fee(50000.0).build();
+		shippingFeeRepository.save(shippingFee);
 
 		Bank bank	 = Bank.builder().id(1L).name("Ngan hang bidv").shortName("BIDV").build();
 		Bank bank2	 = Bank.builder().id(2L).name("Ngan hang mb bank").shortName("MB").build();
