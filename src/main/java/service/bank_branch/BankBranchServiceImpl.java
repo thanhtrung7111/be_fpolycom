@@ -4,6 +4,7 @@ import dao.BankBranchRepository;
 import dto.bank_branch.BankBranchMapper;
 import dto.bank_branch.BankBranchRequestDTO;
 import dto.bank_branch.BankBranchResponseDTO;
+import entity.Bank;
 import entity.BankBranch;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class BankBranchServiceImpl implements BankBranchService {
         BankBranch bankBranch = bankBranchRepository.findById(Long.valueOf(bankBranchRequestDTO.getBankBranchCode())).orElseThrow(()->new DataNotFoundException("data not found"));
         bankBranch.setUpdatedDate(new Date());
         bankBranch.setName(bankBranchRequestDTO.getName());
+        bankBranch.setBank(Bank.builder().id(Long.valueOf(bankBranchRequestDTO.getBankCode())).build());
         return BankBranchMapper.INSTANCE.toBankBranchResponseDTO(bankBranchRepository.save(bankBranch));
     }
 

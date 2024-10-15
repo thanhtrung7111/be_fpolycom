@@ -47,7 +47,7 @@ public class BankServiceImpl implements BankService {
     @Override
     public List<BankResponseDTO> getAllData() {
 
-        return BankMapper.INSTANCE.toBankResponseDTO(bankRepository.findAll());
+        return BankMapper.INSTANCE.toBankResponseDTO(bankRepository.findAllBankByActive());
     }
 
     @Override
