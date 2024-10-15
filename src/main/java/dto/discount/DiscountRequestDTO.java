@@ -1,16 +1,24 @@
-package dto.type_good;
+package dto.discount;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TypeGoodRequestDTO {
-    String typeGoodCode;
+public class DiscountRequestDTO {
+    String discountCode;
 
     String name;
 
-    String image;
+    String description;
+
+    Date beginDate;
+
+
+
+
 }

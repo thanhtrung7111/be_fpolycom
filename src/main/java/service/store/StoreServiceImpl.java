@@ -59,4 +59,6 @@ public class StoreServiceImpl implements StoreService {
     public UserStoreDetailResponseDTO getStoreByCode(Long storeCode) {
         return StoreMapper.INSTANCE.toUserStoreDetailResponseDto(storeRepository.findStoreByCodeAndStatus(storeCode, StoreStatus.active).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai!")));
     }
+
+
 }

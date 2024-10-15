@@ -1,4 +1,4 @@
-package dto.type_good;
+package dto.store_transaction;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TypeGoodRequestDTO {
-    String typeGoodCode;
+public class AdminWithdrawRequestDTO {
+    Long storeTransactionCode;
 
-    String name;
 
-    String image;
 }

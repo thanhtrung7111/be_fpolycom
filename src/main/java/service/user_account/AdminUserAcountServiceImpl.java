@@ -25,9 +25,9 @@ public class AdminUserAcountServiceImpl implements AdminUserAccountService {
 
     @Override
     public AdminUserAccountResponseDTO lockUser(AdminUserAccountRequestDTO request) {
-        UserAccount userAccount = userAccountRepository.findById(Long.valueOf(request.getUserAccountID())).orElseThrow(() -> new DataNotFoundException("Data Not Found"));
-        userAccount.setUserStatus(UserStatus.lock);
-        return UserAccountMapper.INSTANCE.toAdminUserAccountResponseDto(userAccountRepository.save(userAccount));
+       UserAccount userAccount = userAccountRepository.findById(Long.valueOf(request.getUserAccountID())).orElse(null);
+       userAccount.setUserStatus(UserStatus.lock);
+       return UserAccountMapper.INSTANCE.toAdminUserAccountResponseDto(userAccountRepository.save(userAccount));
     }
 
     @Override

@@ -27,6 +27,7 @@ public class StoreDetailService implements UserDetailsService {
         if(!store.getStoreStatus().equals(StoreStatus.active)){
             throw new UsernameNotFoundException("Cua hang chua duoc kick hoat!");
         }
+
         return new UserInfoDetails(store);
     }
 }
