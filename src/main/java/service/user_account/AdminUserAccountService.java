@@ -11,4 +11,6 @@ public interface AdminUserAccountService<DTORequest,DTOResponse> {
     AdminUserAccountResponseDTO lockUser(AdminUserAccountRequestDTO request);
 
     AdminUserAccountResponseDTO unlockUser(AdminUserAccountRequestDTO request);
+
+
 }

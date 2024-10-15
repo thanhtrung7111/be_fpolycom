@@ -53,6 +53,8 @@ public interface UserAccountMapper {
     @Mapping(target = "wardName",source = "ward.name")
     AdminUserAccountResponseDTO toAdminUserAccountResponseDto(UserAccount userAccount);
 
+
+
     List<AdminUserAccountResponseDTO> toList (List<UserAccount> userAccounts);
 
 
