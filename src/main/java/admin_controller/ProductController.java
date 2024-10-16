@@ -23,19 +23,19 @@ public class ProductController {
     DataReturnService dataReturnService;
 
 
-    @GetMapping(value = "product/approve/all")
-    public ResponseEntity<Object> getAll() {
-        return ResponseEntity.ok(dataReturnService.success(productService.getAll()));
-    }
-
-    @PostMapping("/product/approve/lock")
-    public ResponseEntity<DataReturn> lockProduct(@RequestBody ProductApproveRequestDTO request) {
-        return ResponseEntity.ok(dataReturnService.success(productService.lockProduct(request)));
-    }
-    @PostMapping("/product/approve/unlock")
-    public ResponseEntity<DataReturn> unlockProduct(@RequestBody ProductApproveRequestDTO request) {
-        return ResponseEntity.ok(dataReturnService.success(productService.unlockProduct(request)));
-    }
+//    @GetMapping(value = "product/approve/all")
+//    public ResponseEntity<Object> getAll() {
+//        return ResponseEntity.ok(dataReturnService.success(productService.getAll()));
+//    }
+//
+//    @PostMapping("/product/approve/lock")
+//    public ResponseEntity<DataReturn> lockProduct(@RequestBody ProductApproveRequestDTO request) {
+//        return ResponseEntity.ok(dataReturnService.success(productService.lockProduct(request)));
+//    }
+//    @PostMapping("/product/approve/unlock")
+//    public ResponseEntity<DataReturn> unlockProduct(@RequestBody ProductApproveRequestDTO request) {
+//        return ResponseEntity.ok(dataReturnService.success(productService.unlockProduct(request)));
+//    }
 
 
 }

@@ -11,6 +11,7 @@ import entity.Administration;
 import entity.District;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -23,7 +24,9 @@ public class AdministrationServiceImpl implements AdministrationService {
 
     @Override
     public AdministrationResponseDTO postData(AdministrationRequestDTO administrationRequestDTO) {
-        Administration administration = adminRepository.save(AdministrationMapper.INSTANCE.toAdministration(administrationRequestDTO));
+        Administration administration = AdministrationMapper.INSTANCE.toAdministration(administrationRequestDTO);
+        administration.setPassword(new BCryptPasswordEncoder().encode(administrationRequestDTO.getPassword()));
+        administration = adminRepository.save(administration);
         return AdministrationMapper.INSTANCE.toAdministrationResponseDto(administration);
     }
 
@@ -35,6 +38,7 @@ public class AdministrationServiceImpl implements AdministrationService {
         administration.setEmail(administrationRequestDTO.getEmail());
         administration.setPhone(administrationRequestDTO.getPhone());
         administration.setUserLogin(administrationRequestDTO.getUserLogin());
+        administration.setPassword(new BCryptPasswordEncoder().encode(administrationRequestDTO.getPassword()));
         return AdministrationMapper.INSTANCE.toAdministrationResponseDto(adminRepository.save(administration));
     }
 
