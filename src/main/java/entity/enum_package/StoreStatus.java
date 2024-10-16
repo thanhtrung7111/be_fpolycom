@@ -1,7 +1,18 @@
 package entity.enum_package;
 
 public enum StoreStatus {
-    pending,
-    active,
-    lock,
+    pending("Pending"),
+    active("Active"),
+    lock("Lock");
+
+    private String description;
+    // Constructor
+    StoreStatus(String description) {
+        this.description = description;
+    }
+
+    // Getter cho mô tả
+    public String getDescription() {
+        return description;
+    }
 }

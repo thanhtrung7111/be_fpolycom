@@ -20,6 +20,14 @@ public interface WardMapper {
     @Mapping(target = "districtCode", source = "district.id")
     AdminWardResponseDTO adminWardToAdminWardDTO(Ward ward);
 
+    @Mapping(target = "wardCode", source = "ward.id")
+    BaseWardResponseDTO toBaseWardResponseDto(Ward ward);
+
     List<Ward> toWardList (List<AdminWardResponseDTO> adminWardResponseDTOS);
+
+
+
     List<AdminWardResponseDTO> toAdminWardList (List<Ward> wardList);
+
+    List<BaseWardResponseDTO> toBaseWardResponseDtoList (List<Ward> wardList);
 }

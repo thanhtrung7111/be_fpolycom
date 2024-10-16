@@ -18,6 +18,10 @@ public class AdminUserAccountResponseDTO {
 
     String adress;
 
+    String image;
+
+    String bannerImage;
+
     String email;
 
     String userStatus;

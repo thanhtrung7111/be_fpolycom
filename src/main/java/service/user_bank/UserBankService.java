@@ -1,5 +1,6 @@
 package service.user_bank;
 
+import dto.bank_user.AdminBankUserResponseDTO;
 import dto.bank_user.BankUserRequestDTO;
 import dto.bank_user.BankUserResponseDTO;
 
@@ -12,7 +13,7 @@ public interface UserBankService {
 
     public BankUserResponseDTO postBankUser(BankUserRequestDTO requestDTO);
 
-
+    public List<AdminBankUserResponseDTO> getAllBankUserByAdmin ();
 
 
 }

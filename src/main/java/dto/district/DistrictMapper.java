@@ -24,10 +24,16 @@ public interface DistrictMapper {
     @Mapping(target = "numberOfWards",source = "wardList",qualifiedByName = "numberOfWards")
     AdminDistrictResponseDTO toAdminDistrictResponseDto(District district);
 
+    @Mapping(target = "districtCode",source = "id")
+    BaseDistrictResponseDTO tDistrictResponseDto(District district);
+
+
 
     List<District> toDistrictList(List<AdminDistrictRequestDTO> adminDistrictRequestDTOS);
 
     List<AdminDistrictResponseDTO> toAdminDistrictResponseDtoList(List<District> districtList);
+
+    List<BaseDistrictResponseDTO> tBaseDistrictResponseDtoList(List<District> districtList);
 
     @Named("numberOfWards")
     default Integer numberOfWards(List<Ward> wardList){
