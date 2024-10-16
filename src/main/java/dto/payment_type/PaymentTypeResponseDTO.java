@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PaymentTypeResponseDTO {
 
-    String paymentTypeCode;
+    Long paymentTypeCode;
 
     String name;
 

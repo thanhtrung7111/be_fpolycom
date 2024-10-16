@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PaymentTypeRequestDTO {
 
-    String paymentTypeCode;
+    Long paymentTypeCode;
 
     String name;
 
