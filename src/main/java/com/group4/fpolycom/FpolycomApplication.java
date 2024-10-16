@@ -94,7 +94,7 @@ public class FpolycomApplication implements CommandLineRunner {
 	BankStoreRepository bankStoreRepository;
 
 	@Autowired
-	BankStoreRepository bankStoreRepository;
+	PaymentTypeRepository paymentTypeRepository;
 
 
 	public static void main(String[] args) {
@@ -174,7 +174,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		bankBranchRepository.saveAll(List.of(bankBranch,bankBranch2));
 
 
-		BankStore bankStore = BankStore.builder().id(1L).bankStoreStatus(BankStatus.active).bankBranch(bankBranch).accountName("THANH TRUNG").accountNumber("123213").build();
+		BankStore bankStore = BankStore.builder().id(1L).bankStoreStatus(BankStatus.active).accountName("THANH TRUNG").accountNumber("123213").build();
 		bankStoreRepository.save(bankStore);
 
 		Voucher voucher = Voucher.builder().id(1L).voucherType(VoucherType.store).store(store).beginDate(new Date()).endDate(new Date()).percentDecrease(10).priceApply(100000.0).name("Khuye mai thang 10").beginDate(new Date()).endDate(new Date()).build();
@@ -188,7 +188,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		PaymentType paymentType = PaymentType.builder().id(1L).name("Thanh toasn viet qr").image("sfsdf").build();
 		paymentTypeRepository.save(paymentType);
 
-		Orders orders = Orders.builder().paymentType(paymentType).shippingFee(shippingFee).orderStatus(OrderStatus.complete).createdDate(new Date()).deleted(false).address("35 Tran dai nghia").addressDetail("35 Trai Dai Nghiax kp noi hoa 2 ").updatedDate(null).deletedDate(null).id(1L).pickupDate(new Date()).noteContent("Content").store(store).deliveryType(deliveryType).userAccount(userAccount).finalTotal(50000.0).totalAmount(60000.0).totalAmountShip(80000.0).totalAmountVoucher(30000.0).deliveryDate(new Date()).build();
+		Orders orders = Orders.builder().paymentType(paymentType).orderStatus(OrderStatus.complete).createdDate(new Date()).deleted(false).address("35 Tran dai nghia").addressDetail("35 Trai Dai Nghiax kp noi hoa 2 ").updatedDate(null).deletedDate(null).id(1L).pickupDate(new Date()).noteContent("Content").store(store).deliveryType(deliveryType).userAccount(userAccount).finalTotal(50000.0).totalAmount(60000.0).totalAmountShip(80000.0).totalAmountVoucher(30000.0).deliveryDate(new Date()).build();
 		ordersRepository.save(orders);
 
 		StoreTransaction storeTransaction = StoreTransaction.builder().id(1L).typeTransaction(TypeTransaction.withdraw).totalAmount(10000.0).content("hmmmm").transactionStatus(TransactionStatus.pending).build();
