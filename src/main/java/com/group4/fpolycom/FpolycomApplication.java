@@ -124,8 +124,8 @@ public class FpolycomApplication implements CommandLineRunner {
 
 
 
-		Administration administration = Administration.builder().id(1L).name("Thaành Trung").image("sdfsdf").userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
-		adminRepository.save(administration);
+//		Administration administration = Administration.builder().id(1L).name("Thaành Trung").image("sdfsdf").userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+//		adminRepository.save(administration);
 
 		Province province = Province.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Bình Dương").build();
 		Province province2 = Province.builder().id(2L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Đồng Nai").build();
@@ -199,6 +199,8 @@ public class FpolycomApplication implements CommandLineRunner {
 
 		StoreTransaction storeTransaction = StoreTransaction.builder().id(1L).typeTransaction(TypeTransaction.withdraw).totalAmount(10000.0).content("hmmmm").transactionStatus(TransactionStatus.pending).build();
 		storeTransactionRepository.save(storeTransaction);
+
+
 
 	}
 
