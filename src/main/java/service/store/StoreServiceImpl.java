@@ -79,7 +79,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public ChangeInfoStoreResponseDTO changeInfoStore(ChangeInfoStoreRequestDTO requestDTO) {
-        Store store = storeRepository.findById(Long.valueOf(requestDTO.getStoreCode())).orElseThrow(() -> new DataNotFoundException("Cua hang khong ton tai"));
+        Store store = storeRepository.findStoreByCode(Long.valueOf(requestDTO.getStoreCode()));
         if (requestDTO.getName() != null && !requestDTO.getName().isBlank()){
             store.setName(requestDTO.getName());
         }
