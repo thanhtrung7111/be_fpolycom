@@ -2,6 +2,7 @@ package service.ward;
 
 import dao.WardRepository;
 import dto.ward.AdminWardResponseDTO;
+import dto.ward.BaseWardResponseDTO;
 import dto.ward.WardCreateRequestDTO;
 import dto.ward.WardMapper;
 import entity.District;
@@ -52,5 +53,10 @@ public class WardServiceImpl implements WardService {
     @Override
     public AdminWardResponseDTO getDetailData(Long along) {
         return null;
+    }
+
+    @Override
+    public List<BaseWardResponseDTO> getAllWardByDistrict(Long districtCode) {
+        return WardMapper.INSTANCE.toBaseWardResponseDtoList(wardRepository.findWardByDistrict(districtCode));
     }
 }

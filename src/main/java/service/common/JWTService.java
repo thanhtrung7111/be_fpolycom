@@ -31,7 +31,7 @@ public class JWTService {
     }
 
     private String createToken(Map<String, Object> claims, String username) {
-        return Jwts.builder().setClaims(claims).setSubject(encodingService.encode(username)).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)).signWith(getSignKey()).compact();
+        return Jwts.builder().setClaims(claims).setSubject(encodingService.encode(username)).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)).signWith(getSignKey()).compact();
     }
 
     private Key getSignKey() {

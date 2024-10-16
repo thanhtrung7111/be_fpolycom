@@ -3,6 +3,7 @@ package service.district;
 import dao.DistrictRepository;
 import dto.district.AdminDistrictRequestDTO;
 import dto.district.AdminDistrictResponseDTO;
+import dto.district.BaseDistrictResponseDTO;
 import dto.district.DistrictMapper;
 import entity.District;
 import entity.Province;
@@ -50,5 +51,10 @@ public class DistrictServiceImpl implements DistrictService{
     @Override
     public AdminDistrictResponseDTO getDetailData(Long aLong) {
         return null;
+    }
+
+    @Override
+    public List<BaseDistrictResponseDTO> getAllDistrictByProvince(Long provinceCode) {
+        return DistrictMapper.INSTANCE.tBaseDistrictResponseDtoList(districtRepository.findDistrictByProvince(provinceCode));
     }
 }
