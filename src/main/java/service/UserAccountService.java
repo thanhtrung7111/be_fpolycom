@@ -47,7 +47,7 @@ public class UserAccountService implements UserDetailsService {
     @Autowired
     EncodingService encodingService;
 
-   @Autowired
+    @Autowired
     AuthUserService authUserService;
 
     @Autowired
@@ -60,14 +60,11 @@ public class UserAccountService implements UserDetailsService {
     PaymentWalletUserRepository paymentWalletUserRepository;
 
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<UserAccount> userDetail = userAccountRepository.findByUserLoginAndStatus(username, UserStatus.active);
         return userDetail.map(UserInfoDetails::new).orElseThrow(() -> new UsernameNotFoundException("Thoong tin dang nhap sai hoac nguoi dung chua xac thuc email!"));
     }
-
-
 
 
     public UserAccountRegisterResponseDTO registerAccount(UserAccountRegisterRequestDTO request) throws MessagingException {
@@ -80,7 +77,7 @@ public class UserAccountService implements UserDetailsService {
         LocalDateTime expiredDateTime = curentDateTime.plusMinutes(15);
         TokenRegister tokenRegister = TokenRegister.builder().token(UUID.randomUUID().toString()).userAccount(saved).createdDate(new Date()).expiredDate(expiredDateTime).build();
         tokenRegisterRepository.save(tokenRegister);
-        mailService.sendMail(request.getEmail(),"Xac nhan dang ki","Dang ki thanh cong!"+tokenRegister.getToken());
+        mailService.sendMail(request.getEmail(), "Xac nhan dang ki", "Dang ki thanh cong!" + tokenRegister.getToken());
         return UserAccountMapper.INSTANCE.toUserAccountRegisterResponseDto(saved);
     }
 
@@ -99,12 +96,11 @@ public class UserAccountService implements UserDetailsService {
     }
 
 
-
     public UserAccountRegisterResponseDTO changePassword(ChangePasswordRequestDTO changePasswordRequestDTO) {
-        String username = authUserService.extractUserlogin(changePasswordRequestDTO.getUserLogin());
-        if (authUserService.isValidUserLogin(changePasswordRequestDTO.getUserLogin())) {
+        if (!authUserService.isValidUserLogin(changePasswordRequestDTO.getUserLogin())) {
             throw new NotRightException("Bạn khong có quyền truy cập thao tác treen nguoiw dung nay!");
         }
+        String username = authUserService.extractUserlogin(changePasswordRequestDTO.getUserLogin());
         UserAccount userAccount = userAccountRepository.findByUserLogin(username).orElseThrow(() -> new UsernameNotFoundException("Khong ton tai nguoi dung!"));
 
 
@@ -137,6 +133,15 @@ public class UserAccountService implements UserDetailsService {
     public UserAccountRegisterResponseDTO getForgotPassword(String token) throws MessagingException {
         UserAccount userAccount = userAccountRepository.findByTokenPasswordRecover(token).orElseThrow(() -> new UsernameNotFoundException("Khong tim passwordRecover nguoi dung"));
         return UserAccountMapper.INSTANCE.toUserAccountRegisterResponseDto(userAccount);
+    }
+
+    public UserAccountChangeResponseDTO getInfoUser(String token) throws MessagingException {
+        if (!authUserService.isValidUserLogin(token)) {
+            throw new NotRightException("Bạn khong có quyền truy cập thao tác treen nguoiw dung nay!");
+        }
+        String username = authUserService.extractUserlogin(token);
+        UserAccount userAccount = userAccountRepository.findByUserLogin(username).orElseThrow(() -> new UsernameNotFoundException("Nguoi dung khong ton tai!"));
+        return UserAccountMapper.INSTANCE.toUserAccountChangeResponseDto(userAccount);
     }
 
 

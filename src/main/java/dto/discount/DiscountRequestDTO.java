@@ -18,7 +18,5 @@ public class DiscountRequestDTO {
 
     Date beginDate;
 
-
-
-
+    Integer percentDecrease;
 }
