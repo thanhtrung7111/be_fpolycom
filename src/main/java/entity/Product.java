@@ -45,7 +45,7 @@ public class Product extends EntityCommon{
     @JoinColumn(name = "storeCode")
     Store store;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",cascade = CascadeType.PERSIST)
     List<ProductDetail> productDetailList;
 
     @OneToMany(mappedBy = "product")
@@ -54,6 +54,6 @@ public class Product extends EntityCommon{
     @OneToMany(mappedBy = "product")
     List<Evaluate> evaluateList;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",cascade = CascadeType.PERSIST)
     List<ProductAttr> productAttrList;
 }

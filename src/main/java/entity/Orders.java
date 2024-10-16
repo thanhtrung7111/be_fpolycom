@@ -24,9 +24,11 @@ public class Orders extends EntityCommon {
     @Enumerated(EnumType.STRING)
     OrderStatus orderStatus;
 
-
     @Temporal(TemporalType.DATE)
     Date pickupDate;
+
+    @Temporal(TemporalType.DATE)
+    Date deliveryDate;
 
     Double totalAmount;
 
@@ -35,6 +37,8 @@ public class Orders extends EntityCommon {
     Double totalAmountShip;
 
     Double finalTotal;
+
+    String orderBillCode;
 
     @Lob
     @Nationalized
@@ -51,6 +55,10 @@ public class Orders extends EntityCommon {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shippingFeeCode")
     ShippingFee shippingFee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "paymentTypeCode")
+    PaymentType paymentType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userCode")
@@ -83,7 +91,7 @@ public class Orders extends EntityCommon {
     @Enumerated(EnumType.STRING)
     TypeOrder typeOrder;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "orders",cascade = CascadeType.PERSIST)
     List<OrderDetail> orderDetailList;
 
     @OneToMany(mappedBy = "orders")
@@ -91,4 +99,7 @@ public class Orders extends EntityCommon {
 
     @OneToMany(mappedBy = "orders")
     List<ReceiveDelivery> receiveShippingList;
+
+    @OneToMany(mappedBy = "orders")
+    List<Gift> giftList;
 }

@@ -40,7 +40,10 @@ public class UserBankServiceImpl implements UserBankService{
             throw new UsernameNotFoundException("Ban khong co quyen tren du lieu nay!");
         }
         String userLoginExtract = authUserService.extractUserlogin(requestDTO.getUserLogin());
-        return BankUserMapper.INSTANCE.toBankUserResponseDtoList(bankUserRepository.findAllBankUserByUserLogin(userLoginExtract));
+        System.out.println(userLoginExtract);
+        List<BankUser> bankUserList =bankUserRepository.findAllBankUserByUserLogin(userLoginExtract);
+        System.out.println(bankUserList.size());
+        return BankUserMapper.INSTANCE.toBankUserResponseDtoList(bankUserList);
     }
 
     @Override

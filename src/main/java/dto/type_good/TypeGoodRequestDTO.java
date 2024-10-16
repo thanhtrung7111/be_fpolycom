@@ -11,4 +11,6 @@ public class TypeGoodRequestDTO {
     String typeGoodCode;
 
     String name;
+
+    String image;
 }

@@ -16,6 +16,7 @@ public class AdminDistrictResponseDTO {
     String provinceCode;
 
 
+
     Integer numberOfWards;
 
 }
