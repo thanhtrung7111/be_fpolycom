@@ -18,9 +18,7 @@ public class DiscountResponseDTO {
 
     Date beginDate;
 
-    String storeName;
-
-    String storeCode;
+    Integer percentDecrease;
 
     Integer numberOfOrderDetail;
 

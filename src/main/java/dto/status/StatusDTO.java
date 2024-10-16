@@ -1,22 +1,14 @@
-package dto.discount;
+package dto.status;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiscountRequestDTO {
-    String discountCode;
-
+@Data
+public class StatusDTO {
     String name;
 
     String description;
-
-    Date beginDate;
-
-    Integer percentDecrease;
 }

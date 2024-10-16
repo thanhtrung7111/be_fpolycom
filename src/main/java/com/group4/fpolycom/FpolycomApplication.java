@@ -168,8 +168,9 @@ public class FpolycomApplication implements CommandLineRunner {
 		Liked liked = Liked.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).userAccount(userAccount).product(product).build();
 		likedRepository.save(liked);
 
-		ShippingFee shippingFee = ShippingFee.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.inner).fee(50000.0).build();
-		shippingFeeRepository.save(shippingFee);
+		ShippingFee shippingFee = ShippingFee.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.inner).fee(20000.0).build();
+		ShippingFee shippingFee2 = ShippingFee.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.outer).fee(30000.0).build();
+		shippingFeeRepository.saveAll(List.of(shippingFee,shippingFee2));
 
 		Bank bank	 = Bank.builder().id(1L).name("Ngan hang bidv").shortName("BIDV").build();
 		Bank bank2	 = Bank.builder().id(2L).name("Ngan hang mb bank").shortName("MB").build();

@@ -1,6 +1,16 @@
 package entity.enum_package;
 
 public enum TypeDelivery {
-    delivery,
-    receive
+    delivery("Delivery"),
+    receive("Receive");
+    private String description;
+    // Constructor
+    TypeDelivery(String description) {
+        this.description = description;
+    }
+
+    // Getter cho mô tả
+    public String getDescription() {
+        return description;
+    }
 }

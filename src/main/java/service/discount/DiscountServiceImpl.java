@@ -28,6 +28,11 @@ DiscountRepository discountRepository;
     public DiscountResponseDTO updateData(DiscountRequestDTO discountRequestDTO) {
         Discount discount = discountRepository.findById(Long.valueOf(discountRequestDTO.getDiscountCode())).orElseThrow(()-> new DataNotFoundException("Data not found"));
         discount.setUpdatedDate(new Date());
+        discount.setName(discountRequestDTO.getName());
+        discount.setDescription(discountRequestDTO.getDescription());
+        discount.setBeginDate(discountRequestDTO.getBeginDate());
+        discount.setUpdatedDate(new Date());
+        discount.setPercentDecrease(discountRequestDTO.getPercentDecrease());
         return DiscountMapper.INSTANCE.toDiscountResponseDTO(discountRepository.save(discount));
     }
 
