@@ -15,12 +15,13 @@ import org.hibernate.annotations.Nationalized;
 @EqualsAndHashCode(callSuper = false)
 @SuperBuilder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@AttributeOverride(name = "id",column = @Column(name = "withdrawalCode"))
-public class StoreTransaction extends EntityCommon{
+@AttributeOverride(name = "id", column = @Column(name = "withdrawalCode"))
+public class StoreTransaction extends EntityCommon {
 
     Double totalAmount;
 
     @Enumerated(EnumType.STRING)
+    @Lob
     TransactionStatus transactionStatus;
 
     @Enumerated(EnumType.STRING)
