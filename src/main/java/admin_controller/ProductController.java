@@ -26,19 +26,19 @@ public class ProductController {
     DataReturnService dataReturnService;
 
 
-    @GetMapping(value = "product/approve/all")
+    @GetMapping(value = "product/all")
     public ResponseEntity<Object> getAll() {
         return ResponseEntity.ok(dataReturnService.success(productService.getAll()));
     }
 
-    @PostMapping("/product/approve/lock")
+    @PostMapping("/product/lock")
     public ResponseEntity<DataReturn> lockProduct(@RequestBody Optional<HashMap<String,String>> request) {
         if(request.isEmpty() || request.get().get("productCode").isBlank()){
             throw new DataNotFoundException("Khong ton tai du lieu!");
         }
         return ResponseEntity.ok(dataReturnService.success(productService.lockProduct(Long.valueOf(request.get().get("productCode")))));
     }
-    @PostMapping("/product/approve/unlock")
+    @PostMapping("/product/unlock")
     public ResponseEntity<DataReturn> unlockProduct(@RequestBody Optional<HashMap<String,String>> request) {
         if(request.isEmpty() || request.get().get("productCode").isBlank()){
             throw new DataNotFoundException("Khong ton tai du lieu!");
