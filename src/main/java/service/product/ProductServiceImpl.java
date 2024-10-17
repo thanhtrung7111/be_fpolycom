@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public UserProductResponseDTO lockProduct(Long productCode) {
         Product product = productRepository.findById(productCode).orElseThrow(() -> new DataNotFoundException("Data Not Found"));
-        product.setProductStatus(ProductStatus.inActive);
+        product.setProductStatus(ProductStatus.lock);
         return ProductMapper.INSTANCE.toUserProductResponseDto(productRepository.save(product));
     }
 
@@ -89,6 +89,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = ProductMapper.INSTANCE.toProduct(requestDTO);
         product.getProductDetailList().forEach(item -> item.setProduct(product));
         product.getProductAttrList().forEach(item -> item.setProduct(product));
+        product.setProductStatus(ProductStatus.pending);
         Product productSaved = productRepository.saveAndFlush(product);
 //        Product product1 = productRepository.findById(productSaved.getId()).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai"));
         return ProductMapper.INSTANCE.toProductInfoResponseDto(productSaved);
