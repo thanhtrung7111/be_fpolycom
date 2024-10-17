@@ -16,7 +16,9 @@ public class AdminUserAccountResponseDTO {
 
     String addressDetail;
 
-    String adress;
+    String userLogin;
+
+    String address;
 
     String image;
 
