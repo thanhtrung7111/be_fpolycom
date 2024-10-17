@@ -3,7 +3,7 @@ package entity.enum_package;
 public enum ProductStatus {
     pending("Pending"),
     active("Active"),
-    inActive("InActive");
+    lock("Lock");
 
     private String description;
     // Constructor

@@ -45,7 +45,7 @@ public interface StoreTransactionMapper {
     @Mapping(target = "storeName", source = "bankStore.store.name")
     AdminWithdrawResponseDTO adminToAdminWithdrawResponseDTO(StoreTransaction storeTransaction);
 
-    List<AdminWithdrawResponseDTO> toList(List<StoreTransaction> dtoList);
+    List<AdminWithdrawResponseDTO> toListAdminWithdrawResponseDtoList(List<StoreTransaction> dtoList);
 
 
     List<TransactionDetailResponseDTO> toTransactionDetailResponseDtoList(List<StoreTransaction> dtoList);

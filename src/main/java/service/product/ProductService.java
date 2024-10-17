@@ -9,6 +9,11 @@ import java.util.List;
 
 public interface ProductService {
 
+    public List<UserProductResponseDTO> getAll();
+
+    public UserProductResponseDTO lockProduct(Long productCode);
+
+    public UserProductResponseDTO unlockProduct(Long productCode);
 
     public List<UserProductResponseDTO> getALlProductByStatus(ProductStatus productStatus);
 
