@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<UserProductResponseDTO> getALlProductByStore(Long storeCode) {
-        return ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.getAllProductByStore(storeCode));
+        return ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.getAllProductByStore(storeCode,ProductStatus.active));
     }
 
     @Override
@@ -57,6 +57,29 @@ public class ProductServiceImpl implements ProductService {
         }
         return responseDTO;
     }
+
+
+    @Override
+    public List<UserProductResponseDTO> getAll() {
+        List<UserProductResponseDTO> toList = ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.findAll());
+        return toList;
+    }
+
+    @Override
+    public UserProductResponseDTO lockProduct(Long productCode) {
+        Product product = productRepository.findById(productCode).orElseThrow(() -> new DataNotFoundException("Data Not Found"));
+        product.setProductStatus(ProductStatus.inActive);
+        return ProductMapper.INSTANCE.toUserProductResponseDto(productRepository.save(product));
+    }
+
+    @Override
+    public UserProductResponseDTO unlockProduct(Long productCode) {
+        Product product = productRepository.findById(productCode).orElseThrow(()-> new DataNotFoundException("Data Not found"));
+        product.setProductStatus(ProductStatus.active);
+        return ProductMapper.INSTANCE.toUserProductResponseDto(productRepository.save(product));
+
+    }
+
 
     @Override
     public ProductInfoResponseDTO postNew(ProductRequestDTO requestDTO) {

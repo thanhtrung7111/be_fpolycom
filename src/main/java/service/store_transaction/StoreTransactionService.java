@@ -8,11 +8,11 @@ import java.util.List;
 public interface StoreTransactionService {
     public WithdrawTransactionResponseDTO withdrawTransaction(WithdrawTransactionRequestDTO request);
 
-    public WithdrawTransactionResponseDTO withdrawTransactionCompleted(AdminWithdrawRequestDTO request);
+    public AdminWithdrawResponseDTO withdrawTransactionCompleted(AdminWithdrawRequestDTO request);
 
-    public WithdrawTransactionResponseDTO withdrawTransactionDeclined(Long code,String content);
+    public AdminWithdrawResponseDTO withdrawTransactionDeclined(Long code,String content);
 
-    public List<AdminWithdrawResponseDTO> GetAllTransactionIsPending();
+    public List<AdminWithdrawResponseDTO> getAllTransactionIsPending();
 
     public TransactionDetailResponseDTO getDetailByTransactionCode(Long code);
 }

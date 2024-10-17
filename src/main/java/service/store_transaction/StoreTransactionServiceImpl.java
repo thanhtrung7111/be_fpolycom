@@ -10,6 +10,7 @@ import entity.enum_package.TypeTransaction;
 import exeception_handler.DataNotFoundException;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -36,26 +37,29 @@ public class StoreTransactionServiceImpl implements StoreTransactionService {
     }
 
     @Override
-    public WithdrawTransactionResponseDTO withdrawTransactionCompleted(AdminWithdrawRequestDTO request) {
+    public AdminWithdrawResponseDTO withdrawTransactionCompleted(AdminWithdrawRequestDTO request) {
         StoreTransaction storeTransaction = storeTransactionRepository.findById(request.getStoreTransactionCode()).orElseThrow(()->new DataNotFoundException("Khong ton tai du lieu!"));
+        if(storeTransaction.getStoreTransactionReceipt()!=null){
+            throw new UsernameNotFoundException("Giao dich da hoan tat khong the xac nhan!");
+        }
         storeTransaction.setTransactionStatus(TransactionStatus.complete);
         StoreTransaction saved = storeTransactionRepository.save(storeTransaction);
         StoreTransactionReceipt storeTransactionReceipt = StoreTransactionReceipt.builder().totalAmount(storeTransaction.getTotalAmount()).storeTransaction(saved).createdDate(new Date()).build();
         storeTransactionReceiptRepository.save(storeTransactionReceipt);
-        return StoreTransactionMapper.INSTANCE.toWithdrawTransactionResponseDTO(saved);
+        return StoreTransactionMapper.INSTANCE.adminToAdminWithdrawResponseDTO(saved);
     }
 
     @Override
-    public WithdrawTransactionResponseDTO withdrawTransactionDeclined(Long code,String content) {
+    public AdminWithdrawResponseDTO withdrawTransactionDeclined(Long code,String content) {
         StoreTransaction storeTransaction = storeTransactionRepository.findById(code).orElseThrow(()->new DataNotFoundException("Khong ton tai du lieu!"));
         storeTransaction.setTransactionStatus(TransactionStatus.failed);
-        return StoreTransactionMapper.INSTANCE.toWithdrawTransactionResponseDTO(storeTransactionRepository.save(storeTransaction));
+        storeTransaction.setContent(content);
+        return StoreTransactionMapper.INSTANCE.adminToAdminWithdrawResponseDTO(storeTransactionRepository.save(storeTransaction));
     }
 
     @Override
-    public List<AdminWithdrawResponseDTO> GetAllTransactionIsPending() {
-
-        return StoreTransactionMapper.INSTANCE.toList(storeTransactionRepository.findAll());
+    public List<AdminWithdrawResponseDTO> getAllTransactionIsPending() {
+        return StoreTransactionMapper.INSTANCE.toListAdminWithdrawResponseDtoList(storeTransactionRepository.findAll());
     }
 
     @Override

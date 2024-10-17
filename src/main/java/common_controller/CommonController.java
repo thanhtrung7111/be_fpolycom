@@ -65,7 +65,7 @@ public class CommonController {
         if( request.get("storeCode") == null || request.get("storeCode").isBlank()){
             throw new DataNotFoundException("Khong de trong ma cua hang!");
         }
-        return ResponseEntity.ok(dataReturnService.success(productService.getALlProductByStatus(ProductStatus.active)));
+        return ResponseEntity.ok(dataReturnService.success(productService.getALlProductByStore(Long.valueOf(request.get("storeCode")))));
     }
 
     @PostMapping(value = "/common/product/detail")

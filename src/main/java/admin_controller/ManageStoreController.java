@@ -36,7 +36,7 @@ public class ManageStoreController {
 
     @GetMapping(value = "/store-transaction/all")
     public ResponseEntity<Object> storeTransaction() {
-        return ResponseEntity.ok(dataReturnService.success(storeTransactionService.GetAllTransactionIsPending()));
+        return ResponseEntity.ok(dataReturnService.success(storeTransactionService.getAllTransactionIsPending()));
     }
 
     @PostMapping(value = "/store-transaction/detail")
