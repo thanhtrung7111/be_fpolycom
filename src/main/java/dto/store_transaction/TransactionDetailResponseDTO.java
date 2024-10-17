@@ -7,28 +7,27 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminWithdrawResponseDTO {
+public class TransactionDetailResponseDTO {
+
     Double totalAmount;
-
-    Long storeCode;
-
-    String storeName;
 
     Long storeTransactionCode;
 
     String content;
 
-    String bankBranchName;
-
-    String bankName;
-
     String bankStoreCode;
 
     String transactionStatus;
+
+    String typeTransaction;
 
     String bankAccountName;
 
     String bankAccountNumber;
 
-    String typeTransaction;
+    String bankBranchName;
+
+    String bankBranchCode;
+
+    String bankName;
 }

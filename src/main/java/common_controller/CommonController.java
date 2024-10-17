@@ -76,6 +76,14 @@ public class CommonController {
         return ResponseEntity.ok(dataReturnService.success(productService.getProductById(Long.valueOf(request.get("productCode")),request.get("userLogin"))));
     }
 
+    @PostMapping(value = "/common/store/detail")
+    public ResponseEntity<Object> getStoreById(@RequestBody HashMap<String,String> request) {
+        if( request.get("storeCode") == null || request.get("storeCode").isBlank()){
+            throw new DataNotFoundException("Khong de trong ma cua hang!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(storeService.getStoreByCode(Long.valueOf(request.get("storeCode")))));
+    }
+
     @GetMapping(value = "/common/status/bank")
     public ResponseEntity<Object> getAllBankStatus() {
 

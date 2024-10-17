@@ -2,7 +2,7 @@ package entity.enum_package;
 
 public enum TransactionStatus {
     pending("Pending"),
-    declined("Declined"),
+    failed("Declined"),
     complete("Complete");
     private String description;
     // Constructor
