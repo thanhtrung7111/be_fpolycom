@@ -27,6 +27,10 @@ public class UserProductResponseDTO {
 
     Integer numberOfEvaluates;
 
+    Long provinceCode;
+
+    String provinceName;
+
     Double pointEvaluate;
 
     Double minPrice;

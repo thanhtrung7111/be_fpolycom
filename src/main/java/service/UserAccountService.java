@@ -11,6 +11,7 @@ import entity.*;
 import entity.enum_package.UserStatus;
 import exeception_handler.DataNotFoundException;
 import exeception_handler.NotRightException;
+import exeception_handler.TokenExpiredException;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -77,7 +78,39 @@ public class UserAccountService implements UserDetailsService {
         LocalDateTime expiredDateTime = curentDateTime.plusMinutes(15);
         TokenRegister tokenRegister = TokenRegister.builder().token(UUID.randomUUID().toString()).userAccount(saved).createdDate(new Date()).expiredDate(expiredDateTime).build();
         tokenRegisterRepository.save(tokenRegister);
-        mailService.sendMail(request.getEmail(), "Xac nhan dang ki", "Dang ki thanh cong!" + tokenRegister.getToken());
+        mailService.sendMail(request.getEmail(), "Xac nhan dang ki", "<!DOCTYPE html>\n" +
+                "<html lang='en'>\n" +
+                "  <head>\n" +
+                "    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n" +
+                "    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\n" +
+                "    <title>Document</title>\n" +
+                "  </head>\n" +
+                "  <body>\n" +
+                "    <div\n" +
+                "      style='\n" +
+                "        padding: 10px;\n" +
+                "        border: 1px solid rgb(215, 215, 215);\n" +
+                "        border-radius: 5px;\n" +
+                "      '\n" +
+                "    >\n" +
+                "      <h3 style='color: rgb(48, 48, 48); margin-top: 0px'>FpolyCom</h3>\n" +
+                "      <p>Thank you for register!</p>\n" +
+                "      <a\n" +
+                "        href='http://localhost:5173/confirm_account/"+tokenRegister.getToken()+"'\n" +
+                "        style='\n" +
+                "          width: fit-content;\n" +
+                "          display: block;\n" +
+                "          border: 1px solid gray;\n" +
+                "          text-decoration: none;\n" +
+                "          color: white;\n" +
+                "          background-color: rgb(30, 30, 30);\n" +
+                "          padding: 10px;\n" +
+                "        '\n" +
+                "        >Confirm your account</a\n" +
+                "      >\n" +
+                "    </div>\n" +
+                "  </body>\n" +
+                "</html>\n");
         return UserAccountMapper.INSTANCE.toUserAccountRegisterResponseDto(saved);
     }
 
@@ -85,7 +118,7 @@ public class UserAccountService implements UserDetailsService {
         UserAccount userAccount = userAccountRepository.findByTokenRegister(token).orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy người dùng đăng kí!"));
         if (userAccount.getTokenRegister().getExpiredDate().isBefore(LocalDateTime.now())) {
             tokenRegisterRepository.delete(userAccount.getTokenRegister());
-            throw new UsernameNotFoundException("Token đã hết hạn");
+            throw new TokenExpiredException("Token đã hết hạn");
         }
         tokenRegisterRepository.delete(userAccount.getTokenRegister());
         userAccount.setUserStatus(UserStatus.active);
@@ -115,10 +148,45 @@ public class UserAccountService implements UserDetailsService {
 
     public String forgotPassword(String email) throws MessagingException {
         UserAccount userAccount = userAccountRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Khong tim tha nguoi dung"));
+        if(userAccount.getPasswordRecover()!=null){
+            passwordRecoverRepository.delete(userAccount.getPasswordRecover());
+        }
         String token = UUID.randomUUID().toString();
         PasswordRecover passwordRecover = PasswordRecover.builder().tokenRecover(token).userAccount(userAccount).expiredDate(LocalDateTime.now().plusMinutes(20)).build();
         passwordRecoverRepository.save(passwordRecover);
-        mailService.sendMail(userAccount.getEmail(), "Quen mat khau", token);
+        mailService.sendMail(userAccount.getEmail(), "Recover password", "<!DOCTYPE html>\n" +
+                "<html lang='en'>\n" +
+                "  <head>\n" +
+                "    <meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n" +
+                "    <meta name='viewport' content='width=device-width, initial-scale=1.0' />\n" +
+                "    <title>Document</title>\n" +
+                "  </head>\n" +
+                "  <body>\n" +
+                "    <div\n" +
+                "      style='\n" +
+                "        padding: 10px;\n" +
+                "        border: 1px solid rgb(215, 215, 215);\n" +
+                "        border-radius: 5px;\n" +
+                "      '\n" +
+                "    >\n" +
+                "      <h3 style='color: rgb(48, 48, 48); margin-top: 0px'>FpolyCom</h3>\n" +
+                "      <p>Recover Your Passwo!</p>\n" +
+                "      <a\n" +
+                "        href='http://localhost:5173/recover_password/"+passwordRecover.getTokenRecover()+"'\n" +
+                "        style='\n" +
+                "          width: fit-content;\n" +
+                "          display: block;\n" +
+                "          border: 1px solid gray;\n" +
+                "          text-decoration: none;\n" +
+                "          color: white;\n" +
+                "          background-color: rgb(30, 30, 30);\n" +
+                "          padding: 10px;\n" +
+                "        '\n" +
+                "        >Revocer Password</a\n" +
+                "      >\n" +
+                "    </div>\n" +
+                "  </body>\n" +
+                "</html>\n");
         return "Đã send link thay doi " + token;
     }
 

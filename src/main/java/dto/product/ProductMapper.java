@@ -29,6 +29,8 @@ public interface ProductMapper {
     @Mapping(target = "pointEvaluate", source = "evaluateList", qualifiedByName = "pointEvaluate")
     @Mapping(target = "maxPrice", source = "productDetailList", qualifiedByName = "maxPrice")
     @Mapping(target = "minPrice", source = "productDetailList", qualifiedByName = "minPrice")
+    @Mapping(target = "provinceCode", source = "store.province.id")
+    @Mapping(target = "provinceName", source = "store.province.name")
     UserProductResponseDTO toUserProductResponseDto(Product product);
 
     @Mapping(target = "typeGoodName", source = "typeGood.name")
