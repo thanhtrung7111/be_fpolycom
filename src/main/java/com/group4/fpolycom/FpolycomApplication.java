@@ -138,8 +138,10 @@ public class FpolycomApplication implements CommandLineRunner {
 		Ward ward = Ward.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Binh An").district(district).build();
 		wardRepository.saveAll(List.of(ward));
 
-		Store store = Store.builder().id(1L).userAccount(userAccount).district(district).province(province).ward(ward).name("Cuawr hang thu cng").email("Thucungw@gmail.com").bannerImage("https://tdtdecor.vn/wp-content/uploads/2021/07/thiet-ke-shop-thu-cung-13.jpg").image("https://freelancervietnam.vn/wp-content/uploads/2020/06/post-thumb-pet-shop.jpg").storeStatus(StoreStatus.active).userAccount(userAccount).password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		Store store = Store.builder().id(1L).userAccount(userAccount).district(district).province(province).ward(ward).name("Cuawr hang thu cng").email("Thucungw@gmail.com").bannerImage("https://tdtdecor.vn/wp-content/uploads/2021/07/thiet-ke-shop-thu-cung-13.jpg").image("https://freelancervietnam.vn/wp-content/uploads/2020/06/post-thumb-pet-shop.jpg").storeStatus(StoreStatus.active).password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		storeRepository.save(store);
+		Store store2 = Store.builder().id(5L).userAccount(userAccount2).district(district).province(province).ward(ward).name("Dien thoai di dong").email("Thucungw@gmail.com").bannerImage("https://tdtdecor.vn/wp-content/uploads/2021/07/thiet-ke-shop-thu-cung-13.jpg").image("https://freelancervietnam.vn/wp-content/uploads/2020/06/post-thumb-pet-shop.jpg").storeStatus(StoreStatus.active).password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		storeRepository.saveAll(List.of(store,store2));
 		Followed followed = Followed.builder().id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).statusFollow(true).userAccount(userAccount2).store(store).build();
 		followedRepository.save(followed);
 		NotifycationUser notifycationUser = NotifycationUser.builder().id(1L).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 1").userAccount(userAccount).build();
@@ -169,7 +171,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		likedRepository.save(liked);
 
 		ShippingFee shippingFee = ShippingFee.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.inner).fee(20000.0).build();
-		ShippingFee shippingFee2 = ShippingFee.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.outer).fee(30000.0).build();
+		ShippingFee shippingFee2 = ShippingFee.builder().id(2L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.outer).fee(30000.0).build();
 		shippingFeeRepository.saveAll(List.of(shippingFee,shippingFee2));
 
 		Bank bank	 = Bank.builder().id(1L).name("Ngan hang bidv").shortName("BIDV").build();

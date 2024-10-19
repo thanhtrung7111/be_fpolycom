@@ -1,6 +1,13 @@
 package common_controller;
 
+import dao.DeliveryTypeRepository;
+import dao.ShippingFeeRepository;
+import dto.delivery_type.DeliveryTypeMapper;
+import dto.shipping_fee.ShippingFeeMapper;
+import dto.shipping_fee.ShippingFeeResponse;
 import dto.status.StatusDTO;
+import entity.DeliveryType;
+import entity.PaymentType;
 import entity.enum_package.*;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import service.StoreDetailService;
 import service.data_return.DataReturnService;
 import service.evaluate.EvaluateService;
+import service.payment_type.PaymentTypeService;
 import service.product.ProductService;
 import service.store.StoreService;
 import service.voucher.VoucherService;
@@ -38,6 +46,15 @@ public class CommonController {
 
     @Autowired
     StoreService storeService;
+
+    @Autowired
+    PaymentTypeService paymentTypeService;
+
+    @Autowired
+    ShippingFeeRepository shippingFeeRepository;
+
+    @Autowired
+    DeliveryTypeRepository deliveryTypeRepository;
 
     @PostMapping(value = "/product/evaluate/all")
     public ResponseEntity<Object> getAllProvince(@RequestBody HashMap<String,String> request) {
@@ -82,6 +99,22 @@ public class CommonController {
             throw new DataNotFoundException("Khong de trong ma cua hang!");
         }
         return ResponseEntity.ok(dataReturnService.success(storeService.getStoreByCode(Long.valueOf(request.get("storeCode")))));
+    }
+
+    @GetMapping(value = "/common/payment-type/all")
+    public ResponseEntity<Object> getAllPaymentType() {
+
+        return ResponseEntity.ok(dataReturnService.success(paymentTypeService.getAllData()));
+    }
+
+    @GetMapping(value = "/common/shipping-fee/all")
+    public ResponseEntity<Object> getALlShippingFee() {
+        return ResponseEntity.ok(dataReturnService.success(ShippingFeeMapper.INSTANCE.toShippingFeeResponseList(shippingFeeRepository.findAll())));
+    }
+
+    @GetMapping(value = "/common/delivery-type/all")
+    public ResponseEntity<Object> getAllDeliveryType() {
+        return ResponseEntity.ok(dataReturnService.success(DeliveryTypeMapper.INSTANCE.toDeliveryTypeResponseList(deliveryTypeRepository.findAll())));
     }
 
     @GetMapping(value = "/common/status/bank")

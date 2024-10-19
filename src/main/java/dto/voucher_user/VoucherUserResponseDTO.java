@@ -24,5 +24,7 @@ public class VoucherUserResponseDTO {
 
     Long storeCode;
 
+    Long voucherCode;
+
     String voucherType;
 }

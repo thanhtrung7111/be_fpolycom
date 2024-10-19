@@ -34,6 +34,8 @@ public class Orders extends EntityCommon {
 
     Double totalAmountVoucher;
 
+    Double totalAmountDiscount;
+
     Double totalAmountShip;
 
     Double finalTotal;
@@ -85,7 +87,7 @@ public class Orders extends EntityCommon {
     @JoinColumn(name = "deliveryTypeCode")
     DeliveryType deliveryType;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "orders",cascade = CascadeType.PERSIST)
     List<VoucherApply> voucherApplyList;
 
     @Enumerated(EnumType.STRING)

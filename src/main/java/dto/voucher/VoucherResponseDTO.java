@@ -19,7 +19,6 @@ public class VoucherResponseDTO {
 
     String name;
 
-
     Double priceApply;
 
     Integer percentDecrease;

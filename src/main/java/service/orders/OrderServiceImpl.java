@@ -15,8 +15,10 @@ import entity.UserAccount;
 import entity.enum_package.OrderStatus;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import security.AsyncUpdate;
 import service.auth_user.AuthUserService;
 
 import java.util.ArrayList;
@@ -37,6 +39,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     PaymenReceiptRepository paymenReceiptRepository;
+
+    @Autowired
+    AsyncUpdate asyncUpdate;
 
 
     @Override
@@ -68,6 +73,12 @@ public class OrderServiceImpl implements OrderService {
                 item.setUpdatedDate(null);
                 item.setDeleted(false);
                 item.setDeletedDate(null);
+                if(!(item.getVoucherApplyList() == null) && !(item.getVoucherApplyList().size()==0)){
+                    item.getVoucherApplyList().forEach(i->{
+                        i.setOrders(item);
+                        asyncUpdate.updateVoucherUser(userLoginExtract,i.getVoucher().getId());
+                    });
+                }
             });
             ordersRepository.saveAll(listConvert);
             return OrderMapper.INSTANCE.toOrderInfoResponseDtoList(listConvert);

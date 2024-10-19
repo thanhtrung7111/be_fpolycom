@@ -1,6 +1,7 @@
 package dto.order;
 
 import dto.order_detail.OrderDetailRequestDTO;
+import dto.voucher.VoucherRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,8 @@ public class UserOrderRequestDTO {
     Double totalAmount;
 
     Double totalAmountVoucher;
+
+    Double totalAmountDiscount;
 
     Double totalAmountShip;
 
@@ -42,6 +45,8 @@ public class UserOrderRequestDTO {
     Long wardCode;
 
     Long deliveryTypeCode;
+
+    List<VoucherRequestDTO> voucherList;
 
     List<OrderDetailRequestDTO> orderDetailList;
 

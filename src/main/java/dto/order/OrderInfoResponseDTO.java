@@ -2,6 +2,7 @@ package dto.order;
 
 import dto.order_detail.OrderDetailRequestDTO;
 import dto.order_detail.OrderDetailResponseDTO;
+import dto.voucher.VoucherResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,8 @@ public class OrderInfoResponseDTO {
 
     Long shippingFeeCode;
 
+    Double totalAmountDiscount;
+
     Long storeCode;
 
     Long provinceCode;
@@ -50,5 +53,7 @@ public class OrderInfoResponseDTO {
     Boolean paymentSuccess;
 
     List<OrderDetailResponseDTO> orderDetailList;
+
+    List<VoucherResponseDTO> voucherList;
 
 }
