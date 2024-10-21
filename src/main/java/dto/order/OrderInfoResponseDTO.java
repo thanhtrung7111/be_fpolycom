@@ -24,6 +24,12 @@ public class OrderInfoResponseDTO {
 
     Double totalAmountShip;
 
+    Boolean confirmOrder;
+
+    Boolean confirmDelivery;
+
+    Boolean confirmPickup;
+
     Double finalTotal;
 
     String orderBillCode;

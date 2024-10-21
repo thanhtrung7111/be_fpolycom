@@ -15,7 +15,9 @@ public interface OrderService {
 
     public List<OrderInfoResponseDTO> confirmOrder(String orderBillCode);
 
+    public List<OrderResponseDTO> getAllOrderByStore(Long storeCode);
 
     public OrderInfoResponseDTO getOrderById(Long orderCode);
 
+    public OrderInfoResponseDTO confirmOrderByStore(Long orderCode);
 }

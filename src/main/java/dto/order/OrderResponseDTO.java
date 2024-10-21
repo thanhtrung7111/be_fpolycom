@@ -25,6 +25,12 @@ public class OrderResponseDTO {
 
     OrderStatus orderStatus;
 
+    Boolean confirmOrder;
+
+    Boolean confirmDelivery;
+
+    Boolean confirmPickup;
+
     @Temporal(TemporalType.DATE)
     Date pickupDate;
 
