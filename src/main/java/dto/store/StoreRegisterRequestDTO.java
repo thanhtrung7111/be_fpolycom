@@ -38,7 +38,6 @@ public class StoreRegisterRequestDTO {
 
     Long wardCode;
 
-
     List<StoreDocumentRequestDTO> documentList;
 
 

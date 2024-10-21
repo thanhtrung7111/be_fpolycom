@@ -1,7 +1,6 @@
 package admin_controller;
 
 import dto.store_transaction.AdminWithdrawRequestDTO;
-import entity.StoreTransaction;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/admin")
-public class ManageStoreController {
+public class TransactionStoreController {
     @Autowired
     DataReturnService dataReturnService;
 

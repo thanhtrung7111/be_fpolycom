@@ -77,7 +77,7 @@ public interface ProductMapper {
     @Named("maxPrice")
     default Double maxPrice(List<ProductDetail> productDetailList) {
         return productDetailList != null && !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(item->{
-            if(item.getDiscount()!=null){
+            if(item.getDiscount()!=null && item.getDiscount().getPercentDecrease() != null){
                 return  item.getPrice()- item.getDiscount().getPercentDecrease()*item.getPrice()/100;
             }else{
                 return item.getPrice();
@@ -88,7 +88,7 @@ public interface ProductMapper {
     @Named("minPrice")
     default Double minPrice(List<ProductDetail> productDetailList) {
         return productDetailList != null && !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(item->{
-            if(item.getDiscount()!=null){
+            if(item.getDiscount()!=null && item.getDiscount().getPercentDecrease() != null){
                 return  item.getPrice()- item.getDiscount().getPercentDecrease()*item.getPrice()/100;
             }else{
                 return item.getPrice();

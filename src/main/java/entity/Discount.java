@@ -25,7 +25,7 @@ public class Discount extends EntityCommon{
     @Nationalized
     String name;
 
-    Integer percentDecrease;
+    Integer percentDecrease =0;
 
     @Lob
     @Nationalized

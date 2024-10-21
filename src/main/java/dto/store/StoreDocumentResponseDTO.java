@@ -11,4 +11,6 @@ public class StoreDocumentResponseDTO {
     String documentUrl;
 
     String documentType;
+
+    Long documentCode;
 }

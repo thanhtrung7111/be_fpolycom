@@ -2,6 +2,7 @@ package common_controller;
 
 import dao.DeliveryTypeRepository;
 import dao.ShippingFeeRepository;
+import dao.TypeGoodRepository;
 import dto.delivery_type.DeliveryTypeMapper;
 import dto.shipping_fee.ShippingFeeMapper;
 import dto.shipping_fee.ShippingFeeResponse;
@@ -22,6 +23,7 @@ import service.evaluate.EvaluateService;
 import service.payment_type.PaymentTypeService;
 import service.product.ProductService;
 import service.store.StoreService;
+import service.type_good.TypeGoodService;
 import service.voucher.VoucherService;
 
 import java.util.Arrays;
@@ -55,6 +57,10 @@ public class CommonController {
 
     @Autowired
     DeliveryTypeRepository deliveryTypeRepository;
+
+
+    @Autowired
+    TypeGoodService typeGoodService;
 
     @PostMapping(value = "/product/evaluate/all")
     public ResponseEntity<Object> getAllProvince(@RequestBody HashMap<String,String> request) {
@@ -100,6 +106,16 @@ public class CommonController {
         }
         return ResponseEntity.ok(dataReturnService.success(storeService.getStoreByCode(Long.valueOf(request.get("storeCode")))));
     }
+    @GetMapping(value = "/common/store/all")
+    public ResponseEntity<Object> getAllStoreByActive() {
+        return ResponseEntity.ok(dataReturnService.success(storeService.getAllStoreByStatus(StoreStatus.active)));
+    }
+
+    @GetMapping(value = "/common/type-good/all")
+    public ResponseEntity<Object> getAllTypeGood() {
+        return ResponseEntity.ok(dataReturnService.success(typeGoodService.getAllData()));
+    }
+
 
     @GetMapping(value = "/common/payment-type/all")
     public ResponseEntity<Object> getAllPaymentType() {

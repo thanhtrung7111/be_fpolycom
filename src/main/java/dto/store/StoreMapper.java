@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {StoreDocumentMapper.class})
 public interface StoreMapper {
 
     StoreMapper INSTANCE = Mappers.getMapper(StoreMapper.class);
@@ -27,21 +27,35 @@ public interface StoreMapper {
     @Mapping(target = "districtCode", source = "district.id")
     @Mapping(target = "wardCode", source = "ward.id")
     @Mapping(target = "documentList",source = "storeDocumentList")
+    @Mapping(target = "status",source = "storeStatus")
     @Mapping(target = "userRegister",source = "store.userAccount.name")
     StoreRegisterResponseDTO toStoreRegisterResponseDto(Store store);
 
     @Mapping(target = "provinceName", source = "province.name")
     @Mapping(target = "districtName", source = "district.name")
     @Mapping(target = "wardName", source = "ward.name")
+    @Mapping(target = "storeCode",source = "id")
     @Mapping(target = "status",source = "storeStatus")
     @Mapping(target = "userRegister",source = "store.userAccount.name")
     @Mapping(target = "numberOfFollowed",source = "followedList",qualifiedByName = "numberOfFollowed")
     @Mapping(target = "numberOfLiked",source = "productList",qualifiedByName = "numberOfLiked")
     UserStoreDetailResponseDTO toUserStoreDetailResponseDto(Store store);
 
+    @Mapping(target = "provinceName", source = "province.name")
+    @Mapping(target = "districtName", source = "district.name")
+    @Mapping(target = "wardName", source = "ward.name")
+    @Mapping(target = "status",source = "storeStatus")
+    @Mapping(target = "storeCode",source = "id")
+    @Mapping(target = "userRegister",source = "store.userAccount.name")
+    @Mapping(target = "numberOfFollowed",source = "followedList",qualifiedByName = "numberOfFollowed")
+    @Mapping(target = "numberOfLiked",source = "productList",qualifiedByName = "numberOfLiked")
+    StoreResponseDTO toUserStoreResponseDto(Store store);
 
 
     List<StoreRegisterResponseDTO> toStoreRegisterResponseDtoList(List<Store> storeList);
+
+
+    List<StoreResponseDTO> toUserStoreResponseDtoList(List<Store> storeList);
 
     List<Store> toStoreList(List<StoreRegisterRequestDTO> storeRegisterRequestDTOList);
 
