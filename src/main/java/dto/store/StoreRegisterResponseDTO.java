@@ -21,6 +21,8 @@ public class StoreRegisterResponseDTO {
 
     String address;
 
+    String status;
+
     String phone;
 
     String bannerImage;
@@ -36,5 +38,5 @@ public class StoreRegisterResponseDTO {
     Long wardCode;
 
 
-    List<StoreDocumentRequestDTO> documentList;
+    List<StoreDocumentResponseDTO> documentList;
 }

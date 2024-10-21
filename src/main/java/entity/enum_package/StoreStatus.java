@@ -3,6 +3,7 @@ package entity.enum_package;
 public enum StoreStatus {
     pending("Pending"),
     active("Active"),
+    rejected("Rejected"),
     lock("Lock");
 
     private String description;

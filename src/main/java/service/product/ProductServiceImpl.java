@@ -90,7 +90,8 @@ public class ProductServiceImpl implements ProductService {
         product.getProductDetailList().forEach(item -> item.setProduct(product));
         product.getProductAttrList().forEach(item -> item.setProduct(product));
         product.setProductStatus(ProductStatus.pending);
-        Product productSaved = productRepository.saveAndFlush(product);
+        Product productSaved = productRepository.save(product);
+        System.out.println(productSaved.getName());
 //        Product product1 = productRepository.findById(productSaved.getId()).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai"));
         return ProductMapper.INSTANCE.toProductInfoResponseDto(productSaved);
     }

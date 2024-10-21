@@ -27,4 +27,6 @@ public class VoucherUserResponseDTO {
     Long voucherCode;
 
     String voucherType;
+
+    Boolean apply;
 }

@@ -26,6 +26,8 @@ public class Voucher extends EntityCommon {
 
     Double priceApply;
 
+    Integer amount;
+
     Integer percentDecrease;
 
     @Temporal(TemporalType.DATE)
