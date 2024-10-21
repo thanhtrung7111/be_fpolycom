@@ -38,6 +38,12 @@ public class Orders extends EntityCommon {
 
     Double totalAmountShip;
 
+    Boolean confirmOrder;
+
+    Boolean confirmDelivery;
+
+    Boolean confirmPickup;
+
     Double finalTotal;
 
     String orderBillCode;
