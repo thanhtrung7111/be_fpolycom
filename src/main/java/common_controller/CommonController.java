@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import service.StoreDetailService;
 import service.data_return.DataReturnService;
+import service.discount.DiscountService;
 import service.evaluate.EvaluateService;
 import service.payment_type.PaymentTypeService;
 import service.product.ProductService;
 import service.store.StoreService;
 import service.type_good.TypeGoodService;
+import service.type_good_attr.TypeGoodAttrService;
 import service.voucher.VoucherService;
 
 import java.util.Arrays;
@@ -62,6 +64,12 @@ public class CommonController {
     @Autowired
     TypeGoodService typeGoodService;
 
+    @Autowired
+    TypeGoodAttrService typeGoodAttrService;
+
+    @Autowired
+    DiscountService discountService;
+
     @PostMapping(value = "/product/evaluate/all")
     public ResponseEntity<Object> getAllProvince(@RequestBody HashMap<String,String> request) {
         if( request.get("productCode") == null || request.get("productCode").isBlank()){
@@ -96,7 +104,7 @@ public class CommonController {
         if( request.get("productCode") == null || request.get("productCode").isBlank()){
             throw new DataNotFoundException("Khong de trong ma cua hang!");
         }
-        return ResponseEntity.ok(dataReturnService.success(productService.getProductById(Long.valueOf(request.get("productCode")),request.get("userLogin"))));
+        return ResponseEntity.ok(dataReturnService.success(productService.getProductByIdAndUserLogin(Long.valueOf(request.get("productCode")),request.get("userLogin"))));
     }
 
     @PostMapping(value = "/common/store/detail")
@@ -117,6 +125,13 @@ public class CommonController {
     }
 
 
+    @GetMapping(value = "/common/discount/all")
+    public ResponseEntity<Object> getAllDiscount() {
+        return ResponseEntity.ok(dataReturnService.success(discountService.getAllData()));
+    }
+
+
+
     @GetMapping(value = "/common/payment-type/all")
     public ResponseEntity<Object> getAllPaymentType() {
 
@@ -126,6 +141,14 @@ public class CommonController {
     @GetMapping(value = "/common/shipping-fee/all")
     public ResponseEntity<Object> getALlShippingFee() {
         return ResponseEntity.ok(dataReturnService.success(ShippingFeeMapper.INSTANCE.toShippingFeeResponseList(shippingFeeRepository.findAll())));
+    }
+
+    @PostMapping(value = "/common/type-good-attr/all")
+    public ResponseEntity<Object> getAllTypeGoodAttr(@RequestBody HashMap<String,String> request) {
+        if(request.isEmpty() || request.get("typeGoodCode").isBlank()){
+            throw new DataNotFoundException("Du lieu khong ton tai!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(typeGoodAttrService.getAllTypeGoodAttrByTypeGood(Long.valueOf(request.get("typeGoodCode")))));
     }
 
     @GetMapping(value = "/common/delivery-type/all")
