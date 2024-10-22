@@ -155,7 +155,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		Product product = Product.builder().id(1L).image("https://tiki.vn/blog/wp-content/uploads/2023/11/laptop-mini.jpeg").createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active).name("San pharm 01").store(store).typeGood(typeGood).build();
 		productRepository.save(product);
 
-		Discount discount = Discount.builder().id(1L).percentDecrease(10).build();
+		Discount discount = Discount.builder().id(1L).name("Không giảm giá").percentDecrease(10).build();
 		discountRepository.save(discount);
 
 		ProductDetail productDetail = ProductDetail.builder().discount(discount).quantity(30).image("asdsad").price(50000.0).id(1L).name("RAM").product(product).build();

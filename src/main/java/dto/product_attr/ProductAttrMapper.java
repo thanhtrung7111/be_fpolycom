@@ -26,7 +26,7 @@ public interface ProductAttrMapper {
     @Mapping(target = "productAttrCode", source = "id")
     @Mapping(target = "typeGoodAttrCode", source = "typeGoodAttr.id")
     @Mapping(target = "productCode",source = "product.id")
-    @Mapping(target = "nameAttr",source = "typeGoodAttr.name")
+    @Mapping(target = "typeGoodAttrName",source = "typeGoodAttr.name")
     ProductAttrResponseDTO toProductAttrResponseDTO(ProductAttr productAttr);
 
     List<ProductAttrResponseDTO> toList(List<ProductAttr> productAttrList);
