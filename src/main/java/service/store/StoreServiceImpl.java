@@ -1,7 +1,14 @@
 package service.store;
 
+import dao.DistrictRepository;
 import dao.StoreRepository;
 import dao.UserAccountRepository;
+import dto.store.StoreMapper;
+import dto.store.StoreRegisterRequestDTO;
+import dto.store.StoreRegisterResponseDTO;
+import dto.store.UserStoreDetailResponseDTO;
+import dto.store_account.*;
+import entity.*;
 import dto.store.*;
 import entity.Store;
 import entity.UserAccount;
@@ -10,6 +17,7 @@ import entity.enum_package.StoreStatus;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import service.auth_user.AuthUserService;
 
@@ -91,6 +99,55 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public ChangeStorePasswordResponseDTO changeStorePassword(ChangeStorePasswordRequestDTO requestDTO) {
+        Store store = storeRepository.findStoreByCode(Long.valueOf(requestDTO.getStoreCode()));
+        if(!new BCryptPasswordEncoder().matches(requestDTO.getCurrentPassword(), store.getPassword())) {
+            throw new DataNotFoundException("Mat khau hien tai khong dung !!!");
+        }
+        if(!requestDTO.getNewPassword().matches(requestDTO.getConfirmPassword())){
+            throw new DataNotFoundException("Xac nhan mat khau khong dung !!!");
+        }
+        store.setPassword(new BCryptPasswordEncoder().encode(requestDTO.getNewPassword()) );
+        storeRepository.save(store);
+        return StoreAccountMapper.INSTANCE.changeStorePasswordDTO(store);
+    }
+
+    @Override
+    public ChangeInfoStoreResponseDTO changeInfoStore(ChangeInfoStoreRequestDTO requestDTO) {
+        Store store = storeRepository.findStoreByCode(Long.valueOf(requestDTO.getStoreCode()));
+        if (requestDTO.getName() != null && !requestDTO.getName().isBlank()){
+            store.setName(requestDTO.getName());
+        }
+        if (requestDTO.getImage() != null && !requestDTO.getImage().isBlank()){
+            store.setImage(requestDTO.getImage());
+        }
+        if (requestDTO.getPhone() != null && !requestDTO.getPhone().isBlank()){
+            store.setPhone(requestDTO.getPhone());
+        }
+        if (requestDTO.getEmail() != null && !requestDTO.getEmail().isBlank()){
+            store.setEmail(requestDTO.getEmail());
+        }
+        if (requestDTO.getAddress() != null && !requestDTO.getAddress().isBlank()){
+            store.setAddress(requestDTO.getAddress());
+        }
+        if (requestDTO.getAddressDetail() != null && !requestDTO.getAddressDetail().isBlank()){
+            store.setAddressDetail(requestDTO.getAddressDetail());
+        }
+        if (requestDTO.getBannerImage() != null && !requestDTO.getBannerImage().isBlank()){
+            store.setBannerImage(requestDTO.getBannerImage());
+        }
+        if (requestDTO.getDistrictCode() != null){
+            store.setDistrict(District.builder().id(Long.valueOf(requestDTO.getDistrictCode())).build());
+        }
+        if (requestDTO.getWardCode() != null){
+            store.setWard(Ward.builder().id(Long.valueOf(requestDTO.getWardCode())).build());
+        }
+        if (requestDTO.getProvinceCode() != null){
+            store.setProvince(Province.builder().id(Long.valueOf(requestDTO.getProvinceCode())).build());
+        }
+        storeRepository.saveAndFlush(store);
+        return StoreAccountMapper.INSTANCE.changeInfoStoreDTO(store);
+
     public List<StoreResponseDTO> getAllStoreByStatus(StoreStatus storeStatus) {
         return StoreMapper.INSTANCE.toUserStoreResponseDtoList(storeRepository.findAllStoreByStatus(storeStatus));
     }
