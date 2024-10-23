@@ -1,8 +1,10 @@
 package service.store;
 
+import dao.PaymentWallerStoreRepository;
 import dao.StoreRepository;
 import dao.UserAccountRepository;
 import dto.store.*;
+import entity.PaymentWalletStore;
 import entity.Store;
 import entity.UserAccount;
 import entity.enum_package.DocumentType;
@@ -28,6 +30,9 @@ public class StoreServiceImpl implements StoreService {
 
     @Autowired
     UserAccountRepository userAccountRepository;
+
+    @Autowired
+    PaymentWallerStoreRepository paymentWallerStoreRepository;
 
 
     @Override
@@ -103,6 +108,10 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public StoreResponseDTO approveStore(Long storeCode) {
         Store store = storeRepository.findById(storeCode).orElseThrow(()->new DataNotFoundException("Du lieu khong ton tai!"));
+        if(store.getPaymentWalletStore() ==null){
+            PaymentWalletStore paymentWalletStore = PaymentWalletStore.builder().store(store).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).balance(0.0).password(null).build();
+            paymentWallerStoreRepository.save(paymentWalletStore);
+        }
         store.setUpdatedDate(new Date());
         store.setStoreStatus(StoreStatus.active);
         storeRepository.save(store);
