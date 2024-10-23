@@ -21,7 +21,7 @@ import java.util.List;
 @SpringBootApplication
 @EntityScan(basePackages = {"entity"})
 @EnableJpaRepositories(basePackages = {"dao"})
-@ComponentScan(basePackages = {"security","service","admin_controller","user_controller","dto","common_controller","exeception_handler","notifycation_controller","store_controller","configuration"})
+@ComponentScan(basePackages = {"security","service","admin_controller","user_controller","dto","common_controller","exeception_handler","notifycation_controller","store_controller","configuration","shipper_controller"})
 public class FpolycomApplication implements CommandLineRunner {
 
 	@Autowired

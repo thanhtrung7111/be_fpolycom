@@ -2,6 +2,7 @@ package shipper_controller;
 
 import dto.auth_shipper.ShipperLoginRequestDTO;
 import dto.auth_shipper.ShipperLoginResponseDTO;
+import entity.enum_package.RoleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,10 +31,10 @@ public class ShipperLoginController {
     @PostMapping("/shipper/shipper-login")
     public ResponseEntity<Object> authenticateAndGetToken(@RequestBody ShipperLoginRequestDTO authRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(authRequest.getUserLogin(), authRequest.getPassword())
+                new UsernamePasswordAuthenticationToken(authRequest.getUserLogin()+"&"+ RoleType.SHIPPER.name(), authRequest.getPassword())
         );
         if (authentication.isAuthenticated()) {
-            ShipperLoginResponseDTO rs = shipperLoginService.getShipper(authRequest.getUserLogin());
+            ShipperLoginResponseDTO rs = shipperLoginService.getShipper(authRequest.getUserLogin()+"&"+ RoleType.SHIPPER.name());
             String token = jwtService.generateToken(authentication.getName());
             rs.setToken(token);
             return ResponseEntity.ok().body(dataReturnService.success(rs));
