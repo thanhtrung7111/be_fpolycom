@@ -10,4 +10,9 @@ public interface ShipperService extends CommonService<ShipperRequestDTO, Shipper
     ShipperResponseDTO lockShipper(ShipperRequestDTO request);
 
     ShipperResponseDTO unlockShipper(ShipperRequestDTO request);
+
+    ShipperResponseDTO getShipper(String userLogin);
+    String getShipperLoginAuthenication();
+    String extractShipperLogin(String shipperLogin);
+    boolean isValidShipperLogin(String rawShipperLogin);
 }
