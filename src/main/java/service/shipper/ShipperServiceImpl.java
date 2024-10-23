@@ -26,12 +26,7 @@ import java.util.List;
 
 @Service
 public class ShipperServiceImpl implements ShipperService {
-    @Autowired
-    EncodingService encodingService;
 
-    @Autowired
-    @Lazy
-    AuthenticationManager authenticationManager;
     @Autowired
     ShipperRepository shipperRepository;
 
@@ -43,38 +38,6 @@ public class ShipperServiceImpl implements ShipperService {
     DistrictRepository districtRepository;
     @Autowired
     WardRepository wardRepository;
-    @Override
-    public ShipperResponseDTO getShipper(String userLogin) {
-        Shipper shipper = shipperRepository.findByUserLogin(userLogin)
-                .orElseThrow(() -> new UsernameNotFoundException("Shipper không tồn tại!"));
-        shipper.setUserLogin(encodingService.encode(shipper.getUserLogin()));
-        return ShipperMapper.INSTANCE.toShipperResponseDto(shipper);
-    }
-
-    @Override
-    public String getShipperLoginAuthenication() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            Object principal = authentication.getPrincipal();
-            if (principal instanceof UserDetails) {
-                return ((UserDetails) principal).getUsername();
-            } else {
-                return principal.toString();
-            }
-        }
-        throw new UsernameNotFoundException("Shipper chưa xác thực!");
-    }
-
-    @Override
-    public String extractShipperLogin(String shipperLogin) {
-        return encodingService.decode(shipperLogin);
-    }
-
-    @Override
-    public boolean isValidShipperLogin(String rawShipperLogin) {
-        return extractShipperLogin(rawShipperLogin).equals(getShipperLoginAuthenication());
-    }
-
 
     @Override
     public ShipperResponseDTO lockShipper(ShipperRequestDTO request) {
