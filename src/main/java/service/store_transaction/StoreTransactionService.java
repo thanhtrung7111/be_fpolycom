@@ -1,16 +1,18 @@
 package service.store_transaction;
 
-import dto.store_transaction.AdminWithdrawRequestDTO;
-import dto.store_transaction.AdminWithdrawResponseDTO;
-import dto.store_transaction.WithdrawTransactionRequestDTO;
-import dto.store_transaction.WithdrawTransactionResponseDTO;
+import dto.store_transaction.*;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
 public interface StoreTransactionService {
     public WithdrawTransactionResponseDTO withdrawTransaction(WithdrawTransactionRequestDTO request);
 
-    public WithdrawTransactionResponseDTO withdrawTransactionCompleted(AdminWithdrawRequestDTO request);
+    public AdminWithdrawResponseDTO withdrawTransactionCompleted(AdminWithdrawRequestDTO request);
 
-    public List<AdminWithdrawResponseDTO> GetAllTransactionIsPending();
+    public AdminWithdrawResponseDTO withdrawTransactionDeclined(Long code,String content);
+
+    public List<AdminWithdrawResponseDTO> getAllTransactionIsPending();
+
+    public TransactionDetailResponseDTO getDetailByTransactionCode(Long code);
 }

@@ -18,6 +18,13 @@ public interface UserCartMapper {
     @Mapping(target = "detailName",source = "productDetail.name")
     @Mapping(target = "quantity",source = "quantity")
     @Mapping(target = "price",source = "productDetail.price")
+    @Mapping(target = "discountCode",source = "productDetail.discount.id")
+    @Mapping(target = "percentDecrease",source = "productDetail.discount.percentDecrease")
+    @Mapping(target = "image",source = "productDetail.image")
+    @Mapping(target = "productCode",source = "productDetail.product.id")
+    @Mapping(target = "storeCode",source = "productDetail.product.store.id")
+    @Mapping(target = "storeName",source = "productDetail.product.store.name")
+    @Mapping(target = "provinceCode",source = "productDetail.product.store.province.id")
     UserCartResponseDTO toUserCartResponseDto(ShoppingCart shoppingCart);
 
 

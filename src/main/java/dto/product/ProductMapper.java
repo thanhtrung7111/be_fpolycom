@@ -29,6 +29,8 @@ public interface ProductMapper {
     @Mapping(target = "pointEvaluate", source = "evaluateList", qualifiedByName = "pointEvaluate")
     @Mapping(target = "maxPrice", source = "productDetailList", qualifiedByName = "maxPrice")
     @Mapping(target = "minPrice", source = "productDetailList", qualifiedByName = "minPrice")
+    @Mapping(target = "provinceCode", source = "store.province.id")
+    @Mapping(target = "provinceName", source = "store.province.name")
     UserProductResponseDTO toUserProductResponseDto(Product product);
 
     @Mapping(target = "typeGoodName", source = "typeGood.name")
@@ -74,12 +76,24 @@ public interface ProductMapper {
 
     @Named("maxPrice")
     default Double maxPrice(List<ProductDetail> productDetailList) {
-        return productDetailList != null && !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(ProductDetail::getPrice).max().orElseThrow(() -> new DataNotFoundException("Khong ton tai du lieu")) : 0;
+        return productDetailList != null && !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(item->{
+            if(item.getDiscount()!=null && item.getDiscount().getPercentDecrease() != null){
+                return  item.getPrice()- item.getDiscount().getPercentDecrease()*item.getPrice()/100;
+            }else{
+                return item.getPrice();
+            }
+        }).max().orElseThrow(() -> new DataNotFoundException("Khong ton tai du lieu")) : 0;
     }
 
     @Named("minPrice")
     default Double minPrice(List<ProductDetail> productDetailList) {
-        return productDetailList != null && !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(ProductDetail::getPrice).min().orElseThrow(() -> new DataNotFoundException("Khong ton tai du lieu")) : 0;
+        return productDetailList != null && !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(item->{
+            if(item.getDiscount()!=null && item.getDiscount().getPercentDecrease() != null){
+                return  item.getPrice()- item.getDiscount().getPercentDecrease()*item.getPrice()/100;
+            }else{
+                return item.getPrice();
+            }
+        }).min().orElseThrow(() -> new DataNotFoundException("Khong ton tai du lieu")) : 0;
     }
 
 

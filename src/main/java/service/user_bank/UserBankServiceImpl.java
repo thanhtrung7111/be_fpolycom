@@ -3,6 +3,7 @@ package service.user_bank;
 import dao.BankBranchRepository;
 import dao.BankUserRepository;
 import dao.UserAccountRepository;
+import dto.bank_user.AdminBankUserResponseDTO;
 import dto.bank_user.BankUserMapper;
 import dto.bank_user.BankUserRequestDTO;
 import dto.bank_user.BankUserResponseDTO;
@@ -63,5 +64,10 @@ public class UserBankServiceImpl implements UserBankService{
         bankUser.setBankStatus(BankStatus.active);
         bankUserRepository.save(bankUser);
         return BankUserMapper.INSTANCE.toBankUserResponseDto(bankUser);
+    }
+
+    @Override
+    public List<AdminBankUserResponseDTO> getAllBankUserByAdmin() {
+        return BankUserMapper.INSTANCE.toAdminBankUserResponseDtoList(bankUserRepository.findAll());
     }
 }

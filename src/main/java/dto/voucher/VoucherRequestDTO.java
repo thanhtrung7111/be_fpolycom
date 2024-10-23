@@ -17,6 +17,8 @@ public class VoucherRequestDTO {
 
     Long storeCode;
 
+    Integer amount;
+
     Long voucherCode;
 
     @NotBlank(message = "Phải đặt tên cho voucher")

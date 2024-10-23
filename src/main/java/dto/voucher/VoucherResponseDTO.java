@@ -17,8 +17,9 @@ public class VoucherResponseDTO {
 
     Long voucherCode;
 
-    String name;
+    Integer amount;
 
+    String name;
 
     Double priceApply;
 

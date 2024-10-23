@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,6 +22,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value = "select u from Store u where u.id = :storeCode")
     Store findStoreByCode(@Param("storeCode")Long storeCode);
 
-
+    @Query(value = "select u from Store u where  u.storeStatus = :storeStatus")
+    List<Store> findAllStoreByStatus( @Param("storeStatus")StoreStatus storeStatus);
 
 }

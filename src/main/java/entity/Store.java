@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Nationalized;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,6 +26,7 @@ public class Store extends EntityCommon {
 
     @Lob
     String image;
+
 
     @Lob
     @Nationalized
@@ -66,8 +68,8 @@ public class Store extends EntityCommon {
     Ward ward;
 
 
-    @OneToMany(mappedBy = "store")
-    List<StoreDocument> storeDocumentList;
+    @OneToMany(mappedBy = "store",cascade = CascadeType.ALL)
+    List<StoreDocument> storeDocumentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "store")
     List<BankStore> bankStoreList;

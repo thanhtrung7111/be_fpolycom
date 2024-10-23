@@ -20,7 +20,7 @@ public class MailService {
     @Async
     public void sendMail(String to, String subject, String text) throws MessagingException {
         MimeMessage message = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         message.setContent(text, "text/html");
         helper.setTo(to);
         helper.setSubject(subject);

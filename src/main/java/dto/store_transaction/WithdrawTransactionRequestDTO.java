@@ -24,6 +24,4 @@ public class WithdrawTransactionRequestDTO {
     Long storeTransactionCode;
 
 
-
-
 }

@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserStoreResponseDTO {
-    String storeRegisterCode;
+public class StoreResponseDTO {
+    String storeCode;
 
     String image;
 
@@ -35,5 +35,5 @@ public class UserStoreResponseDTO {
     String wardName;
 
     String  numberOfFollowed;
-
+    String  numberOfLiked;
 }

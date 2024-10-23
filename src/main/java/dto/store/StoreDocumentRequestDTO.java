@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StoreDocumentRequestDTO {
     String documentUrl;
-
+    Long documentCode;
 }

@@ -2,6 +2,7 @@ package dto.order;
 
 import dto.order_detail.OrderDetailRequestDTO;
 import dto.order_detail.OrderDetailResponseDTO;
+import dto.voucher.VoucherResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,12 @@ public class OrderInfoResponseDTO {
 
     Double totalAmountShip;
 
+    Boolean confirmOrder;
+
+    Boolean confirmDelivery;
+
+    Boolean confirmPickup;
+
     Double finalTotal;
 
     String orderBillCode;
@@ -34,6 +41,8 @@ public class OrderInfoResponseDTO {
     String address;
 
     Long shippingFeeCode;
+
+    Double totalAmountDiscount;
 
     Long storeCode;
 
@@ -50,5 +59,7 @@ public class OrderInfoResponseDTO {
     Boolean paymentSuccess;
 
     List<OrderDetailResponseDTO> orderDetailList;
+
+    List<VoucherResponseDTO> voucherList;
 
 }

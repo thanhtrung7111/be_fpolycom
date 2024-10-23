@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserStoreDetailResponseDTO {
 
+    Long storeCode;
     String image;
 
     String name;

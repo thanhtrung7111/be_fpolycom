@@ -14,7 +14,6 @@ public class UserProductResponseDTO {
     String name;
 
 
-
     String image;
 
     String status;
@@ -26,6 +25,10 @@ public class UserProductResponseDTO {
     Integer numberOfLikes;
 
     Integer numberOfEvaluates;
+
+    Long provinceCode;
+
+    String provinceName;
 
     Double pointEvaluate;
 

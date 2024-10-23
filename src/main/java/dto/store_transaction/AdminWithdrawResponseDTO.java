@@ -12,13 +12,25 @@ import java.util.Date;
 public class AdminWithdrawResponseDTO {
     Double totalAmount;
 
+    Long storeCode;
+
+    String storeName;
+
     Long storeTransactionCode;
 
     String content;
 
+    String bankBranchName;
+
+    String bankName;
+
     String bankStoreCode;
 
     String transactionStatus;
+
+    String bankAccountName;
+
+    String bankAccountNumber;
 
     String typeTransaction;
 

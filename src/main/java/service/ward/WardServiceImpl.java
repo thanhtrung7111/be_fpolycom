@@ -2,6 +2,7 @@ package service.ward;
 
 import dao.WardRepository;
 import dto.ward.AdminWardResponseDTO;
+import dto.ward.BaseWardResponseDTO;
 import dto.ward.WardCreateRequestDTO;
 import dto.ward.WardMapper;
 import entity.District;
@@ -29,16 +30,16 @@ public class WardServiceImpl implements WardService {
 
     @Override
     public AdminWardResponseDTO updateData(WardCreateRequestDTO wardCreateRequestDTO) {
-        Ward ward = wardRepository.findById(Long.valueOf(wardCreateRequestDTO.getWardCode())).orElseThrow(() -> new DataNotFoundException("Khong tim thay du lieu"));
+        Ward ward = wardRepository.findById(wardCreateRequestDTO.getWardCode()).orElseThrow(() -> new DataNotFoundException("Khong tim thay du lieu"));
         ward.setName(wardCreateRequestDTO.getName());
-        ward.setDistrict(District.builder().id(wardCreateRequestDTO.getWardCode()).build());
+        ward.setDistrict(District.builder().id(wardCreateRequestDTO.getDistrictCode()).build());
         ward.setUpdatedDate(new Date());
         return WardMapper.INSTANCE.adminWardToAdminWardDTO(wardRepository.save(ward));
     }
 
     @Override
     public AdminWardResponseDTO deleteData(WardCreateRequestDTO wardCreateRequestDTO) {
-        Ward ward = wardRepository.findById(Long.valueOf(wardCreateRequestDTO.getWardCode())).orElseThrow(()-> new DataNotFoundException("Khong tim thay du lieu"));
+        Ward ward = wardRepository.findById(wardCreateRequestDTO.getWardCode()).orElseThrow(()-> new DataNotFoundException("Khong tim thay du lieu"));
         ward.setDeletedDate(new Date());
         ward.setDeleted(true);
         return WardMapper.INSTANCE.adminWardToAdminWardDTO(wardRepository.save(ward));
@@ -52,5 +53,10 @@ public class WardServiceImpl implements WardService {
     @Override
     public AdminWardResponseDTO getDetailData(Long along) {
         return null;
+    }
+
+    @Override
+    public List<BaseWardResponseDTO> getAllWardByDistrict(Long districtCode) {
+        return WardMapper.INSTANCE.toBaseWardResponseDtoList(wardRepository.findWardByDistrict(districtCode));
     }
 }

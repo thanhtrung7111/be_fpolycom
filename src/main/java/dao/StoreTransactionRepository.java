@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface StoreTransactionRepository extends JpaRepository<StoreTransaction, Long> {
     @Query(value = "select o from StoreTransaction o where o.transactionStatus = :status")
-    List<StoreTransaction> findPendingTransactions(@Param("status") TransactionStatus status);
+    List<StoreTransaction> findTransactionsByStatus(@Param("status") TransactionStatus status);
+
 }
 
