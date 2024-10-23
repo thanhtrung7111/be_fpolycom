@@ -11,7 +11,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAccountRegisterResponseDTO {
+public class    UserAccountRegisterResponseDTO {
 
     String name;
 
