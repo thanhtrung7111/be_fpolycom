@@ -35,8 +35,8 @@ public class ShipperLoginController {
                 new UsernamePasswordAuthenticationToken(authRequest.getUserLogin()+"&"+ RoleType.SHIPPER.name(), authRequest.getPassword())
         );
         if (authentication.isAuthenticated()) {
-            ShipperLoginResponseDTO rs = shipperLoginService.getShipper(authRequest.getUserLogin()+"&"+ RoleType.SHIPPER.name());
-            String token = jwtService.generateToken(authentication.getName());
+            ShipperLoginResponseDTO rs = shipperLoginService.getShipper(authRequest.getUserLogin());
+            String token = jwtService.generateToken(authentication.getName()+"&"+ RoleType.SHIPPER.name());
             rs.setToken(token);
             System.out.println("check thanh cong");
             return ResponseEntity.ok().body(dataReturnService.success(rs));

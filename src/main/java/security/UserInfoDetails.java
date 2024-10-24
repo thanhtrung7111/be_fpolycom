@@ -1,6 +1,7 @@
 package security;
 
 import entity.Administration;
+import entity.Shipper;
 import entity.Store;
 import entity.UserAccount;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,6 +33,11 @@ public class UserInfoDetails implements UserDetails {
         this.username = store.getUserAccount().getUserLogin();
         this.password = store.getPassword();
         this.authorityList = List.of(new SimpleGrantedAuthority("STORE"));
+    }
+    public UserInfoDetails(Shipper shipper){
+        this.username = shipper.getUserLogin();
+        this.password = shipper.getPassword();
+        this.authorityList = List.of(new SimpleGrantedAuthority("SHIPPER"));
     }
 
     @Override
