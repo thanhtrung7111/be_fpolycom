@@ -35,7 +35,7 @@ public class ShipperController {
         return ResponseEntity.ok(dataReturnService.success(shipperService.unlockShipper(request)));
     }
     @PostMapping(value = "/shipper/new")
-    public ResponseEntity<Object> newShipper(@Valid @RequestBody ShipperRequestDTO request, Errors errors) {
+    public ResponseEntity<Object> newShipper( @RequestBody ShipperRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("userLogin")&&(errors.hasFieldErrors("passord")) ){
             return ResponseEntity.ok(dataReturnService.dataNotFound("userLogin or passord  is empty"));
         }

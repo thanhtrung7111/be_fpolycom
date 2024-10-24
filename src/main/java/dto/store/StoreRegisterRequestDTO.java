@@ -41,4 +41,5 @@ public class StoreRegisterRequestDTO {
     List<StoreDocumentRequestDTO> documentList;
 
 
+
 }
