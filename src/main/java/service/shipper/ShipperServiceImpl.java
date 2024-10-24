@@ -11,6 +11,12 @@ import entity.enum_package.ProductStatus;
 import entity.enum_package.ShipperStatus;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import service.common.EncodingService;
@@ -20,8 +26,9 @@ import java.util.List;
 
 @Service
 public class ShipperServiceImpl implements ShipperService {
+
     @Autowired
-     ShipperRepository shipperRepository;
+    ShipperRepository shipperRepository;
 
     @Autowired
     private ShipperMapper shipperMapper;
