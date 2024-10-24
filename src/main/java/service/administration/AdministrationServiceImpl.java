@@ -24,6 +24,14 @@ public class AdministrationServiceImpl implements AdministrationService {
 
     @Override
     public AdministrationResponseDTO postData(AdministrationRequestDTO administrationRequestDTO) {
+        if (adminRepository.findByUserLogin(administrationRequestDTO.getUserLogin()).isPresent()) {
+            throw new DataNotFoundException("Tên đăng nhập đã tồn tại"); // Thông báo lỗi nếu tên đăng nhập đã có
+        }
+
+        // Kiểm tra xem email có tồn tại không
+        if (adminRepository.findByEmail(administrationRequestDTO.getEmail()).isPresent()) {
+            throw new DataNotFoundException("Email đã tồn tại"); // Thông báo lỗi nếu email đã có
+        }
         Administration administration = AdministrationMapper.INSTANCE.toAdministration(administrationRequestDTO);
         administration.setPassword(new BCryptPasswordEncoder().encode(administrationRequestDTO.getPassword()));
         administration = adminRepository.save(administration);
