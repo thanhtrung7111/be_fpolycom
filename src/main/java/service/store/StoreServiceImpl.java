@@ -115,39 +115,39 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public ChangeInfoStoreResponseDTO changeInfoStore(ChangeInfoStoreRequestDTO requestDTO) {
         Store store = storeRepository.findStoreByCode(Long.valueOf(requestDTO.getStoreCode()));
-        if (requestDTO.getName() != null && !requestDTO.getName().isBlank()){
+        if (requestDTO.getName() != null && !requestDTO.getName().isBlank()) {
             store.setName(requestDTO.getName());
         }
-        if (requestDTO.getImage() != null && !requestDTO.getImage().isBlank()){
+        if (requestDTO.getImage() != null && !requestDTO.getImage().isBlank()) {
             store.setImage(requestDTO.getImage());
         }
-        if (requestDTO.getPhone() != null && !requestDTO.getPhone().isBlank()){
+        if (requestDTO.getPhone() != null && !requestDTO.getPhone().isBlank()) {
             store.setPhone(requestDTO.getPhone());
         }
-        if (requestDTO.getEmail() != null && !requestDTO.getEmail().isBlank()){
+        if (requestDTO.getEmail() != null && !requestDTO.getEmail().isBlank()) {
             store.setEmail(requestDTO.getEmail());
         }
-        if (requestDTO.getAddress() != null && !requestDTO.getAddress().isBlank()){
+        if (requestDTO.getAddress() != null && !requestDTO.getAddress().isBlank()) {
             store.setAddress(requestDTO.getAddress());
         }
-        if (requestDTO.getAddressDetail() != null && !requestDTO.getAddressDetail().isBlank()){
+        if (requestDTO.getAddressDetail() != null && !requestDTO.getAddressDetail().isBlank()) {
             store.setAddressDetail(requestDTO.getAddressDetail());
         }
-        if (requestDTO.getBannerImage() != null && !requestDTO.getBannerImage().isBlank()){
+        if (requestDTO.getBannerImage() != null && !requestDTO.getBannerImage().isBlank()) {
             store.setBannerImage(requestDTO.getBannerImage());
         }
-        if (requestDTO.getDistrictCode() != null){
+        if (requestDTO.getDistrictCode() != null) {
             store.setDistrict(District.builder().id(Long.valueOf(requestDTO.getDistrictCode())).build());
         }
-        if (requestDTO.getWardCode() != null){
+        if (requestDTO.getWardCode() != null) {
             store.setWard(Ward.builder().id(Long.valueOf(requestDTO.getWardCode())).build());
         }
-        if (requestDTO.getProvinceCode() != null){
+        if (requestDTO.getProvinceCode() != null) {
             store.setProvince(Province.builder().id(Long.valueOf(requestDTO.getProvinceCode())).build());
         }
         storeRepository.saveAndFlush(store);
         return StoreAccountMapper.INSTANCE.changeInfoStoreDTO(store);
-
+    }
     public List<StoreResponseDTO> getAllStoreByStatus(StoreStatus storeStatus) {
         return StoreMapper.INSTANCE.toUserStoreResponseDtoList(storeRepository.findAllStoreByStatus(storeStatus));
     }
