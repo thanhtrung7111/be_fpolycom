@@ -41,6 +41,7 @@ public class ShipperServiceImpl implements ShipperService {
 
     @Override
     public ShipperResponseDTO lockShipper(ShipperRequestDTO request) {
+
         Shipper shipper = shipperRepository.findById(Long.valueOf(request.getShipperCode())).orElseThrow(() -> new DataNotFoundException("Data Not Found"));
         shipper.setShipperStatus(ShipperStatus.inActive);
         return ShipperMapper.INSTANCE.toShipperResponseDto(shipperRepository.save(shipper));
@@ -55,6 +56,14 @@ public class ShipperServiceImpl implements ShipperService {
 
     @Override
     public ShipperResponseDTO postData(ShipperRequestDTO shipperRequestDTO) {
+        if (shipperRepository.findByUserLogin(shipperRequestDTO.getUserLogin()).isPresent()) {
+            throw new DataNotFoundException("Tên đăng nhập đã tồn tại"); // Thông báo lỗi nếu tên đăng nhập đã có
+        }
+
+        // Kiểm tra xem email có tồn tại không
+        if (shipperRepository.findByEmail(shipperRequestDTO.getEmail()).isPresent()) {
+            throw new DataNotFoundException("Email đã tồn tại"); // Thông báo lỗi nếu email đã có
+        }
         Shipper shipper = shipperMapper.INSTANCE.toShipper(shipperRequestDTO);
         shipper.setPassword(new BCryptPasswordEncoder().encode(shipper.getPassword()));
          shipper = shipperRepository.save(shipper);

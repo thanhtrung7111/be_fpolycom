@@ -36,8 +36,8 @@ public class ShipperController {
     }
     @PostMapping(value = "/shipper/new")
     public ResponseEntity<Object> newShipper(@Valid @RequestBody ShipperRequestDTO request, Errors errors) {
-        if(errors.hasFieldErrors("userLogin")&&(errors.hasFieldErrors("passord")) ){
-            return ResponseEntity.ok(dataReturnService.dataNotFound("userLogin or passord  is empty"));
+        if(errors.hasFieldErrors("userLogin")&&(errors.hasFieldErrors("password")) ){
+            return ResponseEntity.ok(dataReturnService.dataNotFound("userLogin or password  is empty"));
         }
         return ResponseEntity.ok(dataReturnService.success(shipperService.postData(request)));
     }
