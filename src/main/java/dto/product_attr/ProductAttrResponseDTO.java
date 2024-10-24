@@ -12,7 +12,7 @@ public class ProductAttrResponseDTO {
 
     String typeGoodAttrCode;
 
-    String nameAttr;
+    String typeGoodAttrName;
 
     String productCode;
 

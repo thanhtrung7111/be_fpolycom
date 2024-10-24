@@ -51,4 +51,9 @@ public class TypeGoodAttrServiceImpl implements TypeGoodAttrService {
     public TypeGoodAttrResponseDTO getDetailData(Long aLong) {
         return null;
     }
+
+    @Override
+    public List<TypeGoodAttrResponseDTO> getAllTypeGoodAttrByTypeGood(Long typeGoodCode) {
+        return TypeGoodAttrMapper.INSTANCE.toList(typeGoodAttrRepository.findAllByTypeGood(typeGoodCode));
+    }
 }

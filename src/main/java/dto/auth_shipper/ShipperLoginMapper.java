@@ -17,11 +17,6 @@ public interface ShipperLoginMapper {
 
 
     // Mapping từ Entity sang DTO
-    @Mapping(target = "shipperCode", source = "id")
-    @Mapping(target = "userLogin", source = "shipper.userLogin")
-    @Mapping(target = "password", source = "shipper.password")
-    @Mapping(target = "name", source = "shipper.name")
-
     ShipperLoginResponseDTO toShipperLoginResponseDto(Shipper shipper);
 
 

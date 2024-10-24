@@ -96,8 +96,10 @@ public class FpolycomApplication implements CommandLineRunner {
 	@Autowired
 	PaymentTypeRepository paymentTypeRepository;
 
+
 	@Autowired
 	ShippingFeeRepository shippingFeeRepository;
+
 
 
 	public static void main(String[] args) {
@@ -155,7 +157,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		Product product = Product.builder().id(1L).image("https://tiki.vn/blog/wp-content/uploads/2023/11/laptop-mini.jpeg").createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active).name("San pharm 01").store(store).typeGood(typeGood).build();
 		productRepository.save(product);
 
-		Discount discount = Discount.builder().id(1L).percentDecrease(10).build();
+		Discount discount = Discount.builder().id(1L).name("Không giảm giá").percentDecrease(10).build();
 		discountRepository.save(discount);
 
 		ProductDetail productDetail = ProductDetail.builder().discount(discount).quantity(30).image("asdsad").price(50000.0).id(1L).name("RAM").product(product).build();
@@ -177,12 +179,11 @@ public class FpolycomApplication implements CommandLineRunner {
 		Bank bank2	 = Bank.builder().id(2L).name("Ngan hang mb bank").shortName("MB").build();
 		bankRepository.saveAll(List.of(bank,bank2));
 
-		BankBranch bankBranch = BankBranch.builder().id(1L).name("chi nhanh binh duong").bank(bank).build();
-		BankBranch bankBranch2 = BankBranch.builder().id(2L).name("chi nhanh binh duong mien bac").bank(bank).build();
-		bankBranchRepository.saveAll(List.of(bankBranch,bankBranch2));
+
 
 
 		BankStore bankStore = BankStore.builder().id(1L).store(store).bankStoreStatus(BankStatus.active).bankBranch(bankBranch).accountName("THANH TRUNG").accountNumber("123213").build();
+
 		bankStoreRepository.save(bankStore);
 
 		Voucher voucher = Voucher.builder().id(1L).voucherType(VoucherType.store).store(store).beginDate(new Date()).endDate(new Date()).percentDecrease(10).priceApply(100000.0).name("Khuye mai thang 10").beginDate(new Date()).endDate(new Date()).build();
@@ -196,11 +197,10 @@ public class FpolycomApplication implements CommandLineRunner {
 		PaymentType paymentType = PaymentType.builder().id(1L).name("Thanh toasn viet qr").image("sfsdf").build();
 		paymentTypeRepository.save(paymentType);
 
-		Orders orders = Orders.builder().paymentType(paymentType).shippingFee(shippingFee).orderStatus(OrderStatus.complete).createdDate(new Date()).deleted(false).address("35 Tran dai nghia").addressDetail("35 Trai Dai Nghiax kp noi hoa 2 ").updatedDate(null).deletedDate(null).id(1L).pickupDate(new Date()).noteContent("Content").store(store).deliveryType(deliveryType).userAccount(userAccount).finalTotal(50000.0).totalAmount(60000.0).totalAmountShip(80000.0).totalAmountVoucher(30000.0).deliveryDate(new Date()).build();
+		Orders orders = Orders.builder().paymentType(paymentType).orderStatus(OrderStatus.complete).createdDate(new Date()).deleted(false).address("35 Tran dai nghia").addressDetail("35 Trai Dai Nghiax kp noi hoa 2 ").updatedDate(null).deletedDate(null).id(1L).pickupDate(new Date()).noteContent("Content").store(store).deliveryType(deliveryType).userAccount(userAccount).finalTotal(50000.0).totalAmount(60000.0).totalAmountShip(80000.0).totalAmountVoucher(30000.0).deliveryDate(new Date()).build();
 		ordersRepository.save(orders);
 
-		StoreTransaction storeTransaction = StoreTransaction.builder().id(1L).bankStore(bankStore).typeTransaction(TypeTransaction.withdraw).totalAmount(10000.0).content("hmmmm").transactionStatus(TransactionStatus.pending).build();
-		storeTransactionRepository.save(storeTransaction);
+
 
 
 

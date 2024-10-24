@@ -27,8 +27,7 @@ public class ShipperLoginServiceImpl implements ShipperLoginService{
     ShipperRepository shipperRepository;
     @Override
     public ShipperLoginResponseDTO getShipper(String userLogin) {
-        Shipper shipper = shipperRepository.findByUserLogin(userLogin)
-                .orElseThrow(() -> new UsernameNotFoundException("Shipper không tồn tại!"));
+        Shipper shipper = shipperRepository.findByUserLogin(userLogin).orElseThrow(() -> new UsernameNotFoundException("Shipper không tồn tại!"));
         shipper.setUserLogin(encodingService.encode(shipper.getUserLogin()));
         return ShipperLoginMapper.INSTANCE.toShipperLoginResponseDto(shipper);
     }
