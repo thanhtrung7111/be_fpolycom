@@ -19,6 +19,8 @@ public class AuthUserLoginResponseDTO {
 
     String storeStatus;
 
+    Long storeCode;
+
     String storeName;
 
     String token;
