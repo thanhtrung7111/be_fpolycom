@@ -130,6 +130,11 @@ public class CommonController {
         return ResponseEntity.ok(dataReturnService.success(discountService.getAllData()));
     }
 
+    @GetMapping(value = "/common/banner-position/all")
+    public ResponseEntity<Object> getAllBannerPosition() {
+        return ResponseEntity.ok(dataReturnService.success(Arrays.stream(BannerPosition.values()).map(status-> new StatusDTO(status.name(),status.getDescription())).collect(Collectors.toList())));
+    }
+
 
 
     @GetMapping(value = "/common/payment-type/all")

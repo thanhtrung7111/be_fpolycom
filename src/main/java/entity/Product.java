@@ -54,6 +54,9 @@ public class Product extends EntityCommon{
     @OneToMany(mappedBy = "product")
     List<Evaluate> evaluateList;
 
+    @OneToMany(mappedBy = "product")
+    List<StoreBanner> storeBannerList;
+
     @OneToMany(mappedBy = "product",cascade = CascadeType.PERSIST)
     List<ProductAttr> productAttrList;
 }
