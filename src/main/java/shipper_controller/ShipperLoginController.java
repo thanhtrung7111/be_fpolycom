@@ -23,13 +23,14 @@ public class ShipperLoginController {
     JWTService jwtService;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    AuthenticationManager authenticationManager;
 
     @Autowired
     DataReturnService dataReturnService;
 
-    @PostMapping("/shipper/shipper-login")
+    @PostMapping("/shipper-login")
     public ResponseEntity<Object> authenticateAndGetToken(@RequestBody ShipperLoginRequestDTO authRequest) {
+        System.out.println(authRequest.getUserLogin()+"  check controller"+ RoleType.SHIPPER.name());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUserLogin()+"&"+ RoleType.SHIPPER.name(), authRequest.getPassword())
         );
@@ -37,6 +38,7 @@ public class ShipperLoginController {
             ShipperLoginResponseDTO rs = shipperLoginService.getShipper(authRequest.getUserLogin()+"&"+ RoleType.SHIPPER.name());
             String token = jwtService.generateToken(authentication.getName());
             rs.setToken(token);
+            System.out.println("check thanh cong");
             return ResponseEntity.ok().body(dataReturnService.success(rs));
         } else {
             return ResponseEntity.ok().body("Fail");

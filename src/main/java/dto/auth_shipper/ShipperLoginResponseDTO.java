@@ -9,8 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ShipperLoginResponseDTO {
     String userLogin;
-String shipperCode;
-    String password;
-    String name;
     String token;
 }
