@@ -2,6 +2,7 @@ package admin_controller;
 
 import dto.administration.AdministrationRequestDTO;
 import dto.role_admin.RoleRequestDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -22,7 +23,7 @@ public class AdministrationController {
     }
 
     @PostMapping(value = "/admin-account/new")
-    public ResponseEntity<Object> newAdmin(@RequestBody AdministrationRequestDTO request, Errors errors) {
+    public ResponseEntity<Object> newAdmin(@Valid @RequestBody AdministrationRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("userLogin")&&(errors.hasFieldErrors("Password")) ){
             return ResponseEntity.ok(dataReturnService.dataNotFound("userLogin & Password is empty"));
         }

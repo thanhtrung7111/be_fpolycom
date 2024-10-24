@@ -13,10 +13,23 @@ public class UserCartResponseDTO {
 
     String productName;
 
+    Long productCode;
+
+    Long discountCode;
+
+    Integer percentDecrease;
+
+    String image;
+
     String detailName;
 
     Double price;
 
     Integer quantity;
 
+    String storeName;
+
+    Long provinceCode;
+
+    Long storeCode;
 }

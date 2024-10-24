@@ -3,6 +3,7 @@ package com.group4.fpolycom;
 import dao.*;
 import entity.*;
 import entity.enum_package.*;
+import org.hibernate.query.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +21,7 @@ import java.util.List;
 @SpringBootApplication
 @EntityScan(basePackages = {"entity"})
 @EnableJpaRepositories(basePackages = {"dao"})
-@ComponentScan(basePackages = {"security","service","admin_controller","user_controller","dto","common_controller","exeception_handler","notifycation_controller","store_controller","configuration"})
+@ComponentScan(basePackages = {"security","service","admin_controller","user_controller","dto","common_controller","exeception_handler","notifycation_controller","store_controller","configuration","shipper_controller"})
 public class FpolycomApplication implements CommandLineRunner {
 
 	@Autowired
@@ -80,6 +81,25 @@ public class FpolycomApplication implements CommandLineRunner {
 	@Autowired
 	DiscountRepository discountRepository;
 
+	@Autowired
+	StoreTransactionRepository storeTransactionRepository;
+
+	@Autowired
+	OrdersRepository ordersRepository;
+
+	@Autowired
+	DeliveryTypeRepository deliveryTypeRepository;
+
+	@Autowired
+	BankStoreRepository bankStoreRepository;
+
+	@Autowired
+	PaymentTypeRepository paymentTypeRepository;
+
+	@Autowired
+	ShippingFeeRepository shippingFeeRepository;
+
+
 	public static void main(String[] args) {
 		SpringApplication.run(FpolycomApplication.class, args);
 	}
@@ -100,15 +120,12 @@ public class FpolycomApplication implements CommandLineRunner {
 		Relationship relationship4 = Relationship.builder().id(4L).userAccountPrimary(userAccount).userAccountSecondary(userAccount3).friendshipStatus(FriendshipStatus.accepted).build();
 		relationshipRepository.saveAll(List.of(relationship,relationship2,relationship3,relationship4));
 
-		Store store = Store.builder().id(1L).userAccount(userAccount).name("Cuawr hang thu cng").storeStatus(StoreStatus.active).userAccount(userAccount).password(encoder.encode("thanhtrung")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
-		storeRepository.save(store);
-		Followed followed = Followed.builder().id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).statusFollow(true).userAccount(userAccount2).store(store).build();
-		followedRepository.save(followed);
 
 
 
-		Administration administration = Administration.builder().id(1L).name("Thaành Trung").image("sdfsdf").userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
-		adminRepository.save(administration);
+
+//		Administration administration = Administration.builder().id(1L).name("Thaành Trung").image("sdfsdf").userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+//		adminRepository.save(administration);
 
 		Province province = Province.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Bình Dương").build();
 		Province province2 = Province.builder().id(2L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Đồng Nai").build();
@@ -121,6 +138,11 @@ public class FpolycomApplication implements CommandLineRunner {
 		Ward ward = Ward.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Binh An").district(district).build();
 		wardRepository.saveAll(List.of(ward));
 
+		Store store = Store.builder().id(1L).userAccount(userAccount).district(district).province(province).ward(ward).name("Cuawr hang thu cng").email("Thucungw@gmail.com").bannerImage("https://tdtdecor.vn/wp-content/uploads/2021/07/thiet-ke-shop-thu-cung-13.jpg").image("https://freelancervietnam.vn/wp-content/uploads/2020/06/post-thumb-pet-shop.jpg").password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+//		Store store2 = Store.builder().id(5L).userAccount(userAccount2).district(district).province(province).ward(ward).name("Dien thoai di dong").email("Th22ucungw@gmail.com").bannerImage("https://tdtdecor.vn/wp-content/uploads/2021/07/thiet-ke-shop-thu-cung-13.jpg").image("https://freelancervietnam.vn/wp-content/uploads/2020/06/post-thumb-pet-shop.jpg").password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		storeRepository.saveAll(List.of(store));
+		Followed followed = Followed.builder().id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).statusFollow(true).userAccount(userAccount2).store(store).build();
+		followedRepository.save(followed);
 		NotifycationUser notifycationUser = NotifycationUser.builder().id(1L).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 1").userAccount(userAccount).build();
 		NotifycationUser notifycationUser2 = NotifycationUser.builder().id(2L).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 2").userAccount(userAccount).build();
 
@@ -130,7 +152,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		TypeGood typeGood = TypeGood.builder().id(1L).name("Laptop").build();
 		typeGoodRepository.save(typeGood);
 
-		Product product = Product.builder().id(1L).createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active).name("San pharm 01").store(store).typeGood(typeGood).build();
+		Product product = Product.builder().id(1L).image("https://tiki.vn/blog/wp-content/uploads/2023/11/laptop-mini.jpeg").createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active).name("San pharm 01").store(store).typeGood(typeGood).build();
 		productRepository.save(product);
 
 		Discount discount = Discount.builder().id(1L).percentDecrease(10).build();
@@ -147,6 +169,10 @@ public class FpolycomApplication implements CommandLineRunner {
 		Liked liked = Liked.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).userAccount(userAccount).product(product).build();
 		likedRepository.save(liked);
 
+		ShippingFee shippingFee = ShippingFee.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.inner).fee(20000.0).build();
+		ShippingFee shippingFee2 = ShippingFee.builder().id(2L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.outer).fee(30000.0).build();
+		shippingFeeRepository.saveAll(List.of(shippingFee,shippingFee2));
+
 		Bank bank	 = Bank.builder().id(1L).name("Ngan hang bidv").shortName("BIDV").build();
 		Bank bank2	 = Bank.builder().id(2L).name("Ngan hang mb bank").shortName("MB").build();
 		bankRepository.saveAll(List.of(bank,bank2));
@@ -156,8 +182,27 @@ public class FpolycomApplication implements CommandLineRunner {
 		bankBranchRepository.saveAll(List.of(bankBranch,bankBranch2));
 
 
+		BankStore bankStore = BankStore.builder().id(1L).store(store).bankStoreStatus(BankStatus.active).bankBranch(bankBranch).accountName("THANH TRUNG").accountNumber("123213").build();
+		bankStoreRepository.save(bankStore);
+
 		Voucher voucher = Voucher.builder().id(1L).voucherType(VoucherType.store).store(store).beginDate(new Date()).endDate(new Date()).percentDecrease(10).priceApply(100000.0).name("Khuye mai thang 10").beginDate(new Date()).endDate(new Date()).build();
 		voucherRepository.save(voucher);
+
+		DeliveryType deliveryType = DeliveryType.builder().id(1L).name("Ship hang sieu toc").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(20000.0).build();
+		deliveryTypeRepository.save(deliveryType);
+
+
+
+		PaymentType paymentType = PaymentType.builder().id(1L).name("Thanh toasn viet qr").image("sfsdf").build();
+		paymentTypeRepository.save(paymentType);
+
+		Orders orders = Orders.builder().paymentType(paymentType).shippingFee(shippingFee).orderStatus(OrderStatus.complete).createdDate(new Date()).deleted(false).address("35 Tran dai nghia").addressDetail("35 Trai Dai Nghiax kp noi hoa 2 ").updatedDate(null).deletedDate(null).id(1L).pickupDate(new Date()).noteContent("Content").store(store).deliveryType(deliveryType).userAccount(userAccount).finalTotal(50000.0).totalAmount(60000.0).totalAmountShip(80000.0).totalAmountVoucher(30000.0).deliveryDate(new Date()).build();
+		ordersRepository.save(orders);
+
+		StoreTransaction storeTransaction = StoreTransaction.builder().id(1L).bankStore(bankStore).typeTransaction(TypeTransaction.withdraw).totalAmount(10000.0).content("hmmmm").transactionStatus(TransactionStatus.pending).build();
+		storeTransactionRepository.save(storeTransaction);
+
+
 
 	}
 

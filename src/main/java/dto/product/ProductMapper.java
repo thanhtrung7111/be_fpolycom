@@ -1,35 +1,100 @@
 package dto.product;
 
-import dto.province.AdminProvinceResponseDTO;
-import dto.province.BaseProvinceResponseDTO;
-import dto.province.ProvinceCreateRequestDTO;
-import dto.province.ProvinceMapper;
-import entity.District;
+import dto.product_attr.ProductAttrMapper;
+import entity.Evaluate;
+import entity.Liked;
 import entity.Product;
-import entity.Province;
-import entity.enum_package.ProductStatus;
+import entity.ProductDetail;
+import exeception_handler.DataNotFoundException;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper( unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE,componentModel = "spring" )
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {ProductDetailMapper.class, ProductAttrMapper.class})
 public interface ProductMapper {
 
     ProductMapper INSTANCE = Mappers.getMapper(ProductMapper.class);
 
-    // Mapping từ DTO sang Entity
-    @Mapping(target = "id", source = "productCode")
-    Product toProduct(ProductApproveRequestDTO dto);
 
-    // Mapping từ Entity sang DTO
+    @Mapping(target = "typeGoodName", source = "typeGood.name")
     @Mapping(target = "productCode", source = "id")
-    @Mapping(target = "productStatusCode", source = "productStatus")
-    ProductApproveResponeDTO toProductResponseDto(Product entity);
+    @Mapping(target = "typeGoodCode", source = "typeGood.id")
+    @Mapping(target = "status", source = "productStatus")
+    @Mapping(target = "numberOfLikes", source = "likedList", qualifiedByName = "numberOfLikes")
+    @Mapping(target = "numberOfEvaluates", source = "evaluateList", qualifiedByName = "numberOfEvaluates")
+    @Mapping(target = "pointEvaluate", source = "evaluateList", qualifiedByName = "pointEvaluate")
+    @Mapping(target = "maxPrice", source = "productDetailList", qualifiedByName = "maxPrice")
+    @Mapping(target = "minPrice", source = "productDetailList", qualifiedByName = "minPrice")
+    @Mapping(target = "provinceCode", source = "store.province.id")
+    @Mapping(target = "provinceName", source = "store.province.name")
+    UserProductResponseDTO toUserProductResponseDto(Product product);
 
-//chuyển đổi danh sách các Product sang danh sách các ProductApproveResponeDTO.
-    List<ProductApproveResponeDTO> toProductApproveResponseDTO(List<Product> products);
+    @Mapping(target = "typeGoodName", source = "typeGood.name")
+    @Mapping(target = "productCode", source = "id")
+    @Mapping(target = "productDetailList", source = "productDetailList")
+    @Mapping(target = "typeGoodCode", source = "typeGood.id")
+    @Mapping(target = "status", source = "productStatus")
+    @Mapping(target = "numberOfLikes", source = "likedList", qualifiedByName = "numberOfLikes")
+    @Mapping(target = "numberOfEvaluates", source = "evaluateList", qualifiedByName = "numberOfEvaluates")
+    @Mapping(target = "pointEvaluate", source = "evaluateList", qualifiedByName = "pointEvaluate")
+    @Mapping(target = "maxPrice", source = "productDetailList", qualifiedByName = "maxPrice")
+    @Mapping(target = "minPrice", source = "productDetailList", qualifiedByName = "minPrice")
+    @Mapping(target = "productAttrList", source = "productAttrList")
+    @Mapping(target = "storeCode", source = "store.id")
+    @Mapping(target = "storeName", source = "store.name")
+    ProductInfoResponseDTO toProductInfoResponseDto(Product product);
+
+
+    List<UserProductResponseDTO> toUserProductResponseDtoList(List<Product> productList);
+
+
+    @Mapping(target = "typeGood.id", source = "typeGoodCode")
+    @Mapping(target = "store.id", source = "storeCode")
+    @Mapping(target = "productDetailList", source = "productDetailList")
+    @Mapping(target = "productAttrList", source = "productAttrList")
+    @Mapping(target = "id", source = "productCode")
+    Product toProduct(ProductRequestDTO requestDTO);
+
+    @Named("numberOfLikes")
+    default Integer numberOfLikes(List<Liked> likedList) {
+        return likedList != null ? likedList.size() : 0;
+    }
+
+    @Named("numberOfEvaluates")
+    default Integer numberOfEvaluates(List<Evaluate> evaluateList) {
+        return evaluateList != null ? evaluateList.size() : 0;
+    }
+
+    @Named("pointEvaluate")
+    default Double pointEvaluate(List<Evaluate> evaluateList) {
+        return evaluateList != null && !evaluateList.isEmpty() ? evaluateList.stream().mapToInt(Evaluate::getQuality).average().orElseThrow(() -> new DataNotFoundException("Khong ton tai du lieu")) : 0;
+    }
+
+    @Named("maxPrice")
+    default Double maxPrice(List<ProductDetail> productDetailList) {
+        return productDetailList != null && !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(item->{
+            if(item.getDiscount()!=null && item.getDiscount().getPercentDecrease() != null){
+                return  item.getPrice()- item.getDiscount().getPercentDecrease()*item.getPrice()/100;
+            }else{
+                return item.getPrice();
+            }
+        }).max().orElseThrow(() -> new DataNotFoundException("Khong ton tai du lieu")) : 0;
+    }
+
+    @Named("minPrice")
+    default Double minPrice(List<ProductDetail> productDetailList) {
+        return productDetailList != null && !productDetailList.isEmpty() ? productDetailList.stream().mapToDouble(item->{
+            if(item.getDiscount()!=null && item.getDiscount().getPercentDecrease() != null){
+                return  item.getPrice()- item.getDiscount().getPercentDecrease()*item.getPrice()/100;
+            }else{
+                return item.getPrice();
+            }
+        }).min().orElseThrow(() -> new DataNotFoundException("Khong ton tai du lieu")) : 0;
+    }
+
 
 }

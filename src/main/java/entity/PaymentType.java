@@ -28,4 +28,8 @@ public class PaymentType extends EntityCommon{
     @OneToMany(mappedBy = "paymentType")
     List<PaymentReceipt> paymentReceiptList;
 
+
+    @OneToMany(mappedBy = "paymentType")
+    List<Orders> ordersList;
+
 }

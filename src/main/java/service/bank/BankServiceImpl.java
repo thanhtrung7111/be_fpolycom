@@ -29,6 +29,7 @@ public class BankServiceImpl implements BankService {
         bank.setUpdatedDate(new Date());
         bank.setDescription(bankRequestDTO.getDescription());
         bank.setName(bankRequestDTO.getName());
+        bank.setImage(bankRequestDTO.getImage());
         bank.setShortName(bankRequestDTO.getShortName());
         return BankMapper.INSTANCE.toBankResponseDTO(bankRepository.save(bank));
     }
@@ -46,7 +47,7 @@ public class BankServiceImpl implements BankService {
     @Override
     public List<BankResponseDTO> getAllData() {
 
-        return BankMapper.INSTANCE.toBankResponseDTO(bankRepository.findAll());
+        return BankMapper.INSTANCE.toBankResponseDTO(bankRepository.findAllBankByActive());
     }
 
     @Override

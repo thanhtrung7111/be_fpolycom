@@ -13,6 +13,7 @@ import service.district.DistrictService;
 
 @RestController
 @RequestMapping(value = "/admin")
+@CrossOrigin("*")
 public class DistrictController {
 
     @Autowired

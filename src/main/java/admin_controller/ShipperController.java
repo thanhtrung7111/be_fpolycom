@@ -3,6 +3,7 @@ package admin_controller;
 import dto.product.ProductApproveRequestDTO;
 import dto.role_admin.RoleRequestDTO;
 import dto.shipper.ShipperRequestDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -30,11 +31,11 @@ public class ShipperController {
         return ResponseEntity.ok(dataReturnService.success(shipperService.lockShipper(request)));
     }
     @PostMapping("/shipper/unlock")
-    public ResponseEntity<DataReturn> unlockProduct(@RequestBody ShipperRequestDTO request) {
+    public ResponseEntity<DataReturn> unlockShipper(@RequestBody ShipperRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(shipperService.unlockShipper(request)));
     }
     @PostMapping(value = "/shipper/new")
-    public ResponseEntity<Object> newShipper(@RequestBody ShipperRequestDTO request, Errors errors) {
+    public ResponseEntity<Object> newShipper(@Valid @RequestBody ShipperRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("userLogin")&&(errors.hasFieldErrors("passord")) ){
             return ResponseEntity.ok(dataReturnService.dataNotFound("userLogin or passord  is empty"));
         }

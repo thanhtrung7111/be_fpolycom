@@ -2,6 +2,7 @@ package admin_controller;
 
 import dto.bank.BankRequestDTO;
 import dto.role_admin.RoleRequestDTO;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -22,7 +23,7 @@ public class RoleController {
     }
 
     @PostMapping(value = "/role/new")
-    public ResponseEntity<Object> newRole(@RequestBody RoleRequestDTO request, Errors errors) {
+    public ResponseEntity<Object> newRole(@Valid @RequestBody RoleRequestDTO request, Errors errors) {
         if(errors.hasFieldErrors("name") ){
             return ResponseEntity.ok(dataReturnService.dataNotFound("Rolecode is empty"));
         }

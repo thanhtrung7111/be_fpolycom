@@ -8,6 +8,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import service.bank.BankService;
 import service.data_return.DataReturnService;
+import service.user_bank.UserBankService;
 
 @RestController
 @RequestMapping(value = "/admin")
@@ -18,9 +19,17 @@ public class BankController {
     @Autowired
     BankService bankService;
 
+    @Autowired
+    UserBankService userBankService;
+
     @GetMapping(value = "/bank/all")
     public ResponseEntity<Object> getAllBank() {
         return ResponseEntity.ok(dataReturnService.success(bankService.getAllData()));
+    }
+
+    @GetMapping(value = "/bank-user/all")
+    public ResponseEntity<Object> getAllBankUser() {
+        return ResponseEntity.ok(dataReturnService.success(userBankService.getAllBankUserByAdmin()));
     }
 
     @PostMapping(value = "/bank/new")

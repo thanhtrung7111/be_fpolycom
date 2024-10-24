@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductAttrResponseDTO {
-    String attr_name;
+    String attrValue;
 
     String typeGoodAttrCode;
+
+    String nameAttr;
 
     String productCode;
 

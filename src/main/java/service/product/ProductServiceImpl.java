@@ -1,41 +1,113 @@
 package service.product;
 
+import dao.LikedRepository;
 import dao.ProductRepository;
-import dto.product.ProductApproveRequestDTO;
-import dto.product.ProductApproveResponeDTO;
+import dto.product.ProductInfoResponseDTO;
 import dto.product.ProductMapper;
+import dto.product.ProductRequestDTO;
+import dto.product.UserProductResponseDTO;
+import entity.Liked;
 import entity.Product;
 import entity.enum_package.ProductStatus;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import service.auth_store.AuthStoreService;
+import service.auth_user.AuthUserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
+
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    AuthUserService authUserService;
+
+    @Autowired
+    LikedRepository likedRepository;
+
+    @Autowired
+    AuthStoreService authStoreService;
+
     @Override
-    public List<ProductApproveResponeDTO> getAll() {
-        List<ProductApproveResponeDTO> toList = ProductMapper.INSTANCE.toProductApproveResponseDTO(productRepository.findAll());
+    public List<UserProductResponseDTO> getALlProductByStatus(ProductStatus productStatus) {
+        return ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.getAllProductByStatus(productStatus));
+    }
+
+    @Override
+    public List<UserProductResponseDTO> getALlProductByStore(Long storeCode) {
+        return ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.getAllProductByStore(storeCode,ProductStatus.active));
+    }
+
+    @Override
+    public ProductInfoResponseDTO getProductById(Long productCode, String userLogin) {
+        String userLoginExtract = null;
+        ProductInfoResponseDTO responseDTO = ProductMapper.INSTANCE.toProductInfoResponseDto(productRepository.findByProductByStatus(productCode, ProductStatus.active).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai")));
+        if (userLogin != null && !userLogin.isBlank()) {
+            userLoginExtract = authUserService.extractUserlogin(userLogin);
+            Optional<Liked> liked = likedRepository.findLikedByUserLoginAndProduct(userLoginExtract, responseDTO.getProductCode());
+            if (liked.isPresent()) {
+                responseDTO.setLiked(true);
+            }
+        }
+        return responseDTO;
+    }
+
+
+    @Override
+    public List<UserProductResponseDTO> getAll() {
+        List<UserProductResponseDTO> toList = ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.findAll());
         return toList;
     }
 
     @Override
-    public ProductApproveResponeDTO lockProduct(ProductApproveRequestDTO request) {
-        Product product = productRepository.findById(Long.valueOf(request.getProductCode())).orElseThrow(() -> new DataNotFoundException("Data Not Found"));
-        product.setProductStatus(ProductStatus.inActive);
-        return ProductMapper.INSTANCE.toProductResponseDto(productRepository.save(product));
+    public UserProductResponseDTO lockProduct(Long productCode) {
+        Product product = productRepository.findById(productCode).orElseThrow(() -> new DataNotFoundException("Data Not Found"));
+        product.setProductStatus(ProductStatus.lock);
+        return ProductMapper.INSTANCE.toUserProductResponseDto(productRepository.save(product));
     }
 
     @Override
-    public ProductApproveResponeDTO unlockProduct(ProductApproveRequestDTO request) {
-        Product product = productRepository.findById(Long.valueOf(request.getProductCode())).orElseThrow(()-> new DataNotFoundException("Data Not found"));
+    public UserProductResponseDTO unlockProduct(Long productCode) {
+        Product product = productRepository.findById(productCode).orElseThrow(()-> new DataNotFoundException("Data Not found"));
         product.setProductStatus(ProductStatus.active);
-        return ProductMapper.INSTANCE.toProductResponseDto(productRepository.save(product));
+        return ProductMapper.INSTANCE.toUserProductResponseDto(productRepository.save(product));
 
     }
 
 
+    @Override
+    public ProductInfoResponseDTO postNew(ProductRequestDTO requestDTO) {
+        if (authStoreService.isValidStore(requestDTO.getStoreCode())) {
+            throw new UsernameNotFoundException("Ban khong co quyen tren du lieu nay!");
+        }
+        Product product = ProductMapper.INSTANCE.toProduct(requestDTO);
+        product.getProductDetailList().forEach(item -> item.setProduct(product));
+        product.getProductAttrList().forEach(item -> item.setProduct(product));
+        product.setProductStatus(ProductStatus.pending);
+        Product productSaved = productRepository.save(product);
+        System.out.println(productSaved.getName());
+//        Product product1 = productRepository.findById(productSaved.getId()).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai"));
+        return ProductMapper.INSTANCE.toProductInfoResponseDto(productSaved);
+    }
+
+    @Override
+    public ProductInfoResponseDTO updateData(ProductRequestDTO requestDTO) {
+        if (authStoreService.isValidStore(requestDTO.getStoreCode())) {
+            throw new UsernameNotFoundException("Ban khong co quyen tren du lieu nay!");
+        }
+        Product product = ProductMapper.INSTANCE.toProduct(requestDTO);
+        product.getProductDetailList().forEach(item -> item.setProduct(product));
+        product.getProductAttrList().forEach(item -> item.setProduct(product));
+        product.setProductStatus(ProductStatus.active);
+        productRepository.save(product);
+        System.out.println(product.getProductStatus()+"---------------------------");
+        Product product1 = productRepository.findById(requestDTO.getProductCode()).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai"));
+        return ProductMapper.INSTANCE.toProductInfoResponseDto(product1);
+    }
 }

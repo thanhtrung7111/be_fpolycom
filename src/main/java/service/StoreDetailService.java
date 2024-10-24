@@ -11,10 +11,8 @@ import org.springframework.stereotype.Service;
 import security.UserInfoDetails;
 import service.auth_user.AuthUserService;
 
-import java.util.Optional;
-
 @Service
-public class StoreService  implements UserDetailsService {
+public class StoreDetailService implements UserDetailsService {
 
     @Autowired
     StoreRepository storeRepository;
@@ -24,11 +22,12 @@ public class StoreService  implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.print(authUserService.extractUserlogin(username));
-        Store store =  storeRepository.findByUserAccount(authUserService.extractUserlogin(username)).orElseThrow(()->new UsernameNotFoundException("Cua hang khong ton tai!"));
+        System.out.println(username +"LoadUserByusername");
+        Store store =  storeRepository.findByUserAccount(username).orElseThrow(()->new UsernameNotFoundException("Cua hang khong ton tai!"));
         if(!store.getStoreStatus().equals(StoreStatus.active)){
             throw new UsernameNotFoundException("Cua hang chua duoc kick hoat!");
         }
+
         return new UserInfoDetails(store);
     }
 }

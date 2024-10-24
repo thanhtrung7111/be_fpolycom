@@ -15,4 +15,10 @@ public interface VoucherRepository extends JpaRepository<Voucher,Long> {
 
     @Query(value = "select o from Voucher o where o.store.id = :storeCode")
     List<Voucher> findAllVoucherByStore(@Param("storeCode")Long storeCode);
+
+
+
+
+
+
 }

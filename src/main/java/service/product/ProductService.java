@@ -1,18 +1,27 @@
 package service.product;
 
-import dto.product.ProductApproveRequestDTO;
-import dto.product.ProductApproveResponeDTO;
-import dto.user_account.AdminUserAccountRequestDTO;
-import dto.user_account.AdminUserAccountResponseDTO;
-import service.common.CommonService;
+import dto.product.ProductInfoResponseDTO;
+import dto.product.ProductRequestDTO;
+import dto.product.UserProductResponseDTO;
+import entity.enum_package.ProductStatus;
 
 import java.util.List;
 
-public interface ProductService <DTORequest,DTOResponse> {
-    public List<DTORequest> getAll();
+public interface ProductService {
 
+    public List<UserProductResponseDTO> getAll();
 
-    ProductApproveResponeDTO lockProduct(ProductApproveRequestDTO request);
+    public UserProductResponseDTO lockProduct(Long productCode);
 
-    ProductApproveResponeDTO unlockProduct(ProductApproveRequestDTO request);
+    public UserProductResponseDTO unlockProduct(Long productCode);
+
+    public List<UserProductResponseDTO> getALlProductByStatus(ProductStatus productStatus);
+
+    public List<UserProductResponseDTO> getALlProductByStore(Long storeCode);
+
+    public ProductInfoResponseDTO getProductById(Long productCode,String userLogin);
+
+    public ProductInfoResponseDTO postNew(ProductRequestDTO requestDTO);
+
+    public ProductInfoResponseDTO updateData(ProductRequestDTO requestDTO);
 }

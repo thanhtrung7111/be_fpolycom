@@ -39,7 +39,7 @@ public class UserVoucherServiceImpl implements UserVoucherService {
             throw new UsernameNotFoundException("Ban khong co quyen tren du lieu nay!");
         }
         String userLoginExtract = authUserService.extractUserlogin(requestDTO.getUserLogin());
-        return VoucherUserMapper.mapper.toVoucherUserResponseDtoList(voucherUserRepository.getAllVoucherUser(userLoginExtract));
+        return VoucherUserMapper.mapper.toVoucherUserResponseDtoList(voucherUserRepository.findAllVoucherUser(userLoginExtract));
     }
 
     @Override
@@ -48,8 +48,11 @@ public class UserVoucherServiceImpl implements UserVoucherService {
             throw new UsernameNotFoundException("Ban khong co quyen tren du lieu nay!");
         }
         String userLoginExtract = authUserService.extractUserlogin(requestDTO.getUserLogin());
-        UserAccount userAccount = userAccountRepository.findByUserLogin(userLoginExtract).orElseThrow(()->new UsernameNotFoundException("Nguoi dung khong ton tai"));
-        Voucher voucher  = voucherRepository.findById(requestDTO.getVoucherCode()).orElseThrow(()->new DataNotFoundException("Du lieu khong ton tai"));
+        UserAccount userAccount = userAccountRepository.findByUserLogin(userLoginExtract).orElseThrow(() -> new UsernameNotFoundException("Nguoi dung khong ton tai"));
+        Voucher voucher = voucherRepository.findById(requestDTO.getVoucherCode()).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai"));
+        if (!voucherUserRepository.findVoucherUserByUserLoginAndVoucher(userLoginExtract, requestDTO.getVoucherCode()).isEmpty()) {
+            throw new DataNotFoundException("Ban da luu voucher nay!");
+        }
         VoucherUser voucherUser = VoucherUser.builder().userAccount(userAccount).voucher(voucher).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).build();
         voucherUserRepository.save(voucherUser);
         return VoucherUserMapper.mapper.toVoucherUserResponseDto(voucherUser);

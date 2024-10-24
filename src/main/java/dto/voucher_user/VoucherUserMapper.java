@@ -16,6 +16,7 @@ public interface VoucherUserMapper {
 
 
     @Mapping(target = "voucherName",source ="voucher.name")
+    @Mapping(target = "voucherCode",source ="voucher.id")
     @Mapping(target = "priceApply",source ="voucher.priceApply")
     @Mapping(target = "percentDecrease",source ="voucher.percentDecrease")
     @Mapping(target = "endDate",source ="voucher.endDate")
