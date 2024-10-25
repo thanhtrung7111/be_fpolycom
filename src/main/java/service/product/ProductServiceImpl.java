@@ -41,7 +41,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<UserProductResponseDTO> getALlProductByStore(Long storeCode) {
-        return ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.getAllProductByStore(storeCode,ProductStatus.active));
+        return ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.getAllProductByStore(storeCode));
+    }
+
+    @Override
+    public List<UserProductResponseDTO> getALlProductByStoreAndStatus(Long storeCode,ProductStatus productStatus) {
+        return ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.getAllProductByStoreAndStatus(storeCode,productStatus));
     }
 
     @Override
@@ -106,12 +111,12 @@ public class ProductServiceImpl implements ProductService {
         if (authStoreService.isValidStore(requestDTO.getStoreCode())) {
             throw new UsernameNotFoundException("Ban khong co quyen tren du lieu nay!");
         }
+        Product productFind = productRepository.findById(requestDTO.getProductCode()).orElseThrow(()->new DataNotFoundException("Du lieu khong ton tai"));
         Product product = ProductMapper.INSTANCE.toProduct(requestDTO);
         product.getProductDetailList().forEach(item -> item.setProduct(product));
         product.getProductAttrList().forEach(item -> item.setProduct(product));
-        product.setProductStatus(ProductStatus.active);
+        product.setProductStatus(productFind.getProductStatus());
         productRepository.save(product);
-        System.out.println(product.getProductStatus()+"---------------------------");
         Product product1 = productRepository.findById(requestDTO.getProductCode()).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai"));
         return ProductMapper.INSTANCE.toProductInfoResponseDto(product1);
     }

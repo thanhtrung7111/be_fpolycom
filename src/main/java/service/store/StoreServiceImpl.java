@@ -97,9 +97,20 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public UserStoreDetailResponseDTO getStoreByCode(Long storeCode) {
-        return StoreMapper.INSTANCE.toUserStoreDetailResponseDto(storeRepository.findStoreByCodeAndStatus(storeCode, StoreStatus.active).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai!")));
+    public UserStoreDetailResponseDTO getStoreByCode(Long storeCode,String userLogin) {
+        Store store = storeRepository.findById(storeCode).orElseThrow(()-> new DataNotFoundException("KHong ton tai du lieu!"));
+        UserStoreDetailResponseDTO responseDTO = StoreMapper.INSTANCE.toUserStoreDetailResponseDto(store);
+        if(userLogin != null){
+            String userName = authUserService.extractUserlogin(userLogin);
+            UserAccount userAccount = userAccountRepository.findByUserLogin(userName).orElseThrow(()->new DataNotFoundException("Khong ton tai du lieuj"));
+            if(store.getFollowedList().stream().filter(item->item.getUserAccount().getUserLogin().equals(userAccount.getUserLogin())).findFirst().isPresent()){
+                responseDTO.setFollowed(true);
+            }
+        }
+        return responseDTO;
     }
+
+
 
     @Override
     public ChangeStorePasswordResponseDTO changeStorePassword(ChangeStorePasswordRequestDTO requestDTO) {

@@ -18,7 +18,10 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
 
     @Query(value = "select o from Product o where o.store.id = :storeCode and o.productStatus = :status" )
-    List<Product> getAllProductByStore(@Param("storeCode") Long storeCode,@Param("status") ProductStatus productStatus);
+    List<Product> getAllProductByStoreAndStatus(@Param("storeCode") Long storeCode,@Param("status") ProductStatus productStatus);
+
+    @Query(value = "select o from Product o where o.store.id = :storeCode" )
+    List<Product> getAllProductByStore(@Param("storeCode") Long storeCode);
 
 
     @Query(value = "select o from Product o where o.id = :productCode and o.productStatus = :productStatus" )

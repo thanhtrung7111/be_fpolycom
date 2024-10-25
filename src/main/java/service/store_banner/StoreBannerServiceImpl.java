@@ -4,6 +4,7 @@ import dao.StoreBannerRepository;
 import dto.store_banner.StoreBannerMapper;
 import dto.store_banner.StoreBannerRequest;
 import dto.store_banner.StoreBannerResponse;
+import entity.Product;
 import entity.StoreBanner;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,11 @@ public class StoreBannerServiceImpl implements StoreBannerService{
     public StoreBannerResponse updateData(StoreBannerRequest request) {
         StoreBanner storeBanner = storeBannerRepository.findById(request.getStoreBannerCode()).orElseThrow(()->new DataNotFoundException("Du lieu khong ton tai!"));
         storeBanner.setImage(request.getImage());
+        storeBanner.setProduct(Product.builder().id(request.getProductCode()).build());
         storeBanner.setStatus(request.getStatus());
         storeBanner.setTitle(request.getTitle());
+        storeBanner.setBannerPosition(request.getBannerPosition());
+//        storeBanner.setMain(request.);
         storeBannerRepository.save(storeBanner);
         return StoreBannerMapper.INSTANCE.toStoreBannerResponse(storeBanner);
     }
