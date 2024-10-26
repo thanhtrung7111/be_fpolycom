@@ -1,10 +1,12 @@
 package entity.enum_package;
 
 public enum OrderStatus {
+    prepare("Prepare"),
     pending("Pending"),
     complete("Complete"),
     delivery("Delivery"),
     pickup("Pickup");
+
 
     private String description;
     // Constructor

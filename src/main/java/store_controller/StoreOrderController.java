@@ -23,7 +23,6 @@ public class StoreOrderController {
     @Autowired
     OrderService orderService;
 
-
     @PostMapping(value = "/orders/all")
     public ResponseEntity<Object> getAllOrderByStore(@RequestBody HashMap<String, String> requestDTO) {
         if (requestDTO.isEmpty() || requestDTO.get("storeCode").isBlank()) {

@@ -27,6 +27,7 @@ public class ReceiveDelivery extends EntityCommon {
     @Enumerated(EnumType.STRING)
     TypeDelivery typeDelivery;
 
+    @Enumerated(EnumType.STRING)
     StatusDelivery statusDelivery;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -5,6 +5,7 @@ public enum StatusDelivery {
     taking("Taking"),
     appoinment("Appoinment");
 
+
     private String description;
     // Constructor
     StatusDelivery(String description) {

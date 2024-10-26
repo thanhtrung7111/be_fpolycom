@@ -1,0 +1,26 @@
+package dto.receive_delivery;
+
+import entity.Orders;
+import entity.ReceiveDelivery;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
+
+import java.util.List;
+
+@Mapper(unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE, componentModel = "spring")
+public interface ReceiveDeliveryMapper {
+    ReceiveDeliveryMapper INSTANCE = Mappers.getMapper(ReceiveDeliveryMapper.class);
+
+    @Mapping(target = "shipper.id", source = "shipperCode")
+    ReceiveDelivery toReceiveDelivery(ReceiveDeliveryRequestDTO dto);
+
+    @Mapping(target ="shipperCode",source = "shipper.id")
+    @Mapping(target ="ordersCode",source = "orders.id")
+    @Mapping(target = "receiveDeliveryCode", source = "id")
+    ReceiveDeliveryResponseDTO toReceiveDeliveryResponseDTO(ReceiveDelivery entity);
+
+    List<ReceiveDeliveryResponseDTO> toList(List<ReceiveDelivery> list);
+
+    List<Orders> toListOrders(List<Orders> list);
+}
