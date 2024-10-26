@@ -1,13 +1,16 @@
 package service.voucher;
 
 import dao.StoreRepository;
+import dao.UserAccountRepository;
 import dao.VoucherRepository;
 import dto.store.StoreMapper;
 import dto.store.UserStoreDetailResponseDTO;
 import dto.voucher.VoucherMapper;
 import dto.voucher.VoucherRequestDTO;
+import dto.voucher.VoucherRespUserDTO;
 import dto.voucher.VoucherResponseDTO;
 import entity.Store;
+import entity.UserAccount;
 import entity.Voucher;
 import exeception_handler.DataNotFoundException;
 import jakarta.validation.ValidationException;
@@ -17,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 //import service.StoreAuthService;
 import service.auth_store.AuthStoreService;
+import service.auth_user.AuthUserService;
 import service.store.StoreService;
 
 import java.util.Date;
@@ -40,6 +44,12 @@ public class VoucherServiceImpl implements VoucherService{
     @Autowired
     StoreRepository storeRepository;
 
+    @Autowired
+    AuthUserService authUserService;
+
+    @Autowired
+    UserAccountRepository userAccountRepository;
+
 
 
     @Override
@@ -56,6 +66,23 @@ public class VoucherServiceImpl implements VoucherService{
 //        }
         List<Voucher> voucherList = voucherRepository.findAllVoucherByStore(request.getStoreCode());
         return VoucherMapper.INSTANCE.toVoucherResponseDtoList(voucherList);
+    }
+
+    @Override
+    public List<VoucherResponseDTO> getAllVoucherByStoreIDAndUser(Long storeCode, String userLogin){
+
+        if(userLogin != null){
+            String userLoginextract = authUserService.extractUserlogin(userLogin);
+            Optional<UserAccount> userAccount = userAccountRepository.findByUserLogin(userLoginextract);
+            if(userAccount.isEmpty()){
+                return VoucherMapper.INSTANCE.toVoucherResponseDtoList( voucherRepository.findAllVoucherByStore(storeCode));
+            }
+           List<Voucher> voucherList = voucherRepository.findAllVoucherUserByStore(storeCode,userAccount.get());
+            return VoucherMapper.INSTANCE.toVoucherResponseDtoList(voucherList);
+        }else{
+            List<Voucher> voucherList = voucherRepository.findAllVoucherByStore(storeCode);
+            return VoucherMapper.INSTANCE.toVoucherResponseDtoList(voucherList);
+        }
     }
 
     @Override

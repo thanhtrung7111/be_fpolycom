@@ -24,6 +24,8 @@ public class UserStoreDetailResponseDTO {
 
     String bannerImage;
 
+    Boolean followed;
+
     String email;
 
     String userRegister;

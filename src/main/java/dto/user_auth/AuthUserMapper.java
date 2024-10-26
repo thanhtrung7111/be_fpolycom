@@ -18,6 +18,7 @@ public interface AuthUserMapper {
     @Mapping(target = "userImage",source = "image")
     @Mapping(target = "storeStatus",source = "store.storeStatus")
     @Mapping(target = "storeName",source = "store.name")
+    @Mapping(target = "storeCode",source = "store.id")
     AuthUserLoginResponseDTO toAuthUserLoginResponse(UserAccount userAccount);
 
 

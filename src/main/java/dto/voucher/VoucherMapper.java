@@ -18,6 +18,10 @@ public interface VoucherMapper {
     @Mapping(target = "voucherCode",source = "id")
     VoucherResponseDTO toVoucherResponseDto(Voucher voucher);
 
+    @Mapping(target = "storeCode",source = "store.id")
+    @Mapping(target = "voucherCode",source = "id")
+    VoucherRespUserDTO tVoucherRespUserDto(Voucher voucher);
+
 
     @Mapping(target = "store.id", source = "storeCode")
     @Mapping(target = "id",source = "voucherCode")
@@ -28,4 +32,5 @@ public interface VoucherMapper {
 
     List<VoucherResponseDTO> toVoucherResponseDtoList(List<Voucher> voucherList);
 
+    List<VoucherRespUserDTO> toVoucherRespUserDtoList(List<Voucher> voucherList);
 }
