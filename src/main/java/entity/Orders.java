@@ -38,6 +38,7 @@ public class Orders extends EntityCommon {
 
     Double totalAmountShip;
 
+
     Boolean confirmOrder;
 
     Boolean confirmPrepare;

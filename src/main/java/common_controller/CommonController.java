@@ -2,11 +2,13 @@ package common_controller;
 
 import dao.DeliveryTypeRepository;
 import dao.ShippingFeeRepository;
+import dao.StoreBannerRepository;
 import dao.TypeGoodRepository;
 import dto.delivery_type.DeliveryTypeMapper;
 import dto.shipping_fee.ShippingFeeMapper;
 import dto.shipping_fee.ShippingFeeResponse;
 import dto.status.StatusDTO;
+import dto.store_banner.StoreBannerMapper;
 import entity.DeliveryType;
 import entity.PaymentType;
 import entity.enum_package.*;
@@ -70,6 +72,9 @@ public class CommonController {
     @Autowired
     DiscountService discountService;
 
+    @Autowired
+    StoreBannerRepository storeBannerRepository;
+
     @PostMapping(value = "/product/evaluate/all")
     public ResponseEntity<Object> getAllProvince(@RequestBody HashMap<String,String> request) {
         if( request.get("productCode") == null || request.get("productCode").isBlank()){
@@ -83,7 +88,7 @@ public class CommonController {
         if( request.get("storeCode") == null || request.get("storeCode").isBlank()){
             throw new DataNotFoundException("Khong de trong ma cua hang!");
         }
-        return ResponseEntity.ok(dataReturnService.success(voucherService.getVoucherByStore(Long.valueOf(request.get("storeCode")))));
+        return ResponseEntity.ok(dataReturnService.success(voucherService.getAllVoucherByStoreIDAndUser(Long.valueOf(request.get("storeCode")),request.get("userLogin"))));
     }
 
     @GetMapping(value = "/common/product/all")
@@ -91,12 +96,18 @@ public class CommonController {
         return ResponseEntity.ok(dataReturnService.success(productService.getALlProductByStatus(ProductStatus.active)));
     }
 
+    @PostMapping(value = "/common/store/all-banner")
+    public ResponseEntity<Object> getAllBanner(@RequestBody HashMap<String,String> request) {
+        System.out.print(Long.valueOf(request.get("storeCode")));
+        return ResponseEntity.ok(dataReturnService.success(StoreBannerMapper.INSTANCE.toStoreBannerResponseList(storeBannerRepository.findAllStoreBannerByStoreAndStatus(Long.valueOf(request.get("storeCode")),true))));
+    }
+
     @PostMapping(value = "/common/store/all-product")
     public ResponseEntity<Object> getALlProductByStore(@RequestBody HashMap<String,String> request) {
         if( request.get("storeCode") == null || request.get("storeCode").isBlank()){
             throw new DataNotFoundException("Khong de trong ma cua hang!");
         }
-        return ResponseEntity.ok(dataReturnService.success(productService.getALlProductByStore(Long.valueOf(request.get("storeCode")))));
+        return ResponseEntity.ok(dataReturnService.success(productService.getALlProductByStoreAndStatus(Long.valueOf(request.get("storeCode")),ProductStatus.active)));
     }
 
     @PostMapping(value = "/common/product/detail")
@@ -112,7 +123,7 @@ public class CommonController {
         if( request.get("storeCode") == null || request.get("storeCode").isBlank()){
             throw new DataNotFoundException("Khong de trong ma cua hang!");
         }
-        return ResponseEntity.ok(dataReturnService.success(storeService.getStoreByCode(Long.valueOf(request.get("storeCode")))));
+        return ResponseEntity.ok(dataReturnService.success(storeService.getStoreByCode(Long.valueOf(request.get("storeCode")),request.get("userLogin"))));
     }
     @GetMapping(value = "/common/store/all")
     public ResponseEntity<Object> getAllStoreByActive() {
@@ -128,6 +139,11 @@ public class CommonController {
     @GetMapping(value = "/common/discount/all")
     public ResponseEntity<Object> getAllDiscount() {
         return ResponseEntity.ok(dataReturnService.success(discountService.getAllData()));
+    }
+
+    @GetMapping(value = "/common/banner-position/all")
+    public ResponseEntity<Object> getAllBannerPosition() {
+        return ResponseEntity.ok(dataReturnService.success(Arrays.stream(BannerPosition.values()).map(status-> new StatusDTO(status.name(),status.getDescription())).collect(Collectors.toList())));
     }
 
 

@@ -21,7 +21,8 @@ public interface StoreService {
 
     public StoreRegisterResponseDTO getRegisterStore(String userLogin,Long storeCode);
 
-    public UserStoreDetailResponseDTO getStoreByCode(Long storeCode);
+    public UserStoreDetailResponseDTO getStoreByCode(Long storeCode,String userLogin);
+
 
     public ChangeStorePasswordResponseDTO changeStorePassword(ChangeStorePasswordRequestDTO requestDTO);
 

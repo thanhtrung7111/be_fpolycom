@@ -18,6 +18,7 @@ import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import service.auth_user.AuthUserService;
 
@@ -36,6 +37,9 @@ public class StoreServiceImpl implements StoreService {
 
     @Autowired
     UserAccountRepository userAccountRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -58,6 +62,7 @@ public class StoreServiceImpl implements StoreService {
         store.setUpdatedDate(null);
         store.setDeleted(false);
         store.setDeletedDate(null);
+        store.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
         storeRepository.save(store);
         return StoreMapper.INSTANCE.toStoreRegisterResponseDto(store);
     }
@@ -69,8 +74,6 @@ public class StoreServiceImpl implements StoreService {
         }
         String userLoginExtract = authUserService.extractUserlogin(requestDTO.getUserLogin());
         UserAccount userAccount = userAccountRepository.findByUserLogin(userLoginExtract).orElseThrow(() -> new UsernameNotFoundException("Tai khoan nguoi dung khong ton tai!"));
-
-
         Store store = StoreMapper.INSTANCE.toStore(requestDTO);
         store.setUserAccount(userAccount);
         store.setStoreStatus(StoreStatus.pending);
@@ -94,9 +97,20 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public UserStoreDetailResponseDTO getStoreByCode(Long storeCode) {
-        return StoreMapper.INSTANCE.toUserStoreDetailResponseDto(storeRepository.findStoreByCodeAndStatus(storeCode, StoreStatus.active).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai!")));
+    public UserStoreDetailResponseDTO getStoreByCode(Long storeCode,String userLogin) {
+        Store store = storeRepository.findById(storeCode).orElseThrow(()-> new DataNotFoundException("KHong ton tai du lieu!"));
+        UserStoreDetailResponseDTO responseDTO = StoreMapper.INSTANCE.toUserStoreDetailResponseDto(store);
+        if(userLogin != null){
+            String userName = authUserService.extractUserlogin(userLogin);
+            UserAccount userAccount = userAccountRepository.findByUserLogin(userName).orElseThrow(()->new DataNotFoundException("Khong ton tai du lieuj"));
+            if(store.getFollowedList().stream().filter(item->item.getUserAccount().getUserLogin().equals(userAccount.getUserLogin())).findFirst().isPresent()){
+                responseDTO.setFollowed(true);
+            }
+        }
+        return responseDTO;
     }
+
+
 
     @Override
     public ChangeStorePasswordResponseDTO changeStorePassword(ChangeStorePasswordRequestDTO requestDTO) {

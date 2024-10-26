@@ -110,7 +110,7 @@ public class FpolycomApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		UserAccount userAccount =  UserAccount.builder().id(1L).email("thanhtrung711199@gmail.com").userLogin("thanhtrung").name("Thành Trung").password(encoder.encode("thanhtrung")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		UserAccount userAccount =  UserAccount.builder().id(1L).email("thanhtrung711199@gmail.com").userLogin("thanhtrung").name("Thành Trung").password(encoder.encode("thanhtrung")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).province(Province.builder().id(1L).build()).updatedDate(null).deleted(false).deletedDate(null).build();
 		UserAccount userAccount2 = UserAccount.builder().id(2L).email("thanhtrung7199@gmail.com").userLogin("thanhtrung1").name("Thành Trung 2").password(encoder.encode("thanhtrung1")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		UserAccount userAccount3 = UserAccount.builder().id(3L).email("ngocchau@gmail.com").userLogin("ngocchau").name("Ngọc Châu").password(encoder.encode("ngocchau")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 
@@ -126,8 +126,8 @@ public class FpolycomApplication implements CommandLineRunner {
 
 
 
-//		Administration administration = Administration.builder().id(1L).name("Thaành Trung").image("sdfsdf").userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
-//		adminRepository.save(administration);
+		Administration administration = Administration.builder().id(1L).name("Thaành Trung").image("sdfsdf").userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		adminRepository.save(administration);
 
 		Province province = Province.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Bình Dương").build();
 		Province province2 = Province.builder().id(2L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Đồng Nai").build();
@@ -140,7 +140,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		Ward ward = Ward.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Binh An").district(district).build();
 		wardRepository.saveAll(List.of(ward));
 
-		Store store = Store.builder().id(1L).userAccount(userAccount).district(district).province(province).ward(ward).name("Cuawr hang thu cng").email("Thucungw@gmail.com").bannerImage("https://tdtdecor.vn/wp-content/uploads/2021/07/thiet-ke-shop-thu-cung-13.jpg").image("https://freelancervietnam.vn/wp-content/uploads/2020/06/post-thumb-pet-shop.jpg").password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		Store store = Store.builder().id(1L).userAccount(userAccount).district(district).province(province).ward(ward).name("Cửa hàng thú cưng").email("Thucungw@gmail.com").bannerImage("https://tdtdecor.vn/wp-content/uploads/2021/07/thiet-ke-shop-thu-cung-13.jpg").image("https://freelancervietnam.vn/wp-content/uploads/2020/06/post-thumb-pet-shop.jpg").phone("0909197031").password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 //		Store store2 = Store.builder().id(5L).userAccount(userAccount2).district(district).province(province).ward(ward).name("Dien thoai di dong").email("Th22ucungw@gmail.com").bannerImage("https://tdtdecor.vn/wp-content/uploads/2021/07/thiet-ke-shop-thu-cung-13.jpg").image("https://freelancervietnam.vn/wp-content/uploads/2020/06/post-thumb-pet-shop.jpg").password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		storeRepository.saveAll(List.of(store));
 		Followed followed = Followed.builder().id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).statusFollow(true).userAccount(userAccount2).store(store).build();
@@ -180,6 +180,9 @@ public class FpolycomApplication implements CommandLineRunner {
 		bankRepository.saveAll(List.of(bank,bank2));
 
 
+		BankBranch bankBranch = BankBranch.builder().id(1L).name("chi nhanh binh duong").bank(bank).build();
+		BankBranch bankBranch2 = BankBranch.builder().id(2L).name("chi nhanh binh duong mien bac").bank(bank).build();
+		bankBranchRepository.saveAll(List.of(bankBranch,bankBranch2));
 
 
 		BankStore bankStore = BankStore.builder().id(1L).store(store).bankStoreStatus(BankStatus.active).accountName("THANH TRUNG").accountNumber("123213").build();
