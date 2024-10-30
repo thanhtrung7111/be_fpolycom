@@ -77,5 +77,13 @@ public class ShipperController {
         return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.createListReceiveDelivery(request)));
     }
 
+    @PostMapping(value = "shipper/add-delivery")
+    public ResponseEntity<Object> receiveDeliveryNewList(@RequestBody Optional<HashMap<String,String>> request) {
+        if(request.isEmpty()){
+            throw new DataNotFoundException("Shipper code is empty");
+        }
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addOderToList(Long.valueOf(request.get().get("shipperCode")),Long.valueOf(request.get().get("orderCode")))));
+    }
+
 
 }

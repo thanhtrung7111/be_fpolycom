@@ -16,7 +16,7 @@ public interface ReceiveDeliveryService{
 
     public ReceiveDeliveryResponseDTO appoiment(ReceiveDeliveryRequestDTO dto);
 
-    
+    public ReceiveDeliveryResponseDTO pickUpOrders(Long shipperCode,Long receiveDeliveryCode, Long ordersCode );
 
-    public ReceiveDeliveryResponseDTO addOderToList(ReceiveDeliveryRequestDTO dto);
+    public ReceiveDeliveryResponseDTO addOderToList(Long shipperCode, Long ordersCode );
 }
