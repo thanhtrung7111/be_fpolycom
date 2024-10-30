@@ -13,6 +13,7 @@ public interface ReceiveDeliveryMapper {
     ReceiveDeliveryMapper INSTANCE = Mappers.getMapper(ReceiveDeliveryMapper.class);
 
     @Mapping(target = "shipper.id", source = "shipperCode")
+    @Mapping(target = "id",source = "receiveDeliveryCode")
     ReceiveDelivery toReceiveDelivery(ReceiveDeliveryRequestDTO dto);
 
     @Mapping(target ="shipperCode",source = "shipper.id")
@@ -22,5 +23,5 @@ public interface ReceiveDeliveryMapper {
 
     List<ReceiveDeliveryResponseDTO> toList(List<ReceiveDelivery> list);
 
-    List<Orders> toListOrders(List<Orders> list);
+
 }

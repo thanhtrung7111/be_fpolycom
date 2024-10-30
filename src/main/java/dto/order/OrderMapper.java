@@ -2,12 +2,10 @@ package dto.order;
 
 import dto.order_detail.OrderDetailMapper;
 import dto.order_detail.OrderDetailRequestDTO;
+import dto.receive_delivery.ReceiveDeliveryRequestDTO;
 import dto.voucher.VoucherMapper;
 import dto.voucher.VoucherRequestDTO;
-import entity.Orders;
-import entity.PaymentReceipt;
-import entity.Voucher;
-import entity.VoucherApply;
+import entity.*;
 import jdk.jfr.Name;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -66,6 +64,12 @@ public interface OrderMapper {
 
     List<Orders> toOrdersList(List<UserOrderRequestDTO> orderRequestDTOList);
 
+    List<Orders> toOrdersListForReiceiveDtos(List<ReceiveDeliveryRequestDTO> list);
+
+    List<Orders> toOrdersLists(List<Orders> list);
+
+
+
     @Named("paymentSuccess")
     default  Boolean paymentSuccess (List<PaymentReceipt> paymentReceiptList){
         return paymentReceiptList == null ||  !paymentReceiptList.isEmpty();
@@ -84,5 +88,6 @@ public interface OrderMapper {
         });
         return voucherApplies;
     }
+
 
 }

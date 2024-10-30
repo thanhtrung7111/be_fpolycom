@@ -35,4 +35,7 @@ public class Province extends EntityCommon {
 
     @OneToMany(mappedBy = "province")
     List<Orders> ordersList;
+
+    @OneToMany(mappedBy = "province")
+    List<Warehouse> warehouseList;
 }

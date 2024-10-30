@@ -54,6 +54,12 @@ public class ShipperServiceImpl implements ShipperService {
     }
 
     @Override
+    public ShipperResponseDTO getOrder(ShipperRequestDTO request) {
+
+        return null;
+    }
+
+    @Override
     public ShipperResponseDTO postData(ShipperRequestDTO shipperRequestDTO) {
         Shipper shipper = shipperMapper.INSTANCE.toShipper(shipperRequestDTO);
         shipper.setPassword(new BCryptPasswordEncoder().encode(shipper.getPassword()));

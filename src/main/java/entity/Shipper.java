@@ -1,6 +1,7 @@
 package entity;
 
 import entity.enum_package.ShipperStatus;
+import entity.enum_package.TypeShipper;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +19,8 @@ import java.util.List;
 @SuperBuilder
 @AttributeOverride(name = "id",column = @Column(name = "shipperCode"))
 public class Shipper extends EntityCommon{
+    @Enumerated(EnumType.STRING)
+    TypeShipper typeShipper;
 
     String userLogin;
 

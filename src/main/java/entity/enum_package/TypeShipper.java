@@ -1,17 +1,13 @@
 package entity.enum_package;
 
-public enum OrderStatus {
-    prepare("Prepare"),
-    pending("Pending"),
-    complete("Complete"),
+public enum TypeShipper {
     delivery("Delivery"),
-    pickup("Pickup"),
-    warehouse("Warehouse");
+    receive("Receive");
 
 
     private String description;
     // Constructor
-    OrderStatus(String description) {
+    TypeShipper(String description) {
         this.description = description;
     }
 

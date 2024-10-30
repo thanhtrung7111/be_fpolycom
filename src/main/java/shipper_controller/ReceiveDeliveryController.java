@@ -16,6 +16,7 @@ import service.receive_delivery.ReceiveDeliveryService;
 public class ReceiveDeliveryController {
     @Autowired
     DataReturnService dataReturnService;
+
     @Autowired
     ReceiveDeliveryService receiveDeliveryService;
 
@@ -34,4 +35,6 @@ public class ReceiveDeliveryController {
         }
         return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.createListReceiveDelivery(request)));
     }
+
+    
 }

@@ -11,4 +11,8 @@ public class ReceiveDeliveryRequestDTO {
     Long shipperCode;
 
     Long wardCode;
+
+    Long receiveDeliveryCode;
+
+    Long ordersCode;
 }

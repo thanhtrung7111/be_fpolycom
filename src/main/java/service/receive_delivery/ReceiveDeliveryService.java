@@ -15,4 +15,8 @@ public interface ReceiveDeliveryService{
     public ReceiveDeliveryResponseDTO taking(ReceiveDeliveryRequestDTO dto);
 
     public ReceiveDeliveryResponseDTO appoiment(ReceiveDeliveryRequestDTO dto);
+
+    
+
+    public ReceiveDeliveryResponseDTO addOderToList(ReceiveDeliveryRequestDTO dto);
 }

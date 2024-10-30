@@ -48,6 +48,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChainUser(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable()).cors(cors->cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").hasAuthority("USER")
+                        .requestMatchers("shipper/**").hasAuthority("SHIPPER")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN").requestMatchers("/store/**").hasAuthority("STORE").anyRequest().permitAll()).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authenticationProvider(customAuthenticationProvider)
                     .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling(x -> x.accessDeniedHandler(customAccessDeniedHandler));
         return httpSecurity.build();
