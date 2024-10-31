@@ -47,24 +47,24 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChainUser(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf(AbstractHttpConfigurer::disable).cors(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> auth
+        httpSecurity.csrf(AbstractHttpConfigurer::disable).cors(cors-> cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").hasAuthority("USER")
                         .requestMatchers("/shipper/**").hasAuthority("SHIPPER")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN").requestMatchers("/store/**").hasAuthority("STORE").anyRequest().permitAll()).sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)).authenticationProvider(customAuthenticationProvider)
                     .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling(x -> x.accessDeniedHandler(customAccessDeniedHandler));
         return httpSecurity.build();
     }
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowedOrigins(List.of("*"));  // Cho phép domain React
-//        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // Các phương thức được phép
-//        config.setAllowedHeaders(List.of("*"));  // Cho phép tất cả headers
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", config);  // Áp dụng cho tất cả các route
-//        return source;
-//    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOriginPatterns(List.of("*"));  // Cho phép domain React
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // Các phương thức được phép
+        config.setAllowedHeaders(List.of("*"));  // Cho phép tất cả headers
+        config.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);  // Áp dụng cho tất cả các route
+        return source;
+    }
 
 
 
