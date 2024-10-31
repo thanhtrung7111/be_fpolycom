@@ -19,6 +19,7 @@ public interface ReceiveDeliveryMapper {
     @Mapping(target ="shipperCode",source = "shipper.id")
     @Mapping(target ="ordersCode",source = "orders.id")
     @Mapping(target = "receiveDeliveryCode", source = "id")
+    @Mapping(target = "shipperName", source = "shipper.name")
     ReceiveDeliveryResponseDTO toReceiveDeliveryResponseDTO(ReceiveDelivery entity);
 
     List<ReceiveDeliveryResponseDTO> toList(List<ReceiveDelivery> list);

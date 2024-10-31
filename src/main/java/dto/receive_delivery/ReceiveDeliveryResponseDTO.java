@@ -16,5 +16,6 @@ public class ReceiveDeliveryResponseDTO {
     String typeDelivery;
     String statusDelivery;
     Long shipperCode;
+    String shipperName;
     Long ordersCode;
 }

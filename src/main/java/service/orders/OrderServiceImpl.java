@@ -105,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
             throw new DataNotFoundException("Khong co don dat hang nao");
         }
         ordersList.forEach(item -> {
-            PaymentReceipt paymentReceipt = PaymentReceipt.builder().paymentType(item.getPaymentType()).finalTotal(item.getFinalTotal()).totalAmount(item.getTotalAmount()).totalAmountShip(item.getTotalAmountShip()).totalAmountVoucher(item.getTotalAmountVoucher()).totalAmountPaid(item.getFinalTotal()).orders(item).createdDate(new Date()).deleted(false).updatedDate(null).deletedDate(null).build();
+            PaymentReceipt paymentReceipt = PaymentReceipt.builder().paymentType(item.getPaymentType()).finalTotal(item.getFinalTotal()).totalAmount(item.getTotalAmount()).totalAmountShip(item.getTotalAmountShip()).totalAmountVoucher(item.getTotalAmountVoucher()).totalAmountDiscount(item.getTotalAmountDiscount()).totalAmountPaid(item.getFinalTotal()).orders(item).createdDate(new Date()).deleted(false).updatedDate(null).deletedDate(null).build();
             PaymentReceipt saved = paymenReceiptRepository.save(paymentReceipt);
             item.getPaymentReceiptList().add(saved);
         });

@@ -2,6 +2,7 @@ package dto.order;
 
 import dto.order_detail.OrderDetailMapper;
 import dto.order_detail.OrderDetailRequestDTO;
+import dto.receive_delivery.ReceiveDeliveryMapper;
 import dto.receive_delivery.ReceiveDeliveryRequestDTO;
 import dto.voucher.VoucherMapper;
 import dto.voucher.VoucherRequestDTO;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {OrderDetailMapper.class, VoucherMapper.class})
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {OrderDetailMapper.class, VoucherMapper.class, ReceiveDeliveryMapper.class})
 public interface OrderMapper {
 
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
@@ -54,6 +55,7 @@ public interface OrderMapper {
     @Mapping(target = "orderCode",source = "id")
     @Mapping(target = "paymentTypeCode",source = "paymentType.id")
     @Mapping(target = "paymentSuccess",source = "paymentReceiptList",qualifiedByName = "paymentSuccess")
+    @Mapping(target = "receiveDeliveryList",source = "receiveDeliveryList")
     @Mapping(target = "voucherList",source = "voucherApplyList",qualifiedByName = "voucherList")
     OrderInfoResponseDTO toOrderInfoResponseDto (Orders orders);
 
