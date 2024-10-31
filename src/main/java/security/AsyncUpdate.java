@@ -17,8 +17,7 @@ public class AsyncUpdate {
     @Async("taskExecutor")
     public void updateVoucherUser(String userLogin,Long voucherCode){
         VoucherUser voucherUser = voucherUserRepository.findVoucherUserByUserLoginAndVoucher(userLogin,voucherCode).orElseThrow(()->new DataNotFoundException("Du lieu khogn ton tai!"));
-        voucherUser.setApply(true);
-        voucherUserRepository.save(voucherUser);
+        voucherUserRepository.delete(voucherUser);
     }
 
 

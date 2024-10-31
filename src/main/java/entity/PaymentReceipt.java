@@ -19,11 +19,14 @@ public class PaymentReceipt extends EntityCommon {
 
     Double totalAmountVoucher;
 
+    Double totalAmountDiscount;
+
+    Double totalAmountShip;
+
     Double totalAmountPaid;
 
     Double finalTotal;
 
-    Double totalAmountShip;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "paymentTypeCode")
