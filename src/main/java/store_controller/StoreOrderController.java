@@ -23,7 +23,6 @@ public class StoreOrderController {
     @Autowired
     OrderService orderService;
 
-
     @PostMapping(value = "/orders/all")
     public ResponseEntity<Object> getAllOrderByStore(@RequestBody HashMap<String, String> requestDTO) {
         if (requestDTO.isEmpty() || requestDTO.get("storeCode").isBlank()) {
@@ -48,6 +47,20 @@ public class StoreOrderController {
             throw new DataNotFoundException("Du lieu khong ton tai!");
         }
         return ResponseEntity.ok(dataReturnService.success(orderService.confirmOrderByStore(Long.valueOf(requestDTO.get("orderCode")))));
+    }
+    @PostMapping(value = "/orders/prepare")
+    public ResponseEntity<Object> prepareOrder(@RequestBody Long orderCode) {
+        if(orderCode == null){
+            throw new DataNotFoundException("Du lieu khong ton tai!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(orderService.prepareReceiveOrders(orderCode)));
+    }
+    @PostMapping(value = "/orders/pick-up")
+    public ResponseEntity<Object> pickUpOrder(@RequestBody Long orderCode) {
+        if(orderCode == null){
+            throw new DataNotFoundException("Du lieu khong ton tai!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(orderService.pickUpReceiveOrders(orderCode)));
     }
 
 

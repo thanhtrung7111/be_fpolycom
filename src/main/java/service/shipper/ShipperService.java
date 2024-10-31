@@ -11,5 +11,6 @@ public interface ShipperService extends CommonService<ShipperRequestDTO, Shipper
 
     ShipperResponseDTO unlockShipper(ShipperRequestDTO request);
 
+    ShipperResponseDTO getOrder(ShipperRequestDTO request);
 
 }

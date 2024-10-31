@@ -41,6 +41,8 @@ public class Orders extends EntityCommon {
 
     Boolean confirmOrder;
 
+    Boolean confirmPrepare;
+
     Boolean confirmDelivery;
 
     Boolean confirmPickup;

@@ -20,4 +20,12 @@ public interface OrderService {
     public OrderInfoResponseDTO getOrderById(Long orderCode);
 
     public OrderInfoResponseDTO confirmOrderByStore(Long orderCode);
+
+    public OrderInfoResponseDTO prepareReceiveOrders(Long orderCode);
+
+    public OrderInfoResponseDTO pickUpReceiveOrders(Long orderCode);
+
+
+
+//
 }

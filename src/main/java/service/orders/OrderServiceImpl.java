@@ -2,17 +2,18 @@ package service.orders;
 
 import dao.OrdersRepository;
 import dao.PaymenReceiptRepository;
+import dao.ReceiveDeliveryRepository;
 import dao.UserAccountRepository;
 import dto.order.OrderInfoResponseDTO;
 import dto.order.OrderMapper;
 import dto.order.OrderResponseDTO;
 import dto.order.UserOrderRequestDTO;
 import dto.product.ProductMapper;
-import entity.Orders;
-import entity.PaymentReceipt;
-import entity.PaymentType;
-import entity.UserAccount;
+import dto.receive_delivery.ReceiveDeliveryMapper;
+import entity.*;
 import entity.enum_package.OrderStatus;
+import entity.enum_package.StatusDelivery;
+import entity.enum_package.TypeDelivery;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -22,6 +23,7 @@ import security.AsyncUpdate;
 import service.auth_store.AuthStoreService;
 import service.auth_user.AuthUserService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +48,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     AuthStoreService authStoreService;
+
+    @Autowired
+    ReceiveDeliveryRepository receiveDeliveryRepository;
+
+
 
 
     @Override
@@ -125,6 +132,26 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus(OrderStatus.pickup);
         order.setConfirmOrder(true);
         ordersRepository.save(order);
+        return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);
+    }
+
+    @Override
+    public OrderInfoResponseDTO prepareReceiveOrders(Long orderCode) {
+        Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay don hang"));
+        order.setOrderStatus(OrderStatus.prepare);
+        order.setConfirmPrepare(true);
+        return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);
+    }
+
+    @Override
+    public OrderInfoResponseDTO pickUpReceiveOrders(Long orderCode) {
+        Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay don hang"));
+        order.setOrderStatus(OrderStatus.pickup);
+        order.setConfirmPickup(true);
+        LocalDate deliveryDate = LocalDate.now().plusDays(3);
+        Date date = java.sql.Date.valueOf(deliveryDate);
+        ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().orders(order).createdDate(new Date()).deliveryDate(date).typeDelivery(TypeDelivery.receive).statusDelivery(StatusDelivery.taking).build();
+        receiveDeliveryRepository.save(receiveDelivery);
         return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);
     }
 }

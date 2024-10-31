@@ -35,4 +35,5 @@ public interface StoreService {
     public StoreResponseDTO approveStore(Long storeCode);
 
     public StoreResponseDTO lockStore(Long storeCode);
+
 }

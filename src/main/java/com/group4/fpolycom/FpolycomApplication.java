@@ -185,7 +185,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		bankBranchRepository.saveAll(List.of(bankBranch,bankBranch2));
 
 
-		BankStore bankStore = BankStore.builder().id(1L).store(store).bankStoreStatus(BankStatus.active).bankBranch(bankBranch).accountName("THANH TRUNG").accountNumber("123213").build();
+		BankStore bankStore = BankStore.builder().id(1L).store(store).bankStoreStatus(BankStatus.active).accountName("THANH TRUNG").accountNumber("123213").build();
 
 		bankStoreRepository.save(bankStore);
 
