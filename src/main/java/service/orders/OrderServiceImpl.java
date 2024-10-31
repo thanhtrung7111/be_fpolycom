@@ -140,6 +140,7 @@ public class OrderServiceImpl implements OrderService {
         Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay don hang"));
         order.setOrderStatus(OrderStatus.prepare);
         order.setConfirmPrepare(true);
+        ordersRepository.save(order);
         return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);
     }
 
@@ -152,6 +153,6 @@ public class OrderServiceImpl implements OrderService {
         Date date = java.sql.Date.valueOf(deliveryDate);
         ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().orders(order).createdDate(new Date()).deliveryDate(date).typeDelivery(TypeDelivery.receive).statusDelivery(StatusDelivery.taking).build();
         receiveDeliveryRepository.save(receiveDelivery);
-        return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);
+        return OrderMapper.INSTANCE.toOrderInfoResponseDto(ordersRepository.save(order));
     }
 }

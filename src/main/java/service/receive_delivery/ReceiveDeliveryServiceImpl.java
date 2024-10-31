@@ -33,7 +33,6 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
     OrdersRepository ordersRepository;
     @Autowired
     ShipperRepository shipperRepository;
-    private ReceiveDeliveryMapper receiveDeliveryMapper;
 
     /**
      * @param shipperCode
@@ -45,11 +44,25 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
     }
 
     @Override
-    public ReceiveDeliveryResponseDTO received(ReceiveDeliveryRequestDTO request) {
+    public ReceiveDeliveryResponseDTO completeReceive(ReceiveDeliveryRequestDTO request) {
+        Orders orders = ordersRepository.findById(request.getOrdersCode()).orElseThrow(() -> new DataNotFoundException("Orders not found"));
+        orders.setOrderStatus(OrderStatus.warehouse);
         ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("khong thay id cua shipper"));
         receiveDelivery.setStatusDelivery(StatusDelivery.complete);
-        receiveDelivery.setDeliveryDate(new Date());
-        return receiveDeliveryMapper.toReceiveDeliveryResponseDTO(receiveDeliveryRepository.save(receiveDelivery));
+        receiveDeliveryRepository.save(receiveDelivery);
+        ordersRepository.save(orders);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDelivery);
+    }
+
+    @Override
+    public ReceiveDeliveryResponseDTO completeDelivery(ReceiveDeliveryRequestDTO request) {
+        Orders orders = ordersRepository.findById(request.getOrdersCode()).orElseThrow(() -> new DataNotFoundException("Orders not found"));
+        orders.setOrderStatus(OrderStatus.complete);
+        ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("khong thay id cua shipper"));
+        receiveDelivery.setStatusDelivery(StatusDelivery.complete);
+        ordersRepository.save(orders);
+        receiveDeliveryRepository.save(receiveDelivery);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDelivery);
     }
 
     @Override
@@ -73,19 +86,17 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
     }
 
     @Override
-    public ReceiveDeliveryResponseDTO taking(ReceiveDeliveryRequestDTO request) {
-        ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("khong thay id cua shipper"));
-        receiveDelivery.setStatusDelivery(StatusDelivery.taking);
-        return receiveDeliveryMapper.toReceiveDeliveryResponseDTO(receiveDeliveryRepository.save(receiveDelivery));
+    public ReceiveDeliveryResponseDTO appoimentDelivery(ReceiveDeliveryRequestDTO request) {
+        ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("ReceiveDelivery not found"));
+        receiveDelivery.setStatusDelivery(StatusDelivery.appoinment);
+        Orders orders = ordersRepository.findById(request.getOrdersCode()).orElseThrow(() -> new DataNotFoundException("Orders not found"));
+        orders.setOrderStatus(OrderStatus.warehouse);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDeliveryRepository.save(receiveDelivery));
     }
 
-    @Override
-    public ReceiveDeliveryResponseDTO appoiment(ReceiveDeliveryRequestDTO request) {
-        ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("khong thay id cua shipper"));
-        ;
-        receiveDelivery.setStatusDelivery(StatusDelivery.taking);
-        return receiveDeliveryMapper.toReceiveDeliveryResponseDTO(receiveDeliveryRepository.save(receiveDelivery));
-    }
+
+
+
 
     @Override
     public ReceiveDeliveryResponseDTO pickUpOrders(Long shipperCode,Long receiveDeliveryCode, Long ordersCode ) {
@@ -96,16 +107,31 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
         receiveDelivery.setDeliveryDate(new Date());
         receiveDelivery.setShipper(shipperRepository.findShipperReceiveByID(shipperCode, TypeShipper.receive));
         receiveDelivery.setOrders(orders);
-        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDelivery);
+        ordersRepository.save(orders);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDeliveryRepository.save(receiveDelivery));
     }
 
     @Override
-    public ReceiveDeliveryResponseDTO addOderToList(Long shipperCode, Long ordersCode ) {
+    public ReceiveDeliveryResponseDTO addDeliveryToList(Long shipperCode, Long ordersCode) {
         Orders orders = ordersRepository.findById(ordersCode).orElseThrow(() -> new DataNotFoundException("khong thay id cua don hang"));
         orders.setOrderStatus(OrderStatus.delivery);
         Shipper shipper = shipperRepository.findById(shipperCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay shipper"));
         ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().shipper(shipper).orders(orders).deliveryDate(new Date()).createdDate(new Date()).statusDelivery(StatusDelivery.taking).typeDelivery(TypeDelivery.delivery).build();
         receiveDeliveryRepository.save(receiveDelivery);
+        ordersRepository.save(orders);
         return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDelivery);
     }
+
+    @Override
+    public ReceiveDeliveryResponseDTO addReceiveToList(Long shipperCode, Long ordersCode) {
+        Orders orders = ordersRepository.findById(ordersCode).orElseThrow(() -> new DataNotFoundException("khong thay id cua don hang"));
+        orders.setOrderStatus(OrderStatus.delivery);
+        Shipper shipper = shipperRepository.findById(shipperCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay shipper"));
+        ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().shipper(shipper).orders(orders).deliveryDate(new Date()).createdDate(new Date()).statusDelivery(StatusDelivery.taking).typeDelivery(TypeDelivery.receive).build();
+        receiveDeliveryRepository.save(receiveDelivery);
+        ordersRepository.save(orders);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDelivery);
+    }
+
+
 }

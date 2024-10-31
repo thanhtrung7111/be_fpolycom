@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper(unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE, componentModel = "spring")
 public interface ReceiveDeliveryMapper {
     ReceiveDeliveryMapper INSTANCE = Mappers.getMapper(ReceiveDeliveryMapper.class);
-
+    @Mapping(target = "orders.id",source = "ordersCode")
     @Mapping(target = "shipper.id", source = "shipperCode")
     @Mapping(target = "id",source = "receiveDeliveryCode")
     ReceiveDelivery toReceiveDelivery(ReceiveDeliveryRequestDTO dto);

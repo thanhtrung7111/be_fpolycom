@@ -78,11 +78,20 @@ public class ShipperController {
     }
 
     @PostMapping(value = "shipper/add-delivery")
-    public ResponseEntity<Object> receiveDeliveryNewList(@RequestBody Optional<HashMap<String,String>> request) {
+    public ResponseEntity<Object> receiveDeliveryNewList(@RequestBody HashMap<String,String> request) {
         if(request.isEmpty()){
             throw new DataNotFoundException("Shipper code is empty");
         }
-        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addOderToList(Long.valueOf(request.get().get("shipperCode")),Long.valueOf(request.get().get("orderCode")))));
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addDeliveryToList(Long.valueOf(request.get("shipperCode")),Long.valueOf(request.get("orderCode")))));
+    }
+
+
+    @PostMapping(value = "shipper/add-receive")
+    public ResponseEntity<Object> receiveReceiveNewList(@RequestBody HashMap<String,String> request) {
+        if(request.isEmpty()){
+            throw new DataNotFoundException("Shipper code is empty");
+        }
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addReceiveToList(Long.valueOf(request.get("shipperCode")),Long.valueOf(request.get("orderCode")))));
     }
 
 

@@ -6,6 +6,7 @@ public enum OrderStatus {
     complete("Complete"),
     delivery("Delivery"),
     pickup("Pickup"),
+    cancel("Cancel"),
     warehouse("Warehouse");
 
 
