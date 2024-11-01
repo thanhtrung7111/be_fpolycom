@@ -28,12 +28,34 @@ public class ReceiveDeliveryController {
         return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.getListReceiveDelivery(request.getShipperCode())));
     }
 
-    @PostMapping(value = "receive-delivery/newList")
+    @PostMapping(value = "/receive-delivery/newList")
     public ResponseEntity<Object> receiveDeliveryNewList(@RequestBody ReceiveDeliveryRequestDTO request) {
         if(request.getShipperCode().describeConstable().isEmpty()){
             throw new DataNotFoundException("Shipper code is empty");
         }
         return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.createListReceiveDelivery(request)));
+    }
+
+    @PostMapping(value = "/receive-delivery/complete-delivery")
+    public ResponseEntity<Object> receiveDeliveryCompleteDelivery(@RequestBody ReceiveDeliveryRequestDTO request) {
+        if(request.getReceiveDeliveryCode().describeConstable().isEmpty()){
+            throw new DataNotFoundException("receiveDeliveryCode is empty");
+        }
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.completeDelivery(request)));
+    }
+    @PostMapping(value = "/receive-delivery/complete-receive")
+    public ResponseEntity<Object> receiveReceiveCompleteDelivery(@RequestBody ReceiveDeliveryRequestDTO request) {
+        if(request.getReceiveDeliveryCode().describeConstable().isEmpty()){
+            throw new DataNotFoundException("receiveDeliveryCode is empty");
+        }
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.completeReceive(request)));
+    }
+    @PostMapping(value = "/receive-delivery/appoiment")
+    public ResponseEntity<Object> appoiment(@RequestBody ReceiveDeliveryRequestDTO request) {
+        if(request.getReceiveDeliveryCode().describeConstable().isEmpty()){
+            throw new DataNotFoundException("receiveDeliveryCode is empty");
+        }
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.appoimentDelivery(request)));
     }
 
     
