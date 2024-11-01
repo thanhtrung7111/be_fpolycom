@@ -29,6 +29,7 @@ public interface OrderMapper {
     @Mapping(target = "storeName",source = "store.name")
     @Mapping(target = "deliveryType",source = "deliveryType.name")
     @Mapping(target = "paymentTypeName",source = "paymentType.name")
+    @Mapping(target = "orderDate",source = "createdDate")
     @Mapping(target = "paymentSuccess",source = "paymentReceiptList",qualifiedByName = "paymentSuccess")
     OrderResponseDTO toOrderResponseDto(Orders order);
 
@@ -56,6 +57,7 @@ public interface OrderMapper {
     @Mapping(target = "paymentTypeCode",source = "paymentType.id")
     @Mapping(target = "paymentSuccess",source = "paymentReceiptList",qualifiedByName = "paymentSuccess")
     @Mapping(target = "receiveDeliveryList",source = "receiveDeliveryList")
+    @Mapping(target = "orderDate",source = "createdDate")
     @Mapping(target = "voucherList",source = "voucherApplyList",qualifiedByName = "voucherList")
     OrderInfoResponseDTO toOrderInfoResponseDto (Orders orders);
 

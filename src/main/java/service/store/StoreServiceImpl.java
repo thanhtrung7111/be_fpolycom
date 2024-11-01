@@ -86,6 +86,7 @@ public class StoreServiceImpl implements StoreService {
         return StoreMapper.INSTANCE.toStoreRegisterResponseDto(store);
     }
 
+
     @Override
     public StoreRegisterResponseDTO getRegisterStore(String userLogin,Long storeCode) {
         if (!authUserService.isValidUserLogin(userLogin)) {
