@@ -40,7 +40,7 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
      */
     @Override
     public List<ReceiveDeliveryResponseDTO> getListReceiveDelivery(Long shipperCode) {
-        return ReceiveDeliveryMapper.INSTANCE.toList(receiveDeliveryRepository.findAllForshipper(shipperCode));
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(receiveDeliveryRepository.findAllForshipper(shipperCode));
     }
 
     @Override
@@ -82,7 +82,7 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
             receiveDelivery.setShipper(shipperRepository.findById(request.getShipperCode()).get());
             mainList.add(receiveDelivery);
         }
-         return ReceiveDeliveryMapper.INSTANCE.toList(receiveDeliveryRepository.saveAllAndFlush(mainList));
+         return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(receiveDeliveryRepository.saveAllAndFlush(mainList));
     }
 
     @Override

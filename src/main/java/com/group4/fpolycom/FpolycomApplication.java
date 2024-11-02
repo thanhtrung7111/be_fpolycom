@@ -103,6 +103,10 @@ public class FpolycomApplication implements CommandLineRunner {
 	ShippingFeeRepository shippingFeeRepository;
 
 
+	@Autowired
+	PaymentWallerStoreRepository paymentWallerStoreRepository;
+
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(FpolycomApplication.class, args);
@@ -145,6 +149,10 @@ public class FpolycomApplication implements CommandLineRunner {
 		Store store = Store.builder().id(1L).userAccount(userAccount).district(district).province(province).ward(ward).name("Cửa hàng thú cưng").email("Thucungw@gmail.com").bannerImage("https://tdtdecor.vn/wp-content/uploads/2021/07/thiet-ke-shop-thu-cung-13.jpg").image("https://freelancervietnam.vn/wp-content/uploads/2020/06/post-thumb-pet-shop.jpg").phone("0909197031").password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 //		Store store2 = Store.builder().id(5L).userAccount(userAccount2).district(district).province(province).ward(ward).name("Dien thoai di dong").email("Th22ucungw@gmail.com").bannerImage("https://tdtdecor.vn/wp-content/uploads/2021/07/thiet-ke-shop-thu-cung-13.jpg").image("https://freelancervietnam.vn/wp-content/uploads/2020/06/post-thumb-pet-shop.jpg").password(encoder.encode("123456")).storeStatus(StoreStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 		storeRepository.saveAll(List.of(store));
+
+		PaymentWalletStore paymentWalletStore  = PaymentWalletStore.builder().id(1L).store(store).balance(500000.0).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).build();
+		paymentWallerStoreRepository.save(paymentWalletStore);
+
 		Followed followed = Followed.builder().id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).statusFollow(true).userAccount(userAccount2).store(store).build();
 		followedRepository.save(followed);
 		NotifycationUser notifycationUser = NotifycationUser.builder().id(1L).createdDate(new Date()).deleted(false).typeNotifycation(TypeNotifycationUser.voucher).content("Thong bao").readed(false).title("Thong bao so 1").userAccount(userAccount).build();

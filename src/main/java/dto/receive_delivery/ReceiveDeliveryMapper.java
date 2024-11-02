@@ -22,7 +22,7 @@ public interface ReceiveDeliveryMapper {
     @Mapping(target = "shipperName", source = "shipper.name")
     ReceiveDeliveryResponseDTO toReceiveDeliveryResponseDTO(ReceiveDelivery entity);
 
-    List<ReceiveDeliveryResponseDTO> toList(List<ReceiveDelivery> list);
+    List<ReceiveDeliveryResponseDTO> toReceiveDeliveryResponseDtoList(List<ReceiveDelivery> list);
 
 
 }

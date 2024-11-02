@@ -1,8 +1,10 @@
 package service.store_transaction;
 
+import dao.PaymentWallerStoreRepository;
 import dao.StoreTransactionReceiptRepository;
 import dao.StoreTransactionRepository;
 import dto.store_transaction.*;
+import entity.PaymentWalletStore;
 import entity.StoreTransaction;
 import entity.StoreTransactionReceipt;
 import entity.enum_package.TransactionStatus;
@@ -17,7 +19,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class StoreTransactionServiceImpl implements StoreTransactionService {
+public class
+StoreTransactionServiceImpl implements StoreTransactionService {
     @Autowired
     StoreTransactionRepository storeTransactionRepository;
 
@@ -26,6 +29,9 @@ public class StoreTransactionServiceImpl implements StoreTransactionService {
     @Autowired
     StoreTransactionReceiptRepository storeTransactionReceiptRepository;
 
+    @Autowired
+    PaymentWallerStoreRepository paymentWallerStoreRepository;
+
     @Override
     public WithdrawTransactionResponseDTO withdrawTransaction(WithdrawTransactionRequestDTO request) {
         if(request.getBankStoreCode().isBlank()) throw new ValidationException("Hay lien ket ngan hang truoc khi rut tien");
@@ -33,6 +39,9 @@ public class StoreTransactionServiceImpl implements StoreTransactionService {
         storeTransaction.setTypeTransaction(TypeTransaction.withdraw);
         storeTransaction.setTransactionStatus(TransactionStatus.pending);
         storeTransaction.setCreatedDate(new Date());
+        PaymentWalletStore paymentWalletStore = paymentWallerStoreRepository.findPaymentWalletByStore(request.getStoreCode()).orElseThrow(()->new DataNotFoundException("Khong ton tai vi tien!"));
+        paymentWalletStore.setBalance(paymentWalletStore.getBalance()-storeTransaction.getTotalAmount());
+        paymentWallerStoreRepository.save(paymentWalletStore);
         return StoreTransactionMapper.INSTANCE.toWithdrawTransactionResponseDTO(storeTransactionRepository.save(storeTransaction));
     }
 
@@ -46,6 +55,7 @@ public class StoreTransactionServiceImpl implements StoreTransactionService {
         StoreTransaction saved = storeTransactionRepository.save(storeTransaction);
         StoreTransactionReceipt storeTransactionReceipt = StoreTransactionReceipt.builder().totalAmount(storeTransaction.getTotalAmount()).storeTransaction(saved).createdDate(new Date()).build();
         storeTransactionReceiptRepository.save(storeTransactionReceipt);
+
         return StoreTransactionMapper.INSTANCE.adminToAdminWithdrawResponseDTO(saved);
     }
 
@@ -54,6 +64,9 @@ public class StoreTransactionServiceImpl implements StoreTransactionService {
         StoreTransaction storeTransaction = storeTransactionRepository.findById(code).orElseThrow(()->new DataNotFoundException("Khong ton tai du lieu!"));
         storeTransaction.setTransactionStatus(TransactionStatus.failed);
         storeTransaction.setContent(content);
+        PaymentWalletStore paymentWalletStore = paymentWallerStoreRepository.findPaymentWalletByStore(storeTransaction.getBankStore().getStore().getId()).orElseThrow(()->new DataNotFoundException("Khong ton tai vi tien!"));
+        paymentWalletStore.setBalance(paymentWalletStore.getBalance()+storeTransaction.getTotalAmount());
+        paymentWallerStoreRepository.save(paymentWalletStore);
         return StoreTransactionMapper.INSTANCE.adminToAdminWithdrawResponseDTO(storeTransactionRepository.save(storeTransaction));
     }
 
@@ -65,5 +78,10 @@ public class StoreTransactionServiceImpl implements StoreTransactionService {
     @Override
     public TransactionDetailResponseDTO getDetailByTransactionCode(Long code) {
         return StoreTransactionMapper.INSTANCE.toTransactionDetailResponseDto(storeTransactionRepository.findById(code).orElseThrow(()->new DataNotFoundException("Khong ton tai du lieu!")));
+    }
+
+    @Override
+    public List<AdminWithdrawResponseDTO> getAllTransactionByStore(Long storeCode) {
+        return StoreTransactionMapper.INSTANCE.toListAdminWithdrawResponseDtoList(storeTransactionRepository.findAllTransactionByStore(storeCode));
     }
 }

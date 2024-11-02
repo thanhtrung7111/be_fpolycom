@@ -129,16 +129,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderInfoResponseDTO confirmOrderByStore(Long orderCode) {
         Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai!"));
-        order.setOrderStatus(OrderStatus.pickup);
+        order.setOrderStatus(OrderStatus.prepare);
         order.setConfirmOrder(true);
         ordersRepository.save(order);
+        LocalDate deliveryDate = LocalDate.now().plusDays(3);
+        Date date = java.sql.Date.valueOf(deliveryDate);
+        ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().orders(order).createdDate(new Date()).deliveryDate(date).typeDelivery(TypeDelivery.receive).statusDelivery(StatusDelivery.taking).build();
+        receiveDeliveryRepository.save(receiveDelivery);
+        order.getReceiveDeliveryList().add(receiveDelivery);
         return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);
     }
 
     @Override
-    public OrderInfoResponseDTO prepareReceiveOrders(Long orderCode) {
+    public OrderInfoResponseDTO preparedReceiveOrders(Long orderCode) {
         Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay don hang"));
-        order.setOrderStatus(OrderStatus.prepare);
+        order.setOrderStatus(OrderStatus.pickup);
         order.setConfirmPrepare(true);
         ordersRepository.save(order);
         return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);
@@ -149,10 +154,7 @@ public class OrderServiceImpl implements OrderService {
         Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay don hang"));
         order.setOrderStatus(OrderStatus.pickup);
         order.setConfirmPickup(true);
-        LocalDate deliveryDate = LocalDate.now().plusDays(3);
-        Date date = java.sql.Date.valueOf(deliveryDate);
-        ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().orders(order).createdDate(new Date()).deliveryDate(date).typeDelivery(TypeDelivery.receive).statusDelivery(StatusDelivery.taking).build();
-        receiveDeliveryRepository.save(receiveDelivery);
+
         return OrderMapper.INSTANCE.toOrderInfoResponseDto(ordersRepository.save(order));
     }
 }

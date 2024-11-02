@@ -15,4 +15,6 @@ public interface StoreTransactionService {
     public List<AdminWithdrawResponseDTO> getAllTransactionIsPending();
 
     public TransactionDetailResponseDTO getDetailByTransactionCode(Long code);
+    public List<AdminWithdrawResponseDTO> getAllTransactionByStore(Long storeCode);
+
 }
