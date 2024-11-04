@@ -102,6 +102,11 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public StoreRegisterResponseDTO getDetailStore(Long storeCode) {
+        return StoreMapper.INSTANCE.toStoreRegisterResponseDto(storeRepository.findStoreByCode(storeCode));
+    }
+
+    @Override
     public UserStoreDetailResponseDTO getStoreByCode(Long storeCode,String userLogin) {
         Store store = storeRepository.findById(storeCode).orElseThrow(()-> new DataNotFoundException("KHong ton tai du lieu!"));
         UserStoreDetailResponseDTO responseDTO = StoreMapper.INSTANCE.toUserStoreDetailResponseDto(store);
