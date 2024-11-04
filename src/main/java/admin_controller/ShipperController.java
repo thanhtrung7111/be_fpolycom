@@ -28,8 +28,7 @@ public class ShipperController {
     @Autowired
     DataReturnService dataReturnService;
 
-    @Autowired
-    ReceiveDeliveryService receiveDeliveryService;
+
 
     @GetMapping(value = "/shipper/all")
     public ResponseEntity<Object> getAll() {
@@ -69,30 +68,10 @@ public class ShipperController {
         return ResponseEntity.ok(dataReturnService.success(shipperService.deleteData(request)));
     }
 
-    @PostMapping(value = "shipper/newList")
-    public ResponseEntity<Object> receiveDeliveryNewList(@RequestBody ReceiveDeliveryRequestDTO request) {
-        if(request.getShipperCode().describeConstable().isEmpty()){
-            throw new DataNotFoundException("Shipper code is empty");
-        }
-        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.createListReceiveDelivery(request)));
-    }
-
-    @PostMapping(value = "shipper/add-delivery")
-    public ResponseEntity<Object> receiveDeliveryNewList(@RequestBody HashMap<String,String> request) {
-        if(request.isEmpty()){
-            throw new DataNotFoundException("Shipper code is empty");
-        }
-        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addDeliveryToList(Long.valueOf(request.get("shipperCode")),Long.valueOf(request.get("orderCode")))));
-    }
 
 
-    @PostMapping(value = "shipper/add-receive")
-    public ResponseEntity<Object> receiveReceiveNewList(@RequestBody HashMap<String,String> request) {
-        if(request.isEmpty()){
-            throw new DataNotFoundException("Shipper code is empty");
-        }
-        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addReceiveToList(Long.valueOf(request.get("shipperCode")),Long.valueOf(request.get("orderCode")))));
-    }
+
+
 
 
 }
