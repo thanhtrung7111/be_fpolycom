@@ -23,6 +23,7 @@ public interface OrderDetailMapper {
 
     @Mapping(target = "productDetailCode",source = "productDetail.id")
     @Mapping(target = "discountCode",source = "discount.id")
+    @Mapping(target = "percentDecrease",source = "discount.percentDecrease")
     @Mapping(target = "orderDetailCode",source = "id")
     @Mapping(target = "image",source = "productDetail.image")
     @Mapping(target = "productDetailName",source = "productDetail.name")

@@ -21,6 +21,7 @@ public class OrderDetailResponseDTO {
     Long productDetailCode;
 
     Long discountCode;
+    Integer percentDecrease;
 
     String image;
 

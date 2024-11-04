@@ -14,5 +14,8 @@ public interface StoreTransactionRepository extends JpaRepository<StoreTransacti
     @Query(value = "select o from StoreTransaction o where o.transactionStatus = :status")
     List<StoreTransaction> findTransactionsByStatus(@Param("status") TransactionStatus status);
 
+    @Query(value = "select o from StoreTransaction o where o.bankStore.store.id = :storeCode")
+    List<StoreTransaction> findAllTransactionByStore(@Param("storeCode") Long storeCode);
+
 }
 

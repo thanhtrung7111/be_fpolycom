@@ -2,17 +2,18 @@ package service.orders;
 
 import dao.OrdersRepository;
 import dao.PaymenReceiptRepository;
+import dao.ReceiveDeliveryRepository;
 import dao.UserAccountRepository;
 import dto.order.OrderInfoResponseDTO;
 import dto.order.OrderMapper;
 import dto.order.OrderResponseDTO;
 import dto.order.UserOrderRequestDTO;
 import dto.product.ProductMapper;
-import entity.Orders;
-import entity.PaymentReceipt;
-import entity.PaymentType;
-import entity.UserAccount;
+import dto.receive_delivery.ReceiveDeliveryMapper;
+import entity.*;
 import entity.enum_package.OrderStatus;
+import entity.enum_package.StatusDelivery;
+import entity.enum_package.TypeDelivery;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -22,6 +23,7 @@ import security.AsyncUpdate;
 import service.auth_store.AuthStoreService;
 import service.auth_user.AuthUserService;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +48,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     AuthStoreService authStoreService;
+
+    @Autowired
+    ReceiveDeliveryRepository receiveDeliveryRepository;
+
+
 
 
     @Override
@@ -98,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
             throw new DataNotFoundException("Khong co don dat hang nao");
         }
         ordersList.forEach(item -> {
-            PaymentReceipt paymentReceipt = PaymentReceipt.builder().paymentType(item.getPaymentType()).finalTotal(item.getFinalTotal()).totalAmount(item.getTotalAmount()).totalAmountShip(item.getTotalAmountShip()).totalAmountVoucher(item.getTotalAmountVoucher()).totalAmountPaid(item.getFinalTotal()).orders(item).createdDate(new Date()).deleted(false).updatedDate(null).deletedDate(null).build();
+            PaymentReceipt paymentReceipt = PaymentReceipt.builder().paymentType(item.getPaymentType()).finalTotal(item.getFinalTotal()).totalAmount(item.getTotalAmount()).totalAmountShip(item.getTotalAmountShip()).totalAmountVoucher(item.getTotalAmountVoucher()).totalAmountDiscount(item.getTotalAmountDiscount()).totalAmountPaid(item.getFinalTotal()).orders(item).createdDate(new Date()).deleted(false).updatedDate(null).deletedDate(null).build();
             PaymentReceipt saved = paymenReceiptRepository.save(paymentReceipt);
             item.getPaymentReceiptList().add(saved);
         });
@@ -122,9 +129,32 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderInfoResponseDTO confirmOrderByStore(Long orderCode) {
         Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai!"));
-        order.setOrderStatus(OrderStatus.pickup);
+        order.setOrderStatus(OrderStatus.prepare);
         order.setConfirmOrder(true);
         ordersRepository.save(order);
+        LocalDate deliveryDate = LocalDate.now().plusDays(3);
+        Date date = java.sql.Date.valueOf(deliveryDate);
+        ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().orders(order).createdDate(new Date()).deliveryDate(date).typeDelivery(TypeDelivery.receive).statusDelivery(StatusDelivery.taking).build();
+        receiveDeliveryRepository.save(receiveDelivery);
+        order.getReceiveDeliveryList().add(receiveDelivery);
         return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);
+    }
+
+    @Override
+    public OrderInfoResponseDTO preparedReceiveOrders(Long orderCode) {
+        Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay don hang"));
+        order.setOrderStatus(OrderStatus.pickup);
+        order.setConfirmPrepare(true);
+        ordersRepository.save(order);
+        return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);
+    }
+
+    @Override
+    public OrderInfoResponseDTO pickUpReceiveOrders(Long orderCode) {
+        Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay don hang"));
+        order.setOrderStatus(OrderStatus.pickup);
+        order.setConfirmPickup(true);
+
+        return OrderMapper.INSTANCE.toOrderInfoResponseDto(ordersRepository.save(order));
     }
 }

@@ -47,6 +47,8 @@ public class OrderResponseDTO {
 
     Double finalTotal;
 
+    Date orderDate;
+
     String deliveryType;
 
     Boolean paymentSuccess;

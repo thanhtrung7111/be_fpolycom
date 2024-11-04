@@ -1,6 +1,7 @@
 package service.store;
 
 import dao.DistrictRepository;
+import dao.PaymentWallerStoreRepository;
 import dao.StoreRepository;
 import dao.UserAccountRepository;
 import dto.store.StoreMapper;
@@ -40,6 +41,9 @@ public class StoreServiceImpl implements StoreService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    PaymentWallerStoreRepository paymentWallerStoreRepository;
 
 
     @Override
@@ -85,6 +89,7 @@ public class StoreServiceImpl implements StoreService {
         storeRepository.save(store);
         return StoreMapper.INSTANCE.toStoreRegisterResponseDto(store);
     }
+
 
     @Override
     public StoreRegisterResponseDTO getRegisterStore(String userLogin,Long storeCode) {
@@ -177,6 +182,9 @@ public class StoreServiceImpl implements StoreService {
         store.setUpdatedDate(new Date());
         store.setStoreStatus(StoreStatus.active);
         storeRepository.save(store);
+        PaymentWalletStore paymentWalletStore = PaymentWalletStore.builder().store(store).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).balance(0.0).password(null).build();
+        paymentWallerStoreRepository.save(paymentWalletStore);
+
         return StoreMapper.INSTANCE.toUserStoreResponseDto(store);
     }
 

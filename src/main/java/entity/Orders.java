@@ -38,7 +38,10 @@ public class Orders extends EntityCommon {
 
     Double totalAmountShip;
 
+
     Boolean confirmOrder;
+
+    Boolean confirmPrepare;
 
     Boolean confirmDelivery;
 
@@ -106,7 +109,7 @@ public class Orders extends EntityCommon {
     List<PaymentReceipt> paymentReceiptList;
 
     @OneToMany(mappedBy = "orders")
-    List<ReceiveDelivery> receiveShippingList;
+    List<ReceiveDelivery> receiveDeliveryList;
 
     @OneToMany(mappedBy = "orders")
     List<Gift> giftList;

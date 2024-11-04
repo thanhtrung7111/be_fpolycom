@@ -1,17 +1,24 @@
 package admin_controller;
 
 import dto.product.ProductApproveRequestDTO;
+import dto.receive_delivery.ReceiveDeliveryRequestDTO;
 import dto.role_admin.RoleRequestDTO;
 import dto.shipper.ShipperRequestDTO;
+import exeception_handler.DataNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import service.data_return.DataReturn;
 import service.data_return.DataReturnService;
+import service.receive_delivery.ReceiveDeliveryService;
 import service.shipper.ShipperService;
+
+import java.util.HashMap;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/admin")
@@ -20,6 +27,9 @@ public class ShipperController {
     ShipperService shipperService;
     @Autowired
     DataReturnService dataReturnService;
+
+    @Autowired
+    ReceiveDeliveryService receiveDeliveryService;
 
     @GetMapping(value = "/shipper/all")
     public ResponseEntity<Object> getAll() {
@@ -58,4 +68,31 @@ public class ShipperController {
         }
         return ResponseEntity.ok(dataReturnService.success(shipperService.deleteData(request)));
     }
+
+    @PostMapping(value = "shipper/newList")
+    public ResponseEntity<Object> receiveDeliveryNewList(@RequestBody ReceiveDeliveryRequestDTO request) {
+        if(request.getShipperCode().describeConstable().isEmpty()){
+            throw new DataNotFoundException("Shipper code is empty");
+        }
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.createListReceiveDelivery(request)));
+    }
+
+    @PostMapping(value = "shipper/add-delivery")
+    public ResponseEntity<Object> receiveDeliveryNewList(@RequestBody HashMap<String,String> request) {
+        if(request.isEmpty()){
+            throw new DataNotFoundException("Shipper code is empty");
+        }
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addDeliveryToList(Long.valueOf(request.get("shipperCode")),Long.valueOf(request.get("orderCode")))));
+    }
+
+
+    @PostMapping(value = "shipper/add-receive")
+    public ResponseEntity<Object> receiveReceiveNewList(@RequestBody HashMap<String,String> request) {
+        if(request.isEmpty()){
+            throw new DataNotFoundException("Shipper code is empty");
+        }
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addReceiveToList(Long.valueOf(request.get("shipperCode")),Long.valueOf(request.get("orderCode")))));
+    }
+
+
 }

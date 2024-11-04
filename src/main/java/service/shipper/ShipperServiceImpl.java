@@ -55,6 +55,12 @@ public class ShipperServiceImpl implements ShipperService {
     }
 
     @Override
+    public ShipperResponseDTO getOrder(ShipperRequestDTO request) {
+
+        return null;
+    }
+
+    @Override
     public ShipperResponseDTO postData(ShipperRequestDTO shipperRequestDTO) {
         if (shipperRepository.findByUserLogin(shipperRequestDTO.getUserLogin()).isPresent()) {
             throw new DataNotFoundException("Tên đăng nhập đã tồn tại"); // Thông báo lỗi nếu tên đăng nhập đã có
