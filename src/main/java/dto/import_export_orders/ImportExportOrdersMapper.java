@@ -6,6 +6,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,componentModel = "spring")
 public interface ImportExportOrdersMapper {
     ImportExportOrdersMapper INSTANCE = Mappers.getMapper(ImportExportOrdersMapper.class);
@@ -20,6 +22,8 @@ public interface ImportExportOrdersMapper {
     @Mapping(target = "warehouseCode",source = "warehouse.id")
     @Mapping(target = "warehouseAddressDetail",source = "warehouse.addressDetail")
     ImportExportOrdersResponseDTO toResponse(ImportExportOrders importExportOrders);
+
+    List<ImportExportOrdersResponseDTO> toResponseList(List<ImportExportOrders> list);
 
 
 }

@@ -1,6 +1,7 @@
 package admin_controller;
 
 import dao.ImportExportOrdersRepository;
+import dto.import_export_orders.ImportExportListOrdersRequestDTO;
 import dto.receive_delivery.AddReceiveDeliveryRequestDTO;
 import dto.ward.WardCreateRequestDTO;
 import dto.warehouse.WarehouseRequestDTO;
@@ -65,15 +66,30 @@ public class WarehouseController {
     public ResponseEntity<Object> receiveReceiveNewList(@RequestBody AddReceiveDeliveryRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addReceiveToList(request)));
     }
-
-
-    @PostMapping(value = "/warehouse/import-warehouse")
-    public ResponseEntity<Object> confirmImport(@RequestBody HashMap<String,String> request) {
-        if(request.isEmpty()){
-            throw new DataNotFoundException("request  is empty");
+        @PostMapping(value = "/warehouse/import-warehouse")
+    public ResponseEntity<Object> confirmImport(@RequestBody ImportExportListOrdersRequestDTO request) {
+        if(request.getOrdersCode().isEmpty()){
+            throw new DataNotFoundException("Don hang bi trong!!");
         }
-        return ResponseEntity.ok(dataReturnService.success(importExportOrdersService.confirmImport(Long.valueOf(request.get("warehouseCode")),Long.valueOf(request.get("ordersCode")))));
+        return ResponseEntity.ok(dataReturnService.success(importExportOrdersService.confirmListImport(request)));
     }
+        @PostMapping(value = "/warehouse/export-warehouse")
+    public ResponseEntity<Object> exportWarehouse(@RequestBody ImportExportListOrdersRequestDTO request) {
+            if(request.getOrdersCode().isEmpty()){
+                throw new DataNotFoundException("Don hang bi trong!!");
+            }
+        return ResponseEntity.ok(dataReturnService.success(importExportOrdersService.confirmListExport(request)));
+    }
+
+
+
+//    @PostMapping(value = "/warehouse/import-warehouse")
+//    public ResponseEntity<Object> confirmImport(@RequestBody HashMap<String,String> request) {
+//        if(request.isEmpty()){
+//            throw new DataNotFoundException("request  is empty");
+//        }
+//        return ResponseEntity.ok(dataReturnService.success(importExportOrdersService.confirmListImport(Long.valueOf(request.get("warehouseCode")),Long.valueOf(request.get("ordersCode")))));
+//    }
 //    @PostMapping(value = "/warehouse/import-appoiment")
 //    public ResponseEntity<Object> confirmImportAppoiment(@RequestBody HashMap<String,String> request) {
 //        if(request.isEmpty()){
@@ -81,11 +97,12 @@ public class WarehouseController {
 //        }
 //        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addReceiveToList(Long.valueOf(request.get("warehouseCode")),Long.valueOf(request.get("ordersCode")))));
 //    }
-    @PostMapping(value = "/warehouse/export-warehouse")
-    public ResponseEntity<Object> exportWarehouse(@RequestBody HashMap<String,String> request) {
-        if(request.isEmpty()){
-            throw new DataNotFoundException("request is empty");
-        }
-        return ResponseEntity.ok(dataReturnService.success(importExportOrdersService.confirmExport(Long.valueOf(request.get("warehouseCode")),Long.valueOf(request.get("ordersCode")))));
-    }
+//    @PostMapping(value = "/warehouse/export-warehouse")
+//    public ResponseEntity<Object> exportWarehouse(@RequestBody HashMap<String,String> request) {
+//        if(request.isEmpty()){
+//            throw new DataNotFoundException("request is empty");
+//        }
+//        return ResponseEntity.ok(dataReturnService.success(importExportOrdersService.confirmExport(Long.valueOf(request.get("warehouseCode")),Long.valueOf(request.get("ordersCode")))));
+//    }
+
 }
