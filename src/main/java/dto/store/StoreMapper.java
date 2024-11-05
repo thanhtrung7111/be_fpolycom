@@ -24,8 +24,11 @@ public interface StoreMapper {
 
     @Mapping(target = "storeRegisterCode", source = "id")
     @Mapping(target = "provinceCode", source = "province.id")
+    @Mapping(target = "provinceName", source = "province.name")
     @Mapping(target = "districtCode", source = "district.id")
+    @Mapping(target = "districtName", source = "district.name")
     @Mapping(target = "wardCode", source = "ward.id")
+    @Mapping(target = "wardName", source = "ward.name")
     @Mapping(target = "documentList",source = "storeDocumentList")
     @Mapping(target = "status",source = "storeStatus")
     @Mapping(target = "userRegister",source = "store.userAccount.name")
