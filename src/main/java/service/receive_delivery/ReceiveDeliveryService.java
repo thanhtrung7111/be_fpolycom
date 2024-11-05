@@ -10,7 +10,9 @@ public interface ReceiveDeliveryService{
 
     public ReceiveDeliveryResponseDTO completeReceive(ReceiveDeliveryRequestDTO dto);
 
-    public ReceiveDeliveryResponseDTO completeDelivery(ReceiveDeliveryRequestDTO dto);
+    public default ReceiveDeliveryResponseDTO completeDelivery(ReceiveDeliveryRequestDTO dto) {
+        return null;
+    }
 
     public List<ReceiveDeliveryResponseDTO> createListReceiveDelivery(ReceiveDeliveryRequestDTO request);
 
