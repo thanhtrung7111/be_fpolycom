@@ -26,5 +26,7 @@ public interface ReceiveDeliveryService{
 
     public List<ReceiveDeliveryResponseDTO> addReceiveToList(AddReceiveDeliveryRequestDTO request );
 
+    public ReceiveDeliveryResponseDTO cancelDelivery(ReceiveDeliveryRequestDTO request);
+
 
 }

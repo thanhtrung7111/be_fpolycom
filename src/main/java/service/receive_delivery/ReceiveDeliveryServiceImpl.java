@@ -122,7 +122,7 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
             ordersRepository.save(orders);
             mainList.add(receiveDelivery);
         }
-        return ReceiveDeliveryMapper.INSTANCE.toList(mainList);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(mainList);
     }
 
     @Override
@@ -137,7 +137,19 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
             ordersRepository.save(order);
             mainList.add(receiveDelivery);
         }
-        return ReceiveDeliveryMapper.INSTANCE.toList(mainList);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(mainList);
+    }
+
+    @Override
+    public ReceiveDeliveryResponseDTO cancelDelivery(ReceiveDeliveryRequestDTO request) {
+        ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("Khong tim thay receive"));
+        receiveDelivery.setStatusDelivery(StatusDelivery.failed);
+        Orders orders = ordersRepository.findById(receiveDelivery.getOrders().getId()).orElseThrow(() -> new DataNotFoundException("Khong tim thay orders"));
+        orders.setOrderStatus(OrderStatus.cancel);
+        ReceiveDelivery returnReceiveDelivery = ReceiveDelivery.builder().statusDelivery(StatusDelivery.taking).typeDelivery(TypeDelivery.refund).deliveryDate(new Date()).createdDate(new Date()).orders(orders).build();
+        ordersRepository.save(orders);
+        receiveDeliveryRepository.save(receiveDelivery);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDeliveryRepository.save(returnReceiveDelivery));
     }
 
 
