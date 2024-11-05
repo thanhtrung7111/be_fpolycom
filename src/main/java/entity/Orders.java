@@ -119,4 +119,7 @@ public class Orders extends EntityCommon {
 
     @OneToMany(mappedBy = "orders")
     List<Gift> giftList;
+
+    @OneToMany(mappedBy = "orders")
+    List<ImportExportOrders> importExportOrdersList;
 }
