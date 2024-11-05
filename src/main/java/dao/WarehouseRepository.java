@@ -13,7 +13,7 @@ public interface  WarehouseRepository extends JpaRepository<Warehouse, Long> {
     @Query(value = "select o from Warehouse o where o.province.id = :ProvinceCode")
     Warehouse findByProvince(@Param("ProvinceCode") String provinceCode);
 
-    @Query(value = "select o from Warehouse o where o.deleted = true")
+    @Query(value = "select o from Warehouse o where o.deleted = false")
     List<Warehouse> findByDeleted();
 
 }

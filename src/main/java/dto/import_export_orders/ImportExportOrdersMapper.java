@@ -16,6 +16,9 @@ public interface ImportExportOrdersMapper {
     ImportExportOrders toEntity(ImportExportOrdersRequestDTO request);
 
 
+    @Mapping(target = "ordersCode",source = "orders.id")
+    @Mapping(target = "warehouseCode",source = "warehouse.id")
+    @Mapping(target = "warehouseAddressDetail",source = "warehouse.addressDetail")
     ImportExportOrdersResponseDTO toResponse(ImportExportOrders importExportOrders);
 
 

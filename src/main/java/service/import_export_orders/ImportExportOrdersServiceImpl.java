@@ -33,8 +33,7 @@ public class ImportExportOrdersServiceImpl implements ImportExportOrdersService 
         Warehouse warehouse = warehouseRepository.findById(warehouseCode).orElseThrow(()-> new DataNotFoundException("Khong tim thay kho"));
         Orders  orders = ordersRepository.findById(ordersCode).orElseThrow(()-> new DataNotFoundException("Khong tim thay don hang"));
         ImportExportOrders importExportOrders = ImportExportOrders.builder().typeImportExportOrders(TypeImportExportOrders.importOrders).createdDate(new Date()).date(LocalDateTime.now()).warehouse(warehouse).orders(orders).build();
-        importExportOrdersRepository.save(importExportOrders);
-        return ImportExportOrdersMapper.INSTANCE.toResponse(importExportOrders);
+        return ImportExportOrdersMapper.INSTANCE.toResponse(importExportOrdersRepository.save(importExportOrders));
     }
 
     @Override

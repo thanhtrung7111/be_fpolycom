@@ -24,4 +24,5 @@ public interface ReceiveDeliveryMapper {
     List<ReceiveDeliveryResponseDTO> toList(List<ReceiveDelivery> list);
 
 
+
 }

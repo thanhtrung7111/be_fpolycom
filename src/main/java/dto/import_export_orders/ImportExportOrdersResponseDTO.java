@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 public class ImportExportOrdersResponseDTO {
     String warehouseAddressDetail;
 
-    String warehouseCode;
+    Long warehouseCode;
+
+    Long ordersCode;
 
     String typeImportExportOrders;
 
