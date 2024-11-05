@@ -122,7 +122,7 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
             ordersRepository.save(orders);
             mainList.add(receiveDelivery);
         }
-        return ReceiveDeliveryMapper.INSTANCE.toList(mainList);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(mainList);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
             ordersRepository.save(order);
             mainList.add(receiveDelivery);
         }
-        return ReceiveDeliveryMapper.INSTANCE.toList(mainList);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(mainList);
     }
 
 
