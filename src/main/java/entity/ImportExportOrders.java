@@ -26,7 +26,7 @@ public class ImportExportOrders extends EntityCommon{
     Orders orders;
 
     @ManyToOne
-    @JoinColumn(name = "warehouseList")
+    @JoinColumn(name = "warehouseCode")
     Warehouse warehouse;
 
     @Enumerated(EnumType.STRING)
