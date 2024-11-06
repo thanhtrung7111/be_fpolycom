@@ -3,7 +3,8 @@ package entity.enum_package;
 public enum StatusDelivery {
     complete("Complete"),
     taking("Taking"),
-    appoinment("Appoinment");
+    appoinment("Appoinment"),
+    failed("Failed");
 
 
     private String description;
