@@ -1,5 +1,6 @@
 package service.receive_delivery;
 
+import dto.receive_delivery.AddReceiveDeliveryRequestDTO;
 import dto.receive_delivery.ReceiveDeliveryRequestDTO;
 import dto.receive_delivery.ReceiveDeliveryResponseDTO;
 
@@ -21,9 +22,9 @@ public interface ReceiveDeliveryService{
 
     public ReceiveDeliveryResponseDTO pickUpOrders(Long shipperCode,Long receiveDeliveryCode, Long ordersCode );
 
-    public ReceiveDeliveryResponseDTO addDeliveryToList(Long shipperCode, Long ordersCode );
+    public List<ReceiveDeliveryResponseDTO> addDeliveryToList(AddReceiveDeliveryRequestDTO request);
 
-    public ReceiveDeliveryResponseDTO addReceiveToList(Long shipperCode, Long ordersCode );
+    public List<ReceiveDeliveryResponseDTO> addReceiveToList(AddReceiveDeliveryRequestDTO request );
 
 
 }

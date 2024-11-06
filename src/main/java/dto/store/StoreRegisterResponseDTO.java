@@ -37,6 +37,11 @@ public class StoreRegisterResponseDTO {
 
     Long wardCode;
 
+    String provinceName;
+
+    String districtName;
+
+    String wardName;
 
     List<StoreDocumentResponseDTO> documentList;
 }

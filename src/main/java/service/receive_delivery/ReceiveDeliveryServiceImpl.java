@@ -4,9 +4,7 @@ import dao.OrdersRepository;
 import dao.ReceiveDeliveryRepository;
 import dao.ShipperRepository;
 import dto.order.OrderMapper;
-import dto.receive_delivery.ReceiveDeliveryMapper;
-import dto.receive_delivery.ReceiveDeliveryRequestDTO;
-import dto.receive_delivery.ReceiveDeliveryResponseDTO;
+import dto.receive_delivery.*;
 import entity.Orders;
 import entity.ReceiveDelivery;
 import entity.Shipper;
@@ -112,25 +110,34 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
     }
 
     @Override
-    public ReceiveDeliveryResponseDTO addDeliveryToList(Long shipperCode, Long ordersCode) {
-        Orders orders = ordersRepository.findById(ordersCode).orElseThrow(() -> new DataNotFoundException("khong thay id cua don hang"));
-        orders.setOrderStatus(OrderStatus.delivery);
-        Shipper shipper = shipperRepository.findById(shipperCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay shipper"));
-        ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().shipper(shipper).orders(orders).deliveryDate(new Date()).createdDate(new Date()).statusDelivery(StatusDelivery.taking).typeDelivery(TypeDelivery.delivery).build();
-        receiveDeliveryRepository.save(receiveDelivery);
-        ordersRepository.save(orders);
-        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDelivery);
+    public List<ReceiveDeliveryResponseDTO> addDeliveryToList(AddReceiveDeliveryRequestDTO request) {
+        List<Orders> list = ordersRepository.findOrdersByOrders(request.getOrdersCode());
+        Shipper shipper = shipperRepository.findById(request.getShipperCode()).orElseThrow(() -> new DataNotFoundException("Khong tim thay shipper"));
+        List<ReceiveDelivery> mainList = new ArrayList<>();
+        if(list.isEmpty()) System.out.println("list rong");
+        for (Orders orders : list) {
+            orders.setOrderStatus(OrderStatus.delivery);
+            ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().shipper(shipper).orders(orders).deliveryDate(new Date()).createdDate(new Date()).statusDelivery(StatusDelivery.taking).typeDelivery(TypeDelivery.delivery).build();
+            receiveDeliveryRepository.save(receiveDelivery);
+            ordersRepository.save(orders);
+            mainList.add(receiveDelivery);
+        }
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(mainList);
     }
 
     @Override
-    public ReceiveDeliveryResponseDTO addReceiveToList(Long shipperCode, Long ordersCode) {
-        Orders orders = ordersRepository.findById(ordersCode).orElseThrow(() -> new DataNotFoundException("khong thay id cua don hang"));
-        orders.setOrderStatus(OrderStatus.delivery);
-        Shipper shipper = shipperRepository.findById(shipperCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay shipper"));
-        ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().shipper(shipper).orders(orders).deliveryDate(new Date()).createdDate(new Date()).statusDelivery(StatusDelivery.taking).typeDelivery(TypeDelivery.receive).build();
-        receiveDeliveryRepository.save(receiveDelivery);
-        ordersRepository.save(orders);
-        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDelivery);
+    public List<ReceiveDeliveryResponseDTO> addReceiveToList(AddReceiveDeliveryRequestDTO request) {
+        List<Orders> list = ordersRepository.findOrdersByOrders(request.getOrdersCode());
+        Shipper shipper = shipperRepository.findById(request.getShipperCode()).orElseThrow(() -> new DataNotFoundException("Khong tim thay shipper"));
+        List<ReceiveDelivery> mainList = new ArrayList<>();
+        if(list.isEmpty()) System.out.println("list rong");
+        for (Orders order : list) {
+            ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().shipper(shipper).orders(order).deliveryDate(new Date()).createdDate(new Date()).statusDelivery(StatusDelivery.taking).typeDelivery(TypeDelivery.receive).build();
+            receiveDeliveryRepository.save(receiveDelivery);
+            ordersRepository.save(order);
+            mainList.add(receiveDelivery);
+        }
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(mainList);
     }
 
 
