@@ -141,8 +141,6 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
             mainList.add(receiveDelivery);
         }
         return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(mainList);
-<<<<<<< HEAD
-=======
     }
 
     @Override
@@ -156,7 +154,6 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
         receiveDeliveryRepository.save(receiveDelivery);
         return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDeliveryRepository.save(returnReceiveDelivery));
 
->>>>>>> c92045322ebfd2d36e3ea55eccfaa42c63947fbc
     }
 
 
