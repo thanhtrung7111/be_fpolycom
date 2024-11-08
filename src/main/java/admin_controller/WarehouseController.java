@@ -1,9 +1,8 @@
 package admin_controller;
 
-import dao.ImportExportOrdersRepository;
 import dto.import_export_orders.ImportExportListOrdersRequestDTO;
 import dto.receive_delivery.AddReceiveDeliveryRequestDTO;
-import dto.ward.WardCreateRequestDTO;
+import dto.receive_delivery.ReceiveDeliveryRequestDTO;
 import dto.warehouse.WarehouseRequestDTO;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import service.data_return.DataReturnService;
 import service.import_export_orders.ImportExportOrdersService;
 import service.receive_delivery.ReceiveDeliveryService;
 import service.warehouse.WarehouseService;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping(value = "/admin")
@@ -41,16 +38,18 @@ public class WarehouseController {
     public ResponseEntity<Object> newWard(@RequestBody WarehouseRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(warehouseService.postData(request)));
     }
+
     @PostMapping(value = "/warehouse/update")
     public ResponseEntity<Object> update(@RequestBody WarehouseRequestDTO request, Errors errors) {
-        if(errors.hasFieldErrors("warehouseCode")){
+        if (errors.hasFieldErrors("warehouseCode")) {
             return ResponseEntity.ok(dataReturnService.dataNotFound("warehouse is empty!!"));
         }
         return ResponseEntity.ok(dataReturnService.success(warehouseService.updateData(request)));
     }
+
     @PostMapping(value = "/warehouse/delete")
     public ResponseEntity<Object> delete(@RequestBody WarehouseRequestDTO request, Errors errors) {
-        if(errors.hasFieldErrors("warehouseCode")){
+        if (errors.hasFieldErrors("warehouseCode")) {
             return ResponseEntity.ok(dataReturnService.dataNotFound("warehouse is empty!!"));
         }
         return ResponseEntity.ok(dataReturnService.success(warehouseService.deleteData(request)));
@@ -66,21 +65,27 @@ public class WarehouseController {
     public ResponseEntity<Object> receiveReceiveNewList(@RequestBody AddReceiveDeliveryRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addReceiveToList(request)));
     }
-        @PostMapping(value = "/warehouse/import-warehouse")
+
+    @PostMapping(value = "/warehouse/import-warehouse")
     public ResponseEntity<Object> confirmImport(@RequestBody ImportExportListOrdersRequestDTO request) {
-        if(request.getOrdersCode().isEmpty()){
+        if (request.getOrdersCode().isEmpty()) {
             throw new DataNotFoundException("Don hang bi trong!!");
         }
         return ResponseEntity.ok(dataReturnService.success(importExportOrdersService.confirmListImport(request)));
     }
-        @PostMapping(value = "/warehouse/export-warehouse")
+
+    @PostMapping(value = "/warehouse/export-warehouse")
     public ResponseEntity<Object> exportWarehouse(@RequestBody ImportExportListOrdersRequestDTO request) {
-            if(request.getOrdersCode().isEmpty()){
-                throw new DataNotFoundException("Don hang bi trong!!");
-            }
+        if (request.getOrdersCode().isEmpty()) {
+            throw new DataNotFoundException("Don hang bi trong!!");
+        }
         return ResponseEntity.ok(dataReturnService.success(importExportOrdersService.confirmListExport(request)));
     }
 
+    @PostMapping(value = "/warehouse/cancel")
+    public ResponseEntity<Object> cancel(@RequestBody ReceiveDeliveryRequestDTO request) {
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.cancelDelivery(request)));
+    }
 
 
 //    @PostMapping(value = "/warehouse/import-warehouse")
