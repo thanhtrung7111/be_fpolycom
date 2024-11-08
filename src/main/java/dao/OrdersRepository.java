@@ -1,6 +1,7 @@
 package dao;
 
 
+
 import entity.Orders;
 import entity.Ward;
 import entity.enum_package.OrderStatus;
@@ -32,4 +33,14 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
 
     @Query(value = "select o from Orders o where o.id in :ordersCode")
     List<Orders> findOrdersByOrders(@Param("ordersCode")List<Long> ordersCode);
+
+//    @Query("SELECT new com.be_fpolycom.src.main.java.dto.StoreRevanueResponeDTO(" +
+//            "o.store_Code, YEARWEEK(o.created_Date, 1), SUM(od.quantity * p.price)) " +
+//            "FROM Order o " +
+//            "JOIN o.order_Details od " +
+//            "JOIN od.product_Detail p " +
+//            "WHERE o.created_Date BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 YEAR) AND CURRENT_DATE " +
+//            "GROUP BY o.store_Code, YEARWEEK(o.created_Date, 1) " +
+//            "ORDER BY YEARWEEK(o.created_Date, 1) DESC")
+//    List<StoreRevanueResponeDTO> findWeeklyRevenueByStore();
 }
