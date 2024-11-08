@@ -18,7 +18,6 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @AttributeOverride(name = "id", column = @Column(name = "receiveShippingCode"))
 public class ReceiveDelivery extends EntityCommon {
-
     String image;
 
     @Temporal(TemporalType.DATE)

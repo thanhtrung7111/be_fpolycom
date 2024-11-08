@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShipperLoginResponseDTO {
+    String id;
     String userLogin;
     String token;
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
-@AttributeOverride(name = "id",column = @Column(name = "wareHouseCode"))
+@AttributeOverride(name = "id", column = @Column(name = "wareHouseCode"))
 public class Warehouse extends EntityCommon {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,6 +28,9 @@ public class Warehouse extends EntityCommon {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wardCode")
     Ward ward;
+
+    @OneToMany(mappedBy = "warehouse")
+    List<ImportExportOrders> importExportOrders;
 
     String address;
 

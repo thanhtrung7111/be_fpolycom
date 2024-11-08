@@ -51,7 +51,6 @@ public class OrderInfoResponseDTO {
 
     Long shippingFeeCode;
 
-
     Long storeCode;
 
     Date orderDate;
@@ -59,10 +58,10 @@ public class OrderInfoResponseDTO {
     Long provinceCode;
 
     Long districtCode;
+
     Long wardCode;
 
     Long deliveryTypeCode;
-
 
     Long paymentTypeCode;
 

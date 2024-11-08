@@ -16,7 +16,6 @@ import java.util.List;
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders,Long> {
 
-
     @Query(value = "select o from Orders o where o.userAccount.userLogin = :userLogin")
     List<Orders> findAllOrdersByUser(@Param("userLogin")String userLogin);
 
@@ -30,6 +29,6 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
     @Query(value = "SELECT o FROM Orders o WHERE o.orderStatus = :orderStatus AND o.ward.id = :wardCode")
     List<Orders> findTop5ByOrderStatusAndWard(@Param("orderStatus") OrderStatus orderStatus, @Param("wardCode") Long wardCode, Pageable pageable);
 
-    @Query(value = "select o from Orders o where o.id = :ordersCode")
-    List<Orders> findOrdersByOrders(@Param("ordersCode")Long ordersCode);
+    @Query(value = "select o from Orders o where o.id in :ordersCode")
+    List<Orders> findOrdersByOrders(@Param("ordersCode")List<Long> ordersCode);
 }

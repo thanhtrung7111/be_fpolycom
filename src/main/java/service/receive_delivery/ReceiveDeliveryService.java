@@ -1,12 +1,14 @@
 package service.receive_delivery;
 
+import dto.receive_delivery.AddReceiveDeliveryRequestDTO;
 import dto.receive_delivery.ReceiveDeliveryRequestDTO;
 import dto.receive_delivery.ReceiveDeliveryResponseDTO;
+import dto.receive_delivery.ReceiveDeliveryShipperResponse;
 
 import java.util.List;
 
 public interface ReceiveDeliveryService{
-    public List<ReceiveDeliveryResponseDTO> getListReceiveDelivery(Long shipperCode);
+    public List<ReceiveDeliveryShipperResponse> getListReceiveDelivery(Long shipperCode);
 
     public ReceiveDeliveryResponseDTO completeReceive(ReceiveDeliveryRequestDTO dto);
 
@@ -23,9 +25,9 @@ public interface ReceiveDeliveryService{
 
     public ReceiveDeliveryResponseDTO pickUpOrders(Long shipperCode,Long receiveDeliveryCode, Long ordersCode );
 
-    public ReceiveDeliveryResponseDTO addDeliveryToList(Long shipperCode, Long ordersCode );
+    public List<ReceiveDeliveryResponseDTO> addDeliveryToList(AddReceiveDeliveryRequestDTO request);
 
-    public ReceiveDeliveryResponseDTO addReceiveToList(Long shipperCode, Long ordersCode );
+    public List<ReceiveDeliveryResponseDTO> addReceiveToList(AddReceiveDeliveryRequestDTO request );
 
 
 }

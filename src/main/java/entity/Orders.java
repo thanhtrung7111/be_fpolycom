@@ -41,11 +41,17 @@ public class Orders extends EntityCommon {
 
     Boolean confirmOrder;
 
+    Boolean confirmComplete;
+
     Boolean confirmPrepare;
 
     Boolean confirmDelivery;
 
     Boolean confirmPickup;
+
+    Boolean confirmCancel;
+
+    Boolean confirmWarehouse;
 
     Double finalTotal;
 
@@ -113,4 +119,7 @@ public class Orders extends EntityCommon {
 
     @OneToMany(mappedBy = "orders")
     List<Gift> giftList;
+
+    @OneToMany(mappedBy = "orders")
+    List<ImportExportOrders> importExportOrdersList;
 }
