@@ -102,6 +102,11 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public StoreRegisterResponseDTO getDetailStore(Long storeCode) {
+        return StoreMapper.INSTANCE.toStoreRegisterResponseDto(storeRepository.findStoreByCode(storeCode));
+    }
+
+    @Override
     public UserStoreDetailResponseDTO getStoreByCode(Long storeCode,String userLogin) {
         Store store = storeRepository.findById(storeCode).orElseThrow(()-> new DataNotFoundException("KHong ton tai du lieu!"));
         UserStoreDetailResponseDTO responseDTO = StoreMapper.INSTANCE.toUserStoreDetailResponseDto(store);
@@ -182,9 +187,10 @@ public class StoreServiceImpl implements StoreService {
         store.setUpdatedDate(new Date());
         store.setStoreStatus(StoreStatus.active);
         storeRepository.save(store);
-        PaymentWalletStore paymentWalletStore = PaymentWalletStore.builder().store(store).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).balance(0.0).password(null).build();
-        paymentWallerStoreRepository.save(paymentWalletStore);
-
+        if(store.getPaymentWalletStore() == null){
+            PaymentWalletStore paymentWalletStore = PaymentWalletStore.builder().store(store).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).balance(0.0).password(null).build();
+            paymentWallerStoreRepository.save(paymentWalletStore);
+        }
         return StoreMapper.INSTANCE.toUserStoreResponseDto(store);
     }
 

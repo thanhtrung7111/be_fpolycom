@@ -35,6 +35,15 @@ public class StoreController {
     }
 
 
+    @PostMapping("/store/detail")
+    public ResponseEntity<Object> getDetailStore(@RequestBody HashMap<String,String> request) {
+        if(request.isEmpty() || request.get("storeCode").isBlank()){
+            throw new DataNotFoundException("Cua hang khong ton tai!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(storeService.getDetailStore(Long.valueOf(request.get("storeCode")))));
+    }
+
+
     @PostMapping("/store/approve")
     public ResponseEntity<Object> unlockStore(@RequestBody HashMap<String,String> request) {
         if(request.isEmpty() || request.get("storeCode").isBlank()){

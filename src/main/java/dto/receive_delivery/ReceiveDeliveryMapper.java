@@ -42,5 +42,4 @@ public interface ReceiveDeliveryMapper {
     ReceiveDeliveryResponseDTO toReceiveDeliveryResponseDTO(ReceiveDelivery entity);
 
     List<ReceiveDeliveryResponseDTO> toReceiveDeliveryResponseDtoList(List<ReceiveDelivery> list);
-
 }

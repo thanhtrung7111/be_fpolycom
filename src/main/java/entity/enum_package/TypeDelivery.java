@@ -2,7 +2,8 @@ package entity.enum_package;
 
 public enum TypeDelivery {
     delivery("Delivery"),
-    receive("Receive");
+    receive("Receive"),
+    refund("Refund");
     private String description;
     // Constructor
     TypeDelivery(String description) {

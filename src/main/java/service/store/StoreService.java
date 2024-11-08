@@ -17,9 +17,13 @@ public interface StoreService {
 
 
     public StoreRegisterResponseDTO registerStore(StoreRegisterRequestDTO requestDTO);
+
+
     public StoreRegisterResponseDTO updateRegisterStore(StoreRegisterRequestDTO requestDTO);
 
     public StoreRegisterResponseDTO getRegisterStore(String userLogin,Long storeCode);
+
+    public StoreRegisterResponseDTO getDetailStore(Long storeCode);
 
     public UserStoreDetailResponseDTO getStoreByCode(Long storeCode,String userLogin);
 
