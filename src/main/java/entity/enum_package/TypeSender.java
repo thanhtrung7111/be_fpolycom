@@ -1,13 +1,12 @@
 package entity.enum_package;
 
-public enum TypeNotifycationUser {
-    evaluate("Evaluate"),
-    voucher("Voucher"),
-    order("Order"),
-    product("Product");
+public enum TypeSender {
+    store("store"),
+    user("user"),
+    shipper("shipper");
     private String description;
     // Constructor
-    TypeNotifycationUser(String description) {
+    TypeSender(String description) {
         this.description = description;
     }
 

@@ -112,4 +112,7 @@ public class UserAccount extends EntityCommon {
 
     @OneToOne(mappedBy = "userAccount")
     PaymentWalletUser paymentWalletUser;
+
+    @OneToMany(mappedBy = "userAccount")
+    List<GroupMessageStore> groupMessageStoreList;
 }

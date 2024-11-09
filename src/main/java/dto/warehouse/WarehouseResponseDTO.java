@@ -16,6 +16,12 @@ public class WarehouseResponseDTO {
 
     Long wardCode;
 
+    String provinceName;
+
+    String wardName;
+
+    String districtName;
+
     String address;
 
     String addressDetail;

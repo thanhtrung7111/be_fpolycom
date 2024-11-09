@@ -84,6 +84,4 @@ public class ReceiveDeliveryController {
         }
         return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.appoimentDelivery(request)));
     }
-
-    
 }

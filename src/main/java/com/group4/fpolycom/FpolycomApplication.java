@@ -224,607 +224,617 @@ public class FpolycomApplication implements CommandLineRunner {
 //		Orders orders = Orders.builder().paymentType(paymentType).orderStatus(OrderStatus.complete).createdDate(new Date()).deleted(false).address("35 Tran dai nghia").addressDetail("35 Trai Dai Nghiax kp noi hoa 2 ").updatedDate(null).deletedDate(null).id(1L).pickupDate(new Date()).noteContent("Content").store(store).deliveryType(deliveryType).userAccount(userAccount).finalTotal(50000.0).totalAmount(60000.0).totalAmountShip(80000.0).totalAmountVoucher(30000.0).deliveryDate(new Date()).build();
 //		ordersRepository.save(orders);
 
-//		ExampleData();
+		ExampleData();
 	}
 
-//	public void ExampleData(){
-//		provinceRepository.saveAll(Arrays.asList(
-//				Province.builder().id(1L).name("TPHCM")		.build(),
-//				Province.builder().id(2L).name("Bình Dương").build()
-//		));
-//
-//		districtRepository.saveAll(Arrays.asList(
-//				District.builder().id(1L).name("Quận 1")			.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-//				District.builder().id(2L).name("Quận Bình Thạnh")	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-//				District.builder().id(3L).name("Quận Châu Thành")	.province(provinceRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-//				District.builder().id(4L).name("Quận Lái Thiêu")	.province(provinceRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build()
-//		));
-//
-//		wardRepository.saveAll(Arrays.asList(
-//				Ward.builder().id(1L).name("Phường 1")	.district(districtRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-//				Ward.builder().id(2L).name("Phường 2")	.district(districtRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-//				Ward.builder().id(3L).name("Phường 13")	.district(districtRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-//				Ward.builder().id(4L).name("Phường 4")	.district(districtRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-//				Ward.builder().id(5L).name("Phường 5")	.district(districtRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-//				Ward.builder().id(6L).name("Phường 6")	.district(districtRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-//				Ward.builder().id(7L).name("Phường 7")	.district(districtRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-//				Ward.builder().id(8L).name("Phường 8")	.district(districtRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""))).build()
-//		));
-//
-//		userAccountRepository.saveAll(Arrays.asList(
-//				UserAccount.builder().id(1L).email("Ngvd4901@gmail.com")	.userLogin("Ngvd4901")	.name("Nguyễn Viết Đức")	.password(encoder.encode("123456"))	.userStatus(UserStatus.active)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.province(	provinceRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.district(	districtRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.ward(		wardRepository		.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.address(	"560 Nơ Trang Long")
-//						.build(),
-//				UserAccount.builder().id(2L).email("DTTrung0123@gmail.com")	.userLogin("user2")		.name("Đỗ Thành Trung")		.password(encoder.encode("123456"))	.userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong")	.createdDate(new Date())	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))	.updatedDate(null)	.deleted(false)	.deletedDate(null).build(),
-//				UserAccount.builder().id(3L).email("VTr0505@gmail.com")		.userLogin("vt0505")	.name("Vòng Trung")			.password(encoder.encode("123456"))	.userStatus(UserStatus.active).address("123 Đường 456, Phường 7, Quận 8, Thành Phố 9")								.createdDate(new Date())	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))	.updatedDate(null)	.deleted(false)	.deletedDate(null).build()
-//		));
-//
-//		String storeImg 		= "https://images.stockcake.com/public/7/a/4/7a49a413-44d8-42bb-a4f0-dcee546f439c_medium/electronics-store-interior-stockcake.jpg";
-//		String storeImg2 		= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.leafio.ai%2Fpet-store-software%2F&psig=AOvVaw3wRPuy0BWXOHZitP-P3JuF&ust=1730542864610000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKj09db0uokDFQAAAAAdAAAAABAT";
-//		String storeBannerImg 	= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fokcredit.in%2Fblog%2Fhow-to-open-a-computer-laptop-showroom%2F&psig=AOvVaw1acMwXcK125ldhmS2I2FW-&ust=1730542216883000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLCszqLyuokDFQAAAAAdAAAAABAE";
-//		String storeBannerImg2 	= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpetstore.ae%2F&psig=AOvVaw3wRPuy0BWXOHZitP-P3JuF&ust=1730542864610000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKj09db0uokDFQAAAAAdAAAAABAe";
-//		UserAccount userAcc 	= userAccountRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
-//		UserAccount userAcc2 	= userAccountRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""));
-//
-//
-//		storeRepository.saveAll(Arrays.asList(
-//				Store.builder().id(1L)
-//						.name("Laptop Shop")
-//						.password("123456")
-//						.phone("0356597539")
-//						.userAccount(userAcc)
-//						.image(storeImg2)
-//						.bannerImage(storeBannerImg2)
-//						.addressDetail("Cửa hàng Laptop - 123 Phạm Văn Đồng")
-//						.province(	provinceRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.district(	districtRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.ward(		wardRepository		.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.storeStatus(StoreStatus.active)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.build(),
-//
-//				Store.builder().id(2L)
-//						.name("Cửa hàng thú cưng")
-//						.password("123456")
-//						.phone("0123456789")
-//						.userAccount(userAcc2)
-//						.image(storeImg)
-//						.bannerImage(storeBannerImg)
-//						.addressDetail("Cửa hàng thú cưng - 789 Dương Quảng Hàm")
-//						.province(	provinceRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.district(	districtRepository	.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.ward(		wardRepository		.findById(5L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.storeStatus(StoreStatus.active)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.build()
-//		));
-//
-//		typeGoodRepository.saveAll(Arrays.asList(
-//				TypeGood.builder().id(1L).name("Laptop").build(),
-//				TypeGood.builder().id(2L).name("Màn hình").build(),
-//				TypeGood.builder().id(3L).name("Máy tính bảng").build(),
-//				TypeGood.builder().id(4L).name("Thú cưng").build()
-//		));
-//
-//		discountRepository.saveAll(Arrays.asList(
-//				Discount.builder().id(1L).percentDecrease(10).name("Mã giảm 10%").build(),
-//				Discount.builder().id(2L).percentDecrease(30).name("Mã giảm 30%").build()
-//		));
-//
-//		Store st = storeRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
-//
-//		productRepository.saveAll(Arrays.asList(
-//				Product.builder().id(1L).name("MacBook Air M3 15 inch 2024, Chính hãng Apple Việt Nam").image("https://cdn2.cellphones.com.vn/358x/media/catalog/product/g/r/gray_2_5.png")
-//						.store(st)
-//						.typeGood(	typeGoodRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.createdDate(new Date()).updatedDate(null)
-//						.productStatus(ProductStatus.active)
-//						.build(),
-//
-//				Product.builder().id(2L).name("Laptop Acer Aspire 7 A715-76G-5806").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_14__3_3_1.png")
-//						.store(st)
-//						.typeGood(	typeGoodRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.createdDate(new Date()).updatedDate(null)
-//						.productStatus(ProductStatus.active)
-//						.build(),
-//
-//				Product.builder().id(3L).name("Laptop HP 15S-FQ5231TU 8U241PA").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/l/a/laptop-hp-15s-fq5231tu-8u241pa_1_.jpg")
-//						.store(st)
-//						.typeGood(	typeGoodRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.createdDate(new Date()).updatedDate(null)
-//						.productStatus(ProductStatus.active)
-//						.build(),
-//
-//				Product.builder().id(4L).name("Màn hình Gaming LG UltraGear 24GS50F-B 24 inch").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-gaming-lg-ultragear-24gs50f-b-24-inch.png")
-//						.store(st)
-//						.typeGood(	typeGoodRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.createdDate(new Date()).updatedDate(null)
-//						.productStatus(ProductStatus.active)
-//						.build(),
-//
-//				Product.builder().id(5L).name("Màn hình Samsung Gaming Odyssey G5 LC34G55TWWEXXV 34 inch").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/3/6/36_1_25.jpg")
-//						.store(st)
-//						.typeGood(	typeGoodRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.createdDate(new Date()).updatedDate(null)
-//						.productStatus(ProductStatus.active)
-//						.build(),
-//
-//				Product.builder().id(6L).name("Màn hình LG UltraWide 29WQ600 29 inch").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-lg-ultrawide-29wq600-29-inch-1.png")
-//						.createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active)
-//						.store(st)
-//						.typeGood(	typeGoodRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.build(),
-//
-//				Product.builder().id(7L).name("iPad Gen 10 10.9 inch 2022 Wifi 64GB I Chính hãng Apple Việt Nam").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-10-9-inch-2022.png")
-//						.store(st)
-//						.typeGood(	typeGoodRepository	.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.createdDate(new Date()).updatedDate(null)
-//						.productStatus(ProductStatus.active)
-//						.build(),
-//
-//				Product.builder().id(8L).name("Samsung Galaxy Tab S9 FE 5G 6GB 128GB").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/a/samsung-galaxy-tab-s9-fe-mint-13_1.jpg")
-//						.store(st)
-//						.typeGood(	typeGoodRepository	.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.createdDate(new Date()).updatedDate(null)
-//						.productStatus(ProductStatus.active)
-//						.build()
-//		));
-//
-//		Discount discnt1 = discountRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Discount discnt2 = discountRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Product p1 = productRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Product p2 = productRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Product p3 = productRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Product p4 = productRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Product p5 = productRepository.findById(5L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Product p6 = productRepository.findById(6L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Product p7 = productRepository.findById(7L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Product p8 = productRepository.findById(8L).orElseThrow(() -> new EntityNotFoundException(""));
-//
-//
-//		productDetailRepository.saveAll(Arrays.asList(
-//				ProductDetail.builder().discount(discnt1).quantity(30).image("https://cdn2.cellphones.com.vn/358x/media/catalog/product/t/e/text_ng_n_2__5_39.png")
-//						.price(50000.0).id(1L)
-//						.name("Bạc").product(p1)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt1).quantity(20).image("https://cdn2.cellphones.com.vn/358x/media/catalog/product/b/a/balck.png")
-//						.price(500000.0).id(2L)
-//						.name("Đen").product(p1)
-//						.build(),
-//
-//
-//				ProductDetail.builder().discount(discnt1).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_14__3_3_1.png")
-//						.price(50000.0).id(3L)
-//						.name("I5-12450H | RTX 3050").product(p2)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt1).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_14__3_3_1.png")
-//						.price(500000.0).id(4L)
-//						.name("I7-12650H | RTX 2050").product(p2)
-//						.build(),
-//
-//
-//				ProductDetail.builder().discount(discnt1).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/l/a/laptop-hp-15s-fq5231tu-8u241pa_1_.jpg")
-//						.price(50000.0).id(5L)
-//						.name("I5-1334U | 512GB").product(p3)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt1).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/l/a/laptop-hp-15s-fq5231tu-8u241pa_1_.jpg")
-//						.price(500000.0).id(6L)
-//						.name("I3-1215U | 256GB").product(p3)
-//						.build(),
-//
-//
-//				ProductDetail.builder().discount(discnt1).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-gaming-lg-ultragear-24gs50f-b-24-inch.png")
-//						.price(50000.0).id(7L)
-//						.name("180Hz").product(p4)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt1).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-gaming-lg-ultragear-24gs50f-b-24-inch.png")
-//						.price(500000.0).id(8L)
-//						.name("360Hz").product(p4)
-//						.build(),
-//
-//
-//				ProductDetail.builder().discount(discnt2).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/3/6/36_1_25.jpg")
-//						.price(50000.0).id(9L)
-//						.name("180Hz").product(p5)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/3/6/36_1_25.jpg")
-//						.price(500000.0).id(10L)
-//						.name("360Hz").product(p5)
-//						.build(),
-//
-//
-//				ProductDetail.builder().discount(discnt2).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-lg-ultrawide-29wq600-29-inch-1.png")
-//						.price(50000.0).id(11L)
-//						.name("180Hz").product(p6)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-lg-ultrawide-29wq600-29-inch-1.png")
-//						.price(500000.0).id(12L)
-//						.name("360Hz").product(p6)
-//						.build(),
-//
-//
-//				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-10-9-inch-2022.png")
-//						.price(600000.0).id(13L)
-//						.name("Bạc").product(p7)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt2).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-2022-hero-blue-wifi-select.png")
-//						.price(500000.0).id(14L)
-//						.name("Xanh").product(p7)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-2022-hero-pink-wifi-select.png")
-//						.price(700000.0).id(15L)
-//						.name("Hồng").product(p7)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-2022-hero-yellow-wifi-select.png")
-//						.price(800000.0).id(16L)
-//						.name("Vàng").product(p7)
-//						.build(),
-//
-//
-//				ProductDetail.builder().discount(discnt2).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/a/samsung-galaxy-tab-s9-fe-mint-13_1.jpg")
-//						.price(50000.0).id(17L)
-//						.name("Bạc").product(p8)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/a/samsung-galaxy-tab-fe-bac-12_1.jpg")
-//						.price(500000.0).id(18L)
-//						.name("Trắng").product(p8)
-//						.build(),
-//
-//				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/358x/media/catalog/product/t/a/tab-s9-fe-xanh_3.png")
-//						.price(500000.0).id(19L)
-//						.name("Lục").product(p8)
-//						.build()
-//		));
-//
-//		shipperRepository.saveAll( Arrays.asList(
-//				Shipper.builder()
-//						.id(1L)
-//						.userLogin("NgvdRev")
-//						.password(encoder.encode("123456"))
-//						.name("Nguyễn Viết Đức")
-//						.email("Ngvd4901@gmail.com")
-//						.phone("0356597539")
-//						.address("560 - Nơ Trang Long")
-//						.addressDetail("Số 2 - Hẻm 558 - Đường Nơ Trang Long")
-//						.province(	provinceRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.district(	districtRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.ward(		wardRepository		.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.shipperStatus(ShipperStatus.active)
-//						.typeShipper(TypeShipper.receive)
-//						.build(),
-//
-//				Shipper.builder()
-//						.id(2L)
-//						.userLogin("NgvdDel")
-//						.password(encoder.encode("123456"))
-//						.name("Nguyễn Viết Đức")
-//						.email("Ngvd4901@gmail.com")
-//						.phone("0356597539")
-//						.address("560 - Nơ Trang Long")
-//						.addressDetail("Số 2 - Hẻm 558 - Đường Nơ Trang Long")
-//						.province(	provinceRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.district(	districtRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.ward(		wardRepository		.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.shipperStatus(ShipperStatus.active)
-//						.typeShipper(TypeShipper.delivery)
-//						.build()
-//		));
-//
-//		ShippingFee shippingFee = ShippingFee.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.inner).fee(20000.0).build();
-//		ShippingFee shippingFee2 = ShippingFee.builder().id(2L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.outer).fee(30000.0).build();
-//		shippingFeeRepository.saveAll(List.of(shippingFee,shippingFee2));
-//
-//		shippingFeeRepository.saveAll(Arrays.asList(
-//				ShippingFee.builder().id(1L).typeShipping(TypeShipping.inner).fee(20000.0).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).build(),
-//				ShippingFee.builder().id(2L).typeShipping(TypeShipping.outer).fee(32000.0).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).build()
-//		));
-//
-//		deliveryTypeRepository.saveAll(Arrays.asList(
-//				DeliveryType.builder().id(1L).name("Giao hàng cơ bản").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(15000.0).build(),
-//				DeliveryType.builder().id(2L).name("Giao hàng hỏa tốc").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(40000.0).build()
-//		));
-//
-////
-//
-//		paymentTypeRepository.saveAll(Arrays.asList(
-//				PaymentType.builder().id(1L).name("Thanh toán tiền mặt").image(null).build(),
-//				PaymentType.builder().id(2L).name("Thanh toán chuyển khoản - VietQR").image(null).build()
-//		));
-//
-//		ordersRepository.saveAll(Arrays.asList(
-//				Orders.builder().id(1L)
-//						.orderStatus(OrderStatus.complete)
-//						.createdDate(new Date()).deleted(false)
-//						.address("Đường Kha vạn Cân")
-//						.addressDetail("Số 24 - Hẻm 36 - Đường Kha vạn Cân")
-//						.updatedDate(null)
-//						.deletedDate(null)
-//						.pickupDate(new Date()).noteContent("Content")
-//						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.finalTotal(50000.0)
-//						.totalAmount(60000.0)
-//						.totalAmountShip(80000.0)
-//						.totalAmountVoucher(30000.0)
-//						.deliveryDate(new Date())
-//						.paymentType(paymentTypeRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.build(),
-//
-//				Orders.builder().id(2L)
-//						.orderStatus(OrderStatus.pickup)
-//						.createdDate(new Date()).deleted(false)
-//						.address("Đường Kha vạn Cân")
-//						.addressDetail("Số 24 - Hẻm 36 - Đường Kha vạn Cân")
-//						.updatedDate(null)
-//						.deletedDate(null)
-//						.pickupDate(new Date()).noteContent("Content")
-//						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.finalTotal(50000.0)
-//						.totalAmount(60000.0)
-//						.totalAmountShip(80000.0)
-//						.totalAmountVoucher(30000.0)
-//						.deliveryDate(new Date())
-//						.paymentType(paymentTypeRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.build(),
-//
-//				Orders.builder().id(3L)
-//						.orderStatus(OrderStatus.pending)
-//						.createdDate(new Date()).deleted(false)
-//						.address("Đường Kha vạn Cân")
-//						.addressDetail("Số 24 - Hẻm 36 - Đường Kha vạn Cân")
-//						.updatedDate(null)
-//						.deletedDate(null)
-//						.pickupDate(new Date()).noteContent("Content")
-//						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.finalTotal(50000.0)
-//						.totalAmount(60000.0)
-//						.totalAmountShip(80000.0)
-//						.totalAmountVoucher(30000.0)
-//						.deliveryDate(new Date())
-//						.paymentType(paymentTypeRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.build(),
-//
-//				Orders.builder().id(4L)
-//						.orderStatus(OrderStatus.pickup)
-//						.createdDate(new Date()).deleted(false)
-//						.address("Đường Kha vạn Cân")
-//						.addressDetail("Số 24 - Hẻm 36 - Đường Kha vạn Cân")
-//						.updatedDate(null)
-//						.deletedDate(null)
-//						.pickupDate(new Date()).noteContent("Content")
-//						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.finalTotal(50000.0)
-//						.totalAmount(60000.0)
-//						.totalAmountShip(80000.0)
-//						.totalAmountVoucher(30000.0)
-//						.deliveryDate(new Date())
-//						.paymentType(paymentTypeRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.build()
-//		));
-//
-//		Orders order1 = ordersRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Orders order2 = ordersRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Orders order3 = ordersRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Orders order4 = ordersRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""));
-//
-//		orderDetailRepository.saveAll(Arrays.asList(
-//				OrderDetail.builder()
-//						.id(1L)
-//						.orders(order1)
-//						.productDetail(	productDetailRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.quantity(2)
-//						.totalAmount(10000000.0)
-//						.totalDiscount(1000000.0)
-//						.finalTotal(9000000.0)
-//						.discount(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.build(),
-//
-//				OrderDetail.builder()
-//						.id(2L)
-//						.orders(order1)
-//						.productDetail(	productDetailRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.quantity(1)
-//						.totalAmount(10000000.0)
-//						.totalDiscount(1000000.0)
-//						.finalTotal(9000000.0)
-//						.discount(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.build(),
-//
-//				OrderDetail.builder()
-//						.id(3L)
-//						.orders(order1)
-//						.productDetail(	productDetailRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.quantity(1)
-//						.totalAmount(10000000.0)
-//						.totalDiscount(1000000.0)
-//						.finalTotal(9000000.0)
-//						.discount(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.build(),
-//
-//				OrderDetail.builder()
-//						.id(4L)
-//						.orders(order2)
-//						.productDetail(	productDetailRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.quantity(1)
-//						.totalAmount(10000000.0)
-//						.totalDiscount(1000000.0)
-//						.finalTotal(9000000.0)
-//						.discount(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.build(),
-//
-//				OrderDetail.builder()
-//						.id(5L)
-//						.orders(order3)
-//						.productDetail(	productDetailRepository.findById(5L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.quantity(1)
-//						.totalAmount(10000000.0)
-//						.totalDiscount(1000000.0)
-//						.finalTotal(9000000.0)
-//						.discount(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.build(),
-//
-//				OrderDetail.builder()
-//						.id(6L)
-//						.orders(order3)
-//						.productDetail(	productDetailRepository.findById(6L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.quantity(1)
-//						.totalAmount(10000000.0)
-//						.totalDiscount(1000000.0)
-//						.finalTotal(9000000.0)
-//						.discount(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.build(),
-//
-//				OrderDetail.builder()
-//						.id(7L)
-//						.orders(order4)
-//						.productDetail(	productDetailRepository.findById(7L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.quantity(1)
-//						.totalAmount(10000000.0)
-//						.totalDiscount(1000000.0)
-//						.finalTotal(9000000.0)
-//						.discount(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.build(),
-//
-//				OrderDetail.builder()
-//						.id(8L)
-//						.orders(order4)
-//						.productDetail(	productDetailRepository.findById(8L).orElseThrow(() -> new EntityNotFoundException("")))
-//						.quantity(1)
-//						.totalAmount(10000000.0)
-//						.totalDiscount(1000000.0)
-//						.finalTotal(9000000.0)
-//						.discount(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.build()
-//		));
-//
-//		Shipper shp1 = shipperRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
-//		Shipper shp2 = shipperRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""));
-//
-//		receiveDeliveryRepository.saveAll(Arrays.asList(
-//				ReceiveDelivery.builder()
-//						.shipper( shp1 )
-//						.statusDelivery(StatusDelivery.taking)
-//						.typeDelivery(TypeDelivery.receive)
-//						.orders( order1 )
-//						.image(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.deliveryDate(addDaysToDate(new Date()))
-//						.build(),
-//				ReceiveDelivery.builder()
-//						.shipper( shp1 )
-//						.statusDelivery(StatusDelivery.taking)
-//						.typeDelivery(TypeDelivery.receive)
-//						.orders( order2 )
-//						.image(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.deliveryDate(addDaysToDate(new Date()))
-//						.build(),
-//				ReceiveDelivery.builder()
-//						.shipper( shp2 )
-//						.statusDelivery(StatusDelivery.taking)
-//						.typeDelivery(TypeDelivery.delivery)
-//						.orders( order3 )
-//						.image(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.deliveryDate(addDaysToDate(new Date()))
-//						.build(),
-//				ReceiveDelivery.builder()
-//						.shipper( shp2 )
-//						.statusDelivery(StatusDelivery.taking)
-//						.typeDelivery(TypeDelivery.delivery)
-//						.orders( order4 )
-//						.image(null)
-//						.createdDate(new Date())
-//						.updatedDate(null)
-//						.deleted(false)
-//						.deletedDate(null)
-//						.deliveryDate(addDaysToDate(new Date()))
-//						.build()
-//		));
-//	}
-//	private Date addDaysToDate(Date date) {
-//		Calendar calendar = Calendar.getInstance();
-//		calendar.setTime(date);
-//		calendar.add(Calendar.DAY_OF_YEAR, 7);
-//		return calendar.getTime();
-//	}
+	public void ExampleData(){
+		provinceRepository.saveAll(Arrays.asList(
+				Province.builder().id(1L).name("TPHCM")		.build(),
+				Province.builder().id(2L).name("Bình Dương").build()
+		));
+
+		districtRepository.saveAll(Arrays.asList(
+				District.builder().id(1L).name("Quận 1")			.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				District.builder().id(2L).name("Quận Bình Thạnh")	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				District.builder().id(3L).name("Quận Châu Thành")	.province(provinceRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				District.builder().id(4L).name("Quận Lái Thiêu")	.province(provinceRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build()
+		));
+
+		wardRepository.saveAll(Arrays.asList(
+				Ward.builder().id(1L).name("Phường 1")	.district(districtRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(2L).name("Phường 2")	.district(districtRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(3L).name("Phường 13")	.district(districtRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(4L).name("Phường 4")	.district(districtRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(5L).name("Phường 5")	.district(districtRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(6L).name("Phường 6")	.district(districtRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(7L).name("Phường 7")	.district(districtRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(8L).name("Phường 8")	.district(districtRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""))).build()
+		));
+
+		userAccountRepository.saveAll(Arrays.asList(
+				UserAccount.builder().id(1L).email("Ngvd4901@gmail.com")	.userLogin("Ngvd4901")	.name("Nguyễn Viết Đức")	.password(encoder.encode("123456"))	.userStatus(UserStatus.active)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.province(	provinceRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.district(	districtRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
+						.ward(		wardRepository		.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
+						.address(	"560 Nơ Trang Long")
+						.phone("0356597539")
+						.build(),
+				UserAccount.builder().id(2L).email("DTTrung0123@gmail.com")	.userLogin("user2")		.name("Đỗ Thành Trung")		.password(encoder.encode("123456"))	.userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong")	.createdDate(new Date())	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))	.updatedDate(null)	.deleted(false)	.deletedDate(null).build(),
+				UserAccount.builder().id(3L).email("VTr0505@gmail.com")		.userLogin("vt0505")	.name("Vòng Trung")			.password(encoder.encode("123456"))	.userStatus(UserStatus.active).address("123 Đường 456, Phường 7, Quận 8, Thành Phố 9")								.createdDate(new Date())	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))	.updatedDate(null)	.deleted(false)	.deletedDate(null).build()
+		));
+
+		String storeImg 		= "https://images.stockcake.com/public/7/a/4/7a49a413-44d8-42bb-a4f0-dcee546f439c_medium/electronics-store-interior-stockcake.jpg";
+		String storeImg2 		= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.leafio.ai%2Fpet-store-software%2F&psig=AOvVaw3wRPuy0BWXOHZitP-P3JuF&ust=1730542864610000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKj09db0uokDFQAAAAAdAAAAABAT";
+		String storeBannerImg 	= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fokcredit.in%2Fblog%2Fhow-to-open-a-computer-laptop-showroom%2F&psig=AOvVaw1acMwXcK125ldhmS2I2FW-&ust=1730542216883000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLCszqLyuokDFQAAAAAdAAAAABAE";
+		String storeBannerImg2 	= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpetstore.ae%2F&psig=AOvVaw3wRPuy0BWXOHZitP-P3JuF&ust=1730542864610000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKj09db0uokDFQAAAAAdAAAAABAe";
+		UserAccount userAcc 	= userAccountRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
+		UserAccount userAcc2 	= userAccountRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""));
+
+
+		storeRepository.saveAll(Arrays.asList(
+				Store.builder().id(1L)
+						.name("Laptop Shop")
+						.password("123456")
+						.phone("0356597539")
+						.userAccount(userAcc)
+						.image(storeImg2)
+						.bannerImage(storeBannerImg2)
+						.addressDetail("Cửa hàng Laptop - 123 Phạm Văn Đồng")
+						.province(	provinceRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.district(	districtRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
+						.ward(		wardRepository		.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
+						.storeStatus(StoreStatus.active)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.build(),
+
+				Store.builder().id(2L)
+						.name("Cửa hàng thú cưng")
+						.password("123456")
+						.phone("0123456789")
+						.userAccount(userAcc2)
+						.image(storeImg)
+						.bannerImage(storeBannerImg)
+						.addressDetail("Cửa hàng thú cưng - 789 Dương Quảng Hàm")
+						.province(	provinceRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
+						.district(	districtRepository	.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
+						.ward(		wardRepository		.findById(5L).orElseThrow(() -> new EntityNotFoundException("")))
+						.storeStatus(StoreStatus.active)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.build()
+		));
+
+		typeGoodRepository.saveAll(Arrays.asList(
+				TypeGood.builder().id(1L).name("Laptop").build(),
+				TypeGood.builder().id(2L).name("Màn hình").build(),
+				TypeGood.builder().id(3L).name("Máy tính bảng").build(),
+				TypeGood.builder().id(4L).name("Thú cưng").build()
+		));
+
+		discountRepository.saveAll(Arrays.asList(
+				Discount.builder().id(1L).percentDecrease(10).name("Mã giảm 10%").build(),
+				Discount.builder().id(2L).percentDecrease(30).name("Mã giảm 30%").build()
+		));
+
+		Store st = storeRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
+
+		productRepository.saveAll(Arrays.asList(
+				Product.builder().id(1L).name("MacBook Air M3 15 inch 2024, Chính hãng Apple Việt Nam").image("https://cdn2.cellphones.com.vn/358x/media/catalog/product/g/r/gray_2_5.png")
+						.store(st)
+						.typeGood(	typeGoodRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.createdDate(new Date()).updatedDate(null)
+						.productStatus(ProductStatus.active)
+						.build(),
+
+				Product.builder().id(2L).name("Laptop Acer Aspire 7 A715-76G-5806").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_14__3_3_1.png")
+						.store(st)
+						.typeGood(	typeGoodRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.createdDate(new Date()).updatedDate(null)
+						.productStatus(ProductStatus.active)
+						.build(),
+
+				Product.builder().id(3L).name("Laptop HP 15S-FQ5231TU 8U241PA").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/l/a/laptop-hp-15s-fq5231tu-8u241pa_1_.jpg")
+						.store(st)
+						.typeGood(	typeGoodRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.createdDate(new Date()).updatedDate(null)
+						.productStatus(ProductStatus.active)
+						.build(),
+
+				Product.builder().id(4L).name("Màn hình Gaming LG UltraGear 24GS50F-B 24 inch").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-gaming-lg-ultragear-24gs50f-b-24-inch.png")
+						.store(st)
+						.typeGood(	typeGoodRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
+						.createdDate(new Date()).updatedDate(null)
+						.productStatus(ProductStatus.active)
+						.build(),
+
+				Product.builder().id(5L).name("Màn hình Samsung Gaming Odyssey G5 LC34G55TWWEXXV 34 inch").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/3/6/36_1_25.jpg")
+						.store(st)
+						.typeGood(	typeGoodRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
+						.createdDate(new Date()).updatedDate(null)
+						.productStatus(ProductStatus.active)
+						.build(),
+
+				Product.builder().id(6L).name("Màn hình LG UltraWide 29WQ600 29 inch").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-lg-ultrawide-29wq600-29-inch-1.png")
+						.createdDate(new Date()).updatedDate(null).productStatus(ProductStatus.active)
+						.store(st)
+						.typeGood(	typeGoodRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
+						.build(),
+
+				Product.builder().id(7L).name("iPad Gen 10 10.9 inch 2022 Wifi 64GB I Chính hãng Apple Việt Nam").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-10-9-inch-2022.png")
+						.store(st)
+						.typeGood(	typeGoodRepository	.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
+						.createdDate(new Date()).updatedDate(null)
+						.productStatus(ProductStatus.active)
+						.build(),
+
+				Product.builder().id(8L).name("Samsung Galaxy Tab S9 FE 5G 6GB 128GB").image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/a/samsung-galaxy-tab-s9-fe-mint-13_1.jpg")
+						.store(st)
+						.typeGood(	typeGoodRepository	.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
+						.createdDate(new Date()).updatedDate(null)
+						.productStatus(ProductStatus.active)
+						.build()
+		));
+
+		Discount discnt1 = discountRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
+		Discount discnt2 = discountRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
+		Product p1 = productRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
+		Product p2 = productRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""));
+		Product p3 = productRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""));
+		Product p4 = productRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""));
+		Product p5 = productRepository.findById(5L).orElseThrow(() -> new EntityNotFoundException(""));
+		Product p6 = productRepository.findById(6L).orElseThrow(() -> new EntityNotFoundException(""));
+		Product p7 = productRepository.findById(7L).orElseThrow(() -> new EntityNotFoundException(""));
+		Product p8 = productRepository.findById(8L).orElseThrow(() -> new EntityNotFoundException(""));
+
+
+		productDetailRepository.saveAll(Arrays.asList(
+				ProductDetail.builder().discount(discnt1).quantity(30).image("https://cdn2.cellphones.com.vn/358x/media/catalog/product/t/e/text_ng_n_2__5_39.png")
+						.price(50000.0).id(1L)
+						.name("Bạc").product(p1)
+						.build(),
+
+				ProductDetail.builder().discount(discnt1).quantity(20).image("https://cdn2.cellphones.com.vn/358x/media/catalog/product/b/a/balck.png")
+						.price(500000.0).id(2L)
+						.name("Đen").product(p1)
+						.build(),
+
+
+				ProductDetail.builder().discount(discnt1).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_14__3_3_1.png")
+						.price(50000.0).id(3L)
+						.name("I5-12450H | RTX 3050").product(p2)
+						.build(),
+
+				ProductDetail.builder().discount(discnt1).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/e/text_ng_n_14__3_3_1.png")
+						.price(500000.0).id(4L)
+						.name("I7-12650H | RTX 2050").product(p2)
+						.build(),
+
+
+				ProductDetail.builder().discount(discnt1).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/l/a/laptop-hp-15s-fq5231tu-8u241pa_1_.jpg")
+						.price(50000.0).id(5L)
+						.name("I5-1334U | 512GB").product(p3)
+						.build(),
+
+				ProductDetail.builder().discount(discnt1).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/l/a/laptop-hp-15s-fq5231tu-8u241pa_1_.jpg")
+						.price(500000.0).id(6L)
+						.name("I3-1215U | 256GB").product(p3)
+						.build(),
+
+
+				ProductDetail.builder().discount(discnt1).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-gaming-lg-ultragear-24gs50f-b-24-inch.png")
+						.price(50000.0).id(7L)
+						.name("180Hz").product(p4)
+						.build(),
+
+				ProductDetail.builder().discount(discnt1).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-gaming-lg-ultragear-24gs50f-b-24-inch.png")
+						.price(500000.0).id(8L)
+						.name("360Hz").product(p4)
+						.build(),
+
+
+				ProductDetail.builder().discount(discnt2).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/3/6/36_1_25.jpg")
+						.price(50000.0).id(9L)
+						.name("180Hz").product(p5)
+						.build(),
+
+				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/3/6/36_1_25.jpg")
+						.price(500000.0).id(10L)
+						.name("360Hz").product(p5)
+						.build(),
+
+
+				ProductDetail.builder().discount(discnt2).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-lg-ultrawide-29wq600-29-inch-1.png")
+						.price(50000.0).id(11L)
+						.name("180Hz").product(p6)
+						.build(),
+
+				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/m/a/man-hinh-lg-ultrawide-29wq600-29-inch-1.png")
+						.price(500000.0).id(12L)
+						.name("360Hz").product(p6)
+						.build(),
+
+
+				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-10-9-inch-2022.png")
+						.price(600000.0).id(13L)
+						.name("Bạc").product(p7)
+						.build(),
+
+				ProductDetail.builder().discount(discnt2).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-2022-hero-blue-wifi-select.png")
+						.price(500000.0).id(14L)
+						.name("Xanh").product(p7)
+						.build(),
+
+				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-2022-hero-pink-wifi-select.png")
+						.price(700000.0).id(15L)
+						.name("Hồng").product(p7)
+						.build(),
+
+				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/ipad-2022-hero-yellow-wifi-select.png")
+						.price(800000.0).id(16L)
+						.name("Vàng").product(p7)
+						.build(),
+
+
+				ProductDetail.builder().discount(discnt2).quantity(30).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/a/samsung-galaxy-tab-s9-fe-mint-13_1.jpg")
+						.price(50000.0).id(17L)
+						.name("Bạc").product(p8)
+						.build(),
+
+				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/a/samsung-galaxy-tab-fe-bac-12_1.jpg")
+						.price(500000.0).id(18L)
+						.name("Trắng").product(p8)
+						.build(),
+
+				ProductDetail.builder().discount(discnt2).quantity(20).image("https://cdn2.cellphones.com.vn/358x/media/catalog/product/t/a/tab-s9-fe-xanh_3.png")
+						.price(500000.0).id(19L)
+						.name("Lục").product(p8)
+						.build()
+		));
+
+		shipperRepository.saveAll( Arrays.asList(
+				Shipper.builder()
+						.id(1L)
+						.userLogin("NgvdRev")
+						.password(encoder.encode("123456"))
+						.name("Nguyễn Viết Đức")
+						.email("Ngvd4901@gmail.com")
+						.phone("0356597539")
+						.address("560 - Nơ Trang Long")
+						.addressDetail("Số 2 - Hẻm 558 - Đường Nơ Trang Long")
+						.province(	provinceRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.district(	districtRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
+						.ward(		wardRepository		.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.shipperStatus(ShipperStatus.active)
+						.typeShipper(TypeShipper.receive)
+						.build(),
+
+				Shipper.builder()
+						.id(2L)
+						.userLogin("NgvdDel")
+						.password(encoder.encode("123456"))
+						.name("Nguyễn Viết Đức")
+						.email("Ngvd4901@gmail.com")
+						.phone("0356597539")
+						.address("560 - Nơ Trang Long")
+						.addressDetail("Số 2 - Hẻm 558 - Đường Nơ Trang Long")
+						.province(	provinceRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.district(	districtRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
+						.ward(		wardRepository		.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.shipperStatus(ShipperStatus.active)
+						.typeShipper(TypeShipper.delivery)
+						.build()
+		));
+
+		ShippingFee shippingFee = ShippingFee.builder().id(1L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.inner).fee(20000.0).build();
+		ShippingFee shippingFee2 = ShippingFee.builder().id(2L).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).typeShipping(TypeShipping.outer).fee(30000.0).build();
+		shippingFeeRepository.saveAll(List.of(shippingFee,shippingFee2));
+
+		shippingFeeRepository.saveAll(Arrays.asList(
+				ShippingFee.builder().id(1L).typeShipping(TypeShipping.inner).fee(20000.0).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).build(),
+				ShippingFee.builder().id(2L).typeShipping(TypeShipping.outer).fee(32000.0).createdDate(new Date()).updatedDate(null).deletedDate(null).deleted(false).build()
+		));
+
+		deliveryTypeRepository.saveAll(Arrays.asList(
+				DeliveryType.builder().id(1L).name("Giao hàng cơ bản").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(15000.0).build(),
+				DeliveryType.builder().id(2L).name("Giao hàng hỏa tốc").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(40000.0).build()
+		));
+
+
+		paymentTypeRepository.saveAll(Arrays.asList(
+				PaymentType.builder().id(1L).name("Thanh toán tiền mặt").image(null).build(),
+				PaymentType.builder().id(2L).name("Thanh toán chuyển khoản - VietQR").image(null).build()
+		));
+
+		String context = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.";
+
+		ordersRepository.saveAll(Arrays.asList(
+				Orders.builder().id(1L)
+						.orderStatus(OrderStatus.delivery)
+						.createdDate(new Date()).deleted(false)
+						.address("Đường Kha vạn Cân")
+						.addressDetail("Số 24 - Hẻm 36 - Đường Kha vạn Cân")
+						.updatedDate(null)
+						.deletedDate(null)
+						.pickupDate(new Date()).noteContent("Content")
+						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.finalTotal(50000.0)
+						.totalAmount(60000.0)
+						.totalAmountShip(80000.0)
+						.totalAmountVoucher(30000.0)
+						.deliveryDate(new Date())
+						.paymentType(paymentTypeRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.noteContent(context)
+						.build(),
+
+				Orders.builder().id(2L)
+						.orderStatus(OrderStatus.pickup)
+						.createdDate(new Date()).deleted(false)
+						.address("Đường Kha vạn Cân")
+						.addressDetail("Số 24 - Hẻm 36 - Đường Kha vạn Cân")
+						.updatedDate(null)
+						.deletedDate(null)
+						.pickupDate(new Date()).noteContent("Content")
+						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.finalTotal(50000.0)
+						.totalAmount(60000.0)
+						.totalAmountShip(80000.0)
+						.totalAmountVoucher(30000.0)
+						.deliveryDate(new Date())
+						.paymentType(paymentTypeRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.noteContent(context)
+						.build(),
+
+				Orders.builder().id(3L)
+						.orderStatus(OrderStatus.pickup)
+						.createdDate(new Date()).deleted(false)
+						.address("Đường Kha vạn Cân")
+						.addressDetail("Số 24 - Hẻm 36 - Đường Kha vạn Cân")
+						.updatedDate(null)
+						.deletedDate(null)
+						.pickupDate(new Date()).noteContent("Content")
+						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.finalTotal(50000.0)
+						.totalAmount(60000.0)
+						.totalAmountShip(80000.0)
+						.totalAmountVoucher(30000.0)
+						.deliveryDate(new Date())
+						.paymentType(paymentTypeRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.noteContent(context)
+						.build(),
+
+				Orders.builder().id(4L)
+						.orderStatus(OrderStatus.pickup)
+						.createdDate(new Date()).deleted(false)
+						.address("Đường Kha vạn Cân")
+						.addressDetail("Số 24 - Hẻm 36 - Đường Kha vạn Cân")
+						.updatedDate(null)
+						.deletedDate(null)
+						.pickupDate(new Date()).noteContent("Content")
+						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.finalTotal(50000.0)
+						.totalAmount(60000.0)
+						.totalAmountShip(80000.0)
+						.totalAmountVoucher(30000.0)
+						.deliveryDate(new Date())
+						.paymentType(paymentTypeRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.noteContent(context)
+						.build()
+		));
+
+		Orders order1 = ordersRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
+		Orders order2 = ordersRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""));
+		Orders order3 = ordersRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""));
+		Orders order4 = ordersRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""));
+
+		orderDetailRepository.saveAll(Arrays.asList(
+				OrderDetail.builder()
+						.id(1L)
+						.orders(order1)
+						.productDetail(	productDetailRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.quantity(2)
+						.totalAmount(10000000.0)
+						.totalDiscount(1000000.0)
+						.finalTotal(9000000.0)
+						.discount(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.build(),
+
+				OrderDetail.builder()
+						.id(2L)
+						.orders(order1)
+						.productDetail(	productDetailRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
+						.quantity(1)
+						.totalAmount(10000000.0)
+						.totalDiscount(1000000.0)
+						.finalTotal(9000000.0)
+						.discount(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.build(),
+
+				OrderDetail.builder()
+						.id(3L)
+						.orders(order1)
+						.productDetail(	productDetailRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
+						.quantity(1)
+						.totalAmount(10000000.0)
+						.totalDiscount(1000000.0)
+						.finalTotal(9000000.0)
+						.discount(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.build(),
+
+				OrderDetail.builder()
+						.id(4L)
+						.orders(order2)
+						.productDetail(	productDetailRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException("")))
+						.quantity(1)
+						.totalAmount(10000000.0)
+						.totalDiscount(1000000.0)
+						.finalTotal(9000000.0)
+						.discount(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.build(),
+
+				OrderDetail.builder()
+						.id(5L)
+						.orders(order3)
+						.productDetail(	productDetailRepository.findById(5L).orElseThrow(() -> new EntityNotFoundException("")))
+						.quantity(1)
+						.totalAmount(10000000.0)
+						.totalDiscount(1000000.0)
+						.finalTotal(9000000.0)
+						.discount(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.build(),
+
+				OrderDetail.builder()
+						.id(6L)
+						.orders(order3)
+						.productDetail(	productDetailRepository.findById(6L).orElseThrow(() -> new EntityNotFoundException("")))
+						.quantity(1)
+						.totalAmount(10000000.0)
+						.totalDiscount(1000000.0)
+						.finalTotal(9000000.0)
+						.discount(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.build(),
+
+				OrderDetail.builder()
+						.id(7L)
+						.orders(order4)
+						.productDetail(	productDetailRepository.findById(7L).orElseThrow(() -> new EntityNotFoundException("")))
+						.quantity(1)
+						.totalAmount(10000000.0)
+						.totalDiscount(1000000.0)
+						.finalTotal(9000000.0)
+						.discount(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.build(),
+
+				OrderDetail.builder()
+						.id(8L)
+						.orders(order4)
+						.productDetail(	productDetailRepository.findById(8L).orElseThrow(() -> new EntityNotFoundException("")))
+						.quantity(1)
+						.totalAmount(10000000.0)
+						.totalDiscount(1000000.0)
+						.finalTotal(9000000.0)
+						.discount(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.build()
+		));
+
+		Shipper shp1 = shipperRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
+		Shipper shp2 = shipperRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""));
+
+		receiveDeliveryRepository.saveAll(Arrays.asList(
+				ReceiveDelivery.builder()
+						.id(1L)
+						.shipper( shp1 )
+						.statusDelivery(StatusDelivery.taking)
+						.typeDelivery(TypeDelivery.receive)
+						.orders( order1 )
+						.image(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.deliveryDate(addDaysToDate(new Date()))
+						.build(),
+				ReceiveDelivery.builder()
+						.id(2L)
+						.shipper( shp1 )
+						.statusDelivery(StatusDelivery.appoinment)
+						.typeDelivery(TypeDelivery.receive)
+						.orders( order2 )
+						.image(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.deliveryDate(addDaysToDate(new Date()))
+						.build(),
+				ReceiveDelivery.builder()
+						.id(3L)
+						.shipper( shp2 )
+						.statusDelivery(StatusDelivery.taking)
+						.typeDelivery(TypeDelivery.delivery)
+						.orders( order3 )
+						.image(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.deliveryDate(addDaysToDate(new Date()))
+						.build(),
+				ReceiveDelivery.builder()
+						.id(4L)
+						.shipper( shp2 )
+						.statusDelivery(StatusDelivery.appoinment)
+						.typeDelivery(TypeDelivery.delivery)
+						.orders( order4 )
+						.image(null)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.deliveryDate(addDaysToDate(new Date()))
+						.build()
+		));
+	}
+	private Date addDaysToDate(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DAY_OF_YEAR, 7);
+		return calendar.getTime();
+	}
 }
