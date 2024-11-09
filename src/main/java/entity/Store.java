@@ -91,4 +91,7 @@ public class Store extends EntityCommon {
 
     @OneToOne(mappedBy = "store")
     PaymentWalletStore paymentWalletStore;
+
+    @OneToMany(mappedBy = "store")
+    List<GroupMessageStore> groupMessageStoreList;
 }

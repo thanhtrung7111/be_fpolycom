@@ -2,9 +2,7 @@ package entity;
 
 import entity.enum_package.TypeMessage;
 import entity.enum_package.TypeSender;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -27,5 +25,7 @@ public class MessageStoreUser extends EntityCommon
 
     TypeSender typeSender;
 
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "groupMessageCode")
+    GroupMessageStore groupMessageStore;
 }
