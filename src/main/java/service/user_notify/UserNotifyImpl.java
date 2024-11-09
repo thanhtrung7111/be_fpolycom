@@ -63,7 +63,7 @@ public class UserNotifyImpl implements UserNotifyService{
     @Override
     @Async("taskExecutor")
     public void sendNotifyToUser(String title, String content, String linkContent, TypeNotifycationUser typeNotifycationUser,String image, Long userCode) {
-        NotifycationUser notifycationUser =NotifycationUser.builder().userAccount(UserAccount.builder().id(userCode).build()).title(title).content(content).linkContent(linkContent).createdDate(new Date()).deleted(false).readed(false).image(image).deletedDate(null).updatedDate(null).build();
+        NotifycationUser notifycationUser =NotifycationUser.builder().userAccount(UserAccount.builder().id(userCode).build()).title(title).content(content).linkContent(linkContent).typeNotifycation(typeNotifycationUser).createdDate(new Date()).deleted(false).readed(false).image(image).deletedDate(null).updatedDate(null).build();
         userNotifycationRepository.save(notifycationUser);
         messagingTemplate.convertAndSend("/topic/notifications/"+userCode, UserNotifycationMapper.INSTANCE.toUserNotifycationResponseDto(notifycationUser));
     }
