@@ -1,6 +1,7 @@
 package user_controller;
 
 import dto.user_notify.UserNotifycationResponseDTO;
+import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,5 +28,13 @@ public class UserNotifycationController {
     public ResponseEntity<Object> getAllNotifyByUser(@RequestBody HashMap<String,String> requestLogin){
         List<UserNotifycationResponseDTO> result = userNotifyService.getAllUserNotifycationByUser(requestLogin.get("userLogin"));
         return ResponseEntity.ok(dataReturnService.success(result));
+    }
+
+    @PostMapping(value = "/notify/readed")
+    public ResponseEntity<Object> postReaded(@RequestBody HashMap<String,Long> request){
+        if(request.isEmpty() || request.get("notifyUserCode") == null) {
+            throw new DataNotFoundException("Dữ liệu không tồn tại!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(userNotifyService.updateReaded(request.get("notifyUserCode"))));
     }
 }

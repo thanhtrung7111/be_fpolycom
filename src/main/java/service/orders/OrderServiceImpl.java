@@ -11,6 +11,7 @@ import entity.*;
 import entity.enum_package.OrderStatus;
 import entity.enum_package.StatusDelivery;
 import entity.enum_package.TypeDelivery;
+import entity.enum_package.TypeNotifycationUser;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import security.AsyncUpdate;
 import service.auth_store.AuthStoreService;
 import service.auth_user.AuthUserService;
+import service.user_notify.UserNotifyService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -50,7 +52,8 @@ public class OrderServiceImpl implements OrderService {
     ReceiveDeliveryRepository receiveDeliveryRepository;
 
 
-
+    @Autowired
+    UserNotifyService userNotifyService;
 
     @Override
     public List<OrderResponseDTO> getAllOrderByUser(String userLogin) {
@@ -105,6 +108,9 @@ public class OrderServiceImpl implements OrderService {
             PaymentReceipt paymentReceipt = PaymentReceipt.builder().paymentType(item.getPaymentType()).finalTotal(item.getFinalTotal()).totalAmount(item.getTotalAmount()).totalAmountShip(item.getTotalAmountShip()).totalAmountVoucher(item.getTotalAmountVoucher()).totalAmountDiscount(item.getTotalAmountDiscount()).totalAmountPaid(item.getFinalTotal()).orders(item).createdDate(new Date()).deleted(false).updatedDate(null).deletedDate(null).build();
             PaymentReceipt saved = paymenReceiptRepository.save(paymentReceipt);
             item.getPaymentReceiptList().add(saved);
+        });
+        ordersList.stream().forEach(item->{
+            userNotifyService.sendNotifyToUser("Thanh toán đơn hàng #"+item.getId(),"Thanh toán thành công đơn hàng #"+item.getId(),item.getId().toString(), TypeNotifycationUser.order,item.getOrderDetailList().get(0).getProductDetail().getImage(), item.getUserAccount().getId());
         });
 
         return OrderMapper.INSTANCE.toOrderInfoResponseDtoList(ordersList);

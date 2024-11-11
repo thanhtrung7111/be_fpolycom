@@ -17,7 +17,7 @@ public class UserNotifycationResponseDTO {
 
     String title;
 
-
+Long notifyUserCode;
 
     String content;
 
