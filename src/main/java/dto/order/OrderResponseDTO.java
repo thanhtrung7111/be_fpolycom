@@ -16,8 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderResponseDTO {
 
-
-    String orderCode;
+    Long orderCode;
 
     String storeName;
 

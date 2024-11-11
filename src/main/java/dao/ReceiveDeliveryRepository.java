@@ -11,8 +11,6 @@ import java.util.List;
 
 @Repository
 public interface ReceiveDeliveryRepository extends JpaRepository<ReceiveDelivery, Long> {
-    @Query(value = "select o from ReceiveDelivery o where o.shipper.id =:shipperCode")
-    public List <ReceiveDelivery> findAllForshipper(@Param("shipperCode")Long shipperCode);
-
-
+    @Query("SELECT r FROM ReceiveDelivery r WHERE r.shipper.id = :shipperCode")
+    List<ReceiveDelivery> findAllForshipper(@Param("shipperCode") Long shipperCode);
 }

@@ -1,6 +1,8 @@
 package dao;
 
 import entity.Product;
+import entity.Store;
+import entity.TypeGood;
 import entity.enum_package.ProductStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -26,4 +28,12 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     @Query(value = "select o from Product o where o.id = :productCode and o.productStatus = :productStatus" )
     Optional<Product> findByProductByStatus(@Param("productCode") Long productCode,@Param("productStatus") ProductStatus productStatus);
+
+    @Query(value = "select o.typeGood from Product  o where  o.store = :store")
+    List<TypeGood> getTypeGood(Store store);
+
+    @Query(value = "select o from Product  o where o.store = :store and o.typeGood =:typeGood")
+    List<Product> getProductsByTypeGood(@Param("store") Store store,@Param("typeGood") TypeGood typeGood);
+
+
 }

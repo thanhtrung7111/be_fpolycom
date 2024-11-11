@@ -1,25 +1,15 @@
 package service.shipper;
 
 import dao.*;
-import dto.product.ProductMapper;
-import dto.role_admin.RoleMapper;
 import dto.shipper.ShipperMapper;
 import dto.shipper.ShipperRequestDTO;
 import dto.shipper.ShipperResponseDTO;
 import entity.*;
-import entity.enum_package.ProductStatus;
 import entity.enum_package.ShipperStatus;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import service.common.EncodingService;
 
 import java.util.Date;
 import java.util.List;
@@ -57,6 +47,12 @@ public class ShipperServiceImpl implements ShipperService {
     public ShipperResponseDTO getOrder(ShipperRequestDTO request) {
 
         return null;
+    }
+
+    @Override
+    public ShipperResponseDTO getShipperInfo(Long request) {
+        Shipper shipper = shipperRepository.findById(request).orElseThrow(() -> new DataNotFoundException("Data Not Found"));
+        return ShipperMapper.INSTANCE.toShipperResponseDto(shipper);
     }
 
     @Override

@@ -16,7 +16,6 @@ import java.util.List;
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders,Long> {
 
-
     @Query(value = "select o from Orders o where o.userAccount.userLogin = :userLogin")
     List<Orders> findAllOrdersByUser(@Param("userLogin")String userLogin);
 

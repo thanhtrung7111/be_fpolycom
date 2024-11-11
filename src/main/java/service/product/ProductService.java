@@ -27,4 +27,5 @@ public interface ProductService {
     public ProductInfoResponseDTO postNew(ProductRequestDTO requestDTO);
 
     public ProductInfoResponseDTO updateData(ProductRequestDTO requestDTO);
+
 }

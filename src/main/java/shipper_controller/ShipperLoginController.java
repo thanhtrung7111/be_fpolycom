@@ -30,7 +30,7 @@ public class ShipperLoginController {
 
     @PostMapping("/shipper-login")
     public ResponseEntity<Object> authenticateAndGetToken(@RequestBody ShipperLoginRequestDTO authRequest) {
-        System.out.println(authRequest.getUserLogin()+"  check controller"+ RoleType.SHIPPER.name());
+        System.out.println(authRequest.getUserLogin()+"check controller"+ RoleType.SHIPPER.name());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getUserLogin()+"&"+ RoleType.SHIPPER.name(), authRequest.getPassword())
         );
