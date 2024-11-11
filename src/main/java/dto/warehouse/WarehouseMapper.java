@@ -21,6 +21,9 @@ public interface WarehouseMapper {
     @Mapping(target = "districtCode",source = "district.id")
     @Mapping(target = "wardCode",source = "ward.id")
     @Mapping(target = "warehouseCode",source = "id")
+    @Mapping(target = "wardName",source = "ward.name")
+    @Mapping(target = "districtName",source = "district.name")
+    @Mapping(target = "provinceName",source = "province.name")
     WarehouseResponseDTO toWarehouseResponseDTO(Warehouse warehouse);
 
     List<WarehouseResponseDTO> toList(List<Warehouse> list);

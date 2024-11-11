@@ -26,9 +26,17 @@ public class ProductController {
     DataReturnService dataReturnService;
 
 
-    @GetMapping(value = "product/all")
+    @GetMapping(value = "/product/all")
     public ResponseEntity<Object> getAll() {
         return ResponseEntity.ok(dataReturnService.success(productService.getAll()));
+    }
+
+    @PostMapping(value = "/product/detail")
+    public ResponseEntity<Object> getDetail(@RequestBody HashMap<String,Long> request) {
+        if(request.isEmpty() || request.get("productCode")==null){
+            throw new DataNotFoundException("Du lieu khong ton tai");
+        }
+        return ResponseEntity.ok(dataReturnService.success(productService.getProductById(request.get("productCode"))));
     }
 
     @PostMapping("/product/lock")
