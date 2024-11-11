@@ -32,6 +32,12 @@ public interface OrderDetailMapper {
     OrderDetailResponseDTO toOrderDetailResponseDto(OrderDetail requestDTO);
 
 
+    @Mapping(target = "orderDetailCode",source = "id")
+    @Mapping(target = "image",source = "productDetail.image")
+    @Mapping(target = "productName",source = "productDetail.product.name")
+    @Mapping(target = "productDetailName",source = "productDetail.name")
+    OrderDetailShipperResponseDTO toOrderDetailShipperResponseDto(OrderDetail requestDTO);
+
     List<OrderDetail> tOrderDetailList(List<OrderDetailRequestDTO> orderDetailRequestDTOList);
 
 

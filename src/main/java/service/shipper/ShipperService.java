@@ -1,7 +1,5 @@
 package service.shipper;
 
-import dto.product.ProductApproveRequestDTO;
-import dto.product.ProductApproveResponeDTO;
 import dto.shipper.ShipperRequestDTO;
 import dto.shipper.ShipperResponseDTO;
 import service.common.CommonService;
@@ -12,5 +10,7 @@ public interface ShipperService extends CommonService<ShipperRequestDTO, Shipper
     ShipperResponseDTO unlockShipper(ShipperRequestDTO request);
 
     ShipperResponseDTO getOrder(ShipperRequestDTO request);
+
+    ShipperResponseDTO getShipperInfo(Long request);
 
 }

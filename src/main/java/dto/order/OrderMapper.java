@@ -23,7 +23,6 @@ public interface OrderMapper {
 
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-
     @Mapping(target = "orderCode",source = "id")
     @Mapping(target = "storeImage",source = "store.image")
     @Mapping(target = "storeName",source = "store.name")
@@ -61,6 +60,22 @@ public interface OrderMapper {
     @Mapping(target = "voucherList",source = "voucherApplyList",qualifiedByName = "voucherList")
     OrderInfoResponseDTO toOrderInfoResponseDto (Orders orders);
 
+    @Mapping(target = "shippingFee",source ="shippingFee.fee" )
+    @Mapping(target = "name",source = "userAccount.name")
+    @Mapping(target = "phone",source = "userAccount.phone")
+    @Mapping(target = "province",source = "userAccount.province.name")
+    @Mapping(target = "district",source = "userAccount.district.name")
+    @Mapping(target = "ward",source = "userAccount.ward.name")
+    @Mapping(target = "deliveryType",source = "deliveryType.name")
+    @Mapping(target = "orderDetailShipperList",source = "orderDetailList")
+    @Mapping(target = "store",source = "store.name")
+    @Mapping(target = "orderCode",source = "id")
+    @Mapping(target = "paymentType",source = "paymentType.name")
+    @Mapping(target = "paymentSuccess",source = "paymentReceiptList",qualifiedByName = "paymentSuccess")
+    @Mapping(target = "receiveDeliveryList",source = "receiveDeliveryList")
+    @Mapping(target = "orderDate",source = "createdDate")
+    OrderShipperResponseDTO toOrderShipperResponseDTO (Orders orders);
+
     List<OrderResponseDTO> toOrderResponseDtoList(List<Orders> ordersList);
 
     List<OrderInfoResponseDTO> toOrderInfoResponseDtoList(List<Orders> ordersList);
@@ -70,7 +85,7 @@ public interface OrderMapper {
 
     List<Orders> toOrdersListForReiceiveDtos(List<ReceiveDeliveryRequestDTO> list);
 
-    List<Orders> toOrdersLists(List<Orders> list);
+//    List<Orders> toOrdersLists(List<Orders> list);
 
 
 

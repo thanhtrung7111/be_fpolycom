@@ -4,10 +4,7 @@ import dao.OrdersRepository;
 import dao.PaymenReceiptRepository;
 import dao.ReceiveDeliveryRepository;
 import dao.UserAccountRepository;
-import dto.order.OrderInfoResponseDTO;
-import dto.order.OrderMapper;
-import dto.order.OrderResponseDTO;
-import dto.order.UserOrderRequestDTO;
+import dto.order.*;
 import dto.product.ProductMapper;
 import dto.receive_delivery.ReceiveDeliveryMapper;
 import entity.*;
@@ -132,6 +129,10 @@ public class OrderServiceImpl implements OrderService {
         return OrderMapper.INSTANCE.toOrderInfoResponseDto(ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai!")));
     }
 
+    @Override
+    public OrderShipperResponseDTO getShipperOrderById(Long orderCode) {
+        return OrderMapper.INSTANCE.toOrderShipperResponseDTO(ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai!")));
+    }
     @Override
     public OrderInfoResponseDTO confirmOrderByStore(Long orderCode) {
         Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Du lieu khong ton tai!"));
