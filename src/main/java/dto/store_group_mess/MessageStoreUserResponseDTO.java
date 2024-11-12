@@ -1,4 +1,4 @@
-package service.store_group_mess;
+package dto.store_group_mess;
 
 import entity.enum_package.TypeMessage;
 import entity.enum_package.TypeSender;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageStoreUserRequestDTO {
+public class MessageStoreUserResponseDTO {
     String message;
 
     TypeMessage typeMessage;
@@ -18,5 +18,7 @@ public class MessageStoreUserRequestDTO {
 
     TypeSender typeSender;
 
-    Long groupMessage;
+    Long messageCode;
+
+    Long groupMessageCode;
 }
