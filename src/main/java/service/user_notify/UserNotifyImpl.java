@@ -23,6 +23,7 @@ public class UserNotifyImpl implements UserNotifyService{
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
+
     @Autowired
     UserNotifycationRepository userNotifycationRepository;
 

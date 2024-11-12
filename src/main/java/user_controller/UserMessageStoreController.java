@@ -33,4 +33,13 @@ public class UserMessageStoreController {
         return ResponseEntity.ok(dataReturnService.success(storeGroupMessService.getAllGroupByUser(request.get("userCode"))));
     }
 
+    @PostMapping("/message/send")
+    public ResponseEntity<Object> sendMessage(@RequestBody HashMap<String, String> request) {
+        if (request.isEmpty() || request.get("userCode") == null) {
+            throw new DataNotFoundException("Du lieu khong ton tai");
+        }
+        return ResponseEntity.ok(dataReturnService.success(storeGroupMessService.getAllGroupByUser(request.get("userCode"))));
+    }
+
+
 }

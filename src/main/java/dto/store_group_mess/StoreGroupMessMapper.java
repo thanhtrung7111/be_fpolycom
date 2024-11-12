@@ -15,7 +15,7 @@ public interface StoreGroupMessMapper {
 
 
     @Mapping(target = "userCode",source = "userAccount.id")
-    @Mapping(target = "userName",source = "userAccount.name")
+    @Mapping(target = "username",source = "userAccount.name")
     @Mapping(target = "storeCode",source = "store.id")
     @Mapping(target = "storeName",source = "store.name")
     @Mapping(target = "storeImage",source = "store.image")
