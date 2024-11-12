@@ -215,6 +215,9 @@ public class FpolycomApplication implements CommandLineRunner {
 
 		Warehouse warehouse = Warehouse.builder().id(1L).createdDate(new Date()).province(province).district(district).ward(ward).build();
 
+		//Orders orders1=Orders.builder().paymentType(paymentType).orderStatus(Or)
+
+
 
 
 
