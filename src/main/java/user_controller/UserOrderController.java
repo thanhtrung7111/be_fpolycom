@@ -26,11 +26,11 @@ public class UserOrderController {
 
 
     @PostMapping(value = "/user/orders/all")
-    public ResponseEntity<Object> getAllLikedAll(@RequestBody Optional<HashMap<String, String>> requestDTO) {
-        if (requestDTO.isEmpty() || requestDTO.get().get("userLogin") == null) {
+    public ResponseEntity<Object> getAllLikedAll(@RequestBody HashMap<String, String> requestDTO) {
+        if (requestDTO.isEmpty() || requestDTO.get("userLogin") == null) {
             throw new UsernameNotFoundException("Truong du lieu userLogin trong!");
         }
-        return ResponseEntity.ok(dataReturnService.success(orderService.getAllOrderByUser( requestDTO.get().get("userLogin"))));
+        return ResponseEntity.ok(dataReturnService.success(orderService.getAllOrderByUser( requestDTO.get("userLogin"))));
     }
 
 
@@ -40,11 +40,11 @@ public class UserOrderController {
     }
 
     @PostMapping(value = "/user/orders/detail")
-    public ResponseEntity<Object> detailOrder(@RequestBody Optional<HashMap<String,String>> requestDTO) {
-        if(requestDTO.isEmpty() || requestDTO.get().get("orderCode").isBlank()){
+    public ResponseEntity<Object> detailOrder(@RequestBody HashMap<String,String> requestDTO) {
+        if(requestDTO.isEmpty() || requestDTO.get("orderCode").isBlank()){
             throw new DataNotFoundException("Du lieu khong ton tai!");
         }
-        return ResponseEntity.ok(dataReturnService.success(orderService.getOrderById(Long.valueOf(requestDTO.get().get("orderCode")))));
+        return ResponseEntity.ok(dataReturnService.success(orderService.getOrderById(Long.valueOf(requestDTO.get("orderCode")))));
     }
 
 
