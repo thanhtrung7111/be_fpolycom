@@ -33,7 +33,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value = "select new dto.store.RevenueByMonthResponseDTO(" +
             "month(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
             "from Orders o " +
-            "where o.store =:store and year(o.createdDate) =:year " +
+            "where o.store =:store and year(o.createdDate) =:year and o.orderStatus = entity.enum_package.OrderStatus.complete " +
             "group by month(o.createdDate), o.store.name"
     )
     List<RevenueByMonthResponseDTO> findAllRevenueByMonth(@Param("store") Store store, @Param("year") Integer year);
@@ -41,7 +41,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value = "select new dto.store.RevenueYearsResponseDTO(" +
             "year(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
             "from Orders o " +
-            "where o.store =:store " +
+            "where o.store =:store and o.orderStatus = entity.enum_package.OrderStatus.complete " +
             "group by year(o.createdDate), o.store.name"
     )
     List<RevenueYearsResponseDTO> findAllRevenueYears(@Param("store") Store store);
@@ -49,7 +49,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value = "select new dto.store.RevenueByMonthResponseDTO(" +
             "month(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
             "from Orders o " +
-            "where o.store =:store and year(o.createdDate) =:year and month(o.createdDate)=:month" +
+            "where o.store =:store and year(o.createdDate) =:year and month(o.createdDate)=:month and o.orderStatus = entity.enum_package.OrderStatus.complete " +
             " group by month (o.createdDate), o.store.name"
     )
     RevenueByMonthResponseDTO findRevenueByMonthAndYear(@Param("store") Store store,@Param("month") Integer month, @Param("year") Integer year);
@@ -57,7 +57,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value = "select new dto.store.RevenueYearsResponseDTO(" +
             "year(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
             "from Orders o " +
-            "where o.store =:store and year(o.createdDate) =:year " +
+            "where o.store =:store and year(o.createdDate) =:year and o.orderStatus = entity.enum_package.OrderStatus.complete " +
             "group by year(o.createdDate), o.store.name"
     )
     RevenueYearsResponseDTO findRevenueByYear(@Param("store") Store store, @Param("year") Integer year);
@@ -65,7 +65,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value = "select new dto.store.RevenueDayResponseDTO(" +
             " o.createdDate, sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
             "from Orders o " +
-            "where o.store =:store " +
+            "where o.store =:store and o.orderStatus = entity.enum_package.OrderStatus.complete " +
             "group by o.createdDate, o.store.name"
     )
     List<RevenueDayResponseDTO> findRevenueByDay(@Param("store") Store store);
@@ -73,7 +73,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value = "select new dto.store.Top5ProductBestSellerResponseDTO(" +
             " pd.product.name,  pd.product.typeGood.name, count(od), sum(od.totalAmount  - od.totalDiscount )) " +
             " from OrderDetail od join od.productDetail pd" +
-            " where od.orders.store =:store " +
+            " where od.orders.store =:store and od.orders.orderStatus = entity.enum_package.OrderStatus.complete " +
             "group by  pd " +
             " order by count(od) desc ")
     List<Top5ProductBestSellerResponseDTO> findTop5ProductBestSeller(@Param("store") Store store, Pageable pageable);
@@ -81,7 +81,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value = "select new dto.store.RevenueDayResponseDTO(" +
             "o.createdDate, sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
             "from Orders o " +
-            "where o.store =:store and o.createdDate =:date" +
+            "where o.store =:store and o.createdDate =:date and o.orderStatus = entity.enum_package.OrderStatus.complete " +
             " group by o.createdDate, o.store.name"
     )
     RevenueDayResponseDTO findRevenueByMonthAndYearAndDay(@Param("store") Store store,@Param("date") Date date);
