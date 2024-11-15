@@ -7,6 +7,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -19,10 +21,16 @@ public class MessageStoreUser extends EntityCommon
 {
     String message;
 
+    LocalDateTime timeSend;
+
+    @Enumerated(EnumType.STRING)
     TypeMessage typeMessage;
+
+    Boolean readed;
 
     Long idSender;
 
+    @Enumerated(EnumType.STRING)
     TypeSender typeSender;
 
     @ManyToOne(fetch = FetchType.LAZY)
