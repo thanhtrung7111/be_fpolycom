@@ -3,6 +3,7 @@ package dto.receive_delivery;
 import dao.UserAccountRepository;
 import entity.Orders;
 import entity.ReceiveDelivery;
+import entity.enum_package.TypeDelivery;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -21,14 +22,31 @@ public interface ReceiveDeliveryMapper {
     @Mapping(target = "deliveryDate", source = "deliveryDate")
     @Mapping(target = "statusDelivery", source = "statusDelivery")
     @Mapping(target = "orderCode", source = "orders.id")
+    @Mapping(target = "receiver", source = "orders.userAccount.district.name")
+    @Mapping(target = "address", source = "orders.address")
+    ReceiveDeliveryShipperResponse toReceiveShipperResponse(ReceiveDelivery dto);
+
+    @Mapping(target = "receiveDeliveryCode", source = "id")
+    @Mapping(target = "deliveryDate", source = "deliveryDate")
+    @Mapping(target = "statusDelivery", source = "statusDelivery")
+    @Mapping(target = "orderCode", source = "orders.id")
     @Mapping(target = "receiver", source = "orders.userAccount.name")
     @Mapping(target = "address", source = "orders.address")
-    ReceiveDeliveryShipperResponse toReceiveDeliveryShipperResponse(ReceiveDelivery dto);
-    default List<ReceiveDeliveryShipperResponse> toReceiveDeliveryShipperResponseList(List<ReceiveDelivery> dtoList) {
+    ReceiveDeliveryShipperResponse toDeliveryShipperResponse(ReceiveDelivery dto);
+
+    default List<ReceiveDeliveryShipperResponse> toShipperResponseList(List<ReceiveDelivery> dtoList) {
         return dtoList.stream()
-                .map(this::toReceiveDeliveryShipperResponse)
+                .map(dto -> {
+                    if (TypeDelivery.receive.equals(dto.getTypeDelivery())) {
+                        return toReceiveShipperResponse(dto);
+                    } else if (TypeDelivery.delivery.equals(dto.getTypeDelivery())) {
+                        return toDeliveryShipperResponse(dto);
+                    }
+                    throw new IllegalArgumentException("Invalid typeDelivery: " + dto.getTypeDelivery());
+                })
                 .collect(Collectors.toList());
     }
+
 
     @Mapping(target = "orders.id",source = "ordersCode")
     @Mapping(target = "shipper.id", source = "shipperCode")

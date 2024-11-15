@@ -39,7 +39,7 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
      */
     @Override
     public List<ReceiveDeliveryShipperResponse> getListReceiveDelivery(Long shipperCode) {
-        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryShipperResponseList(receiveDeliveryRepository.findAllForshipper(shipperCode));
+        return ReceiveDeliveryMapper.INSTANCE.toShipperResponseList(receiveDeliveryRepository.findAllForshipper(shipperCode));
     }
 
     @Override

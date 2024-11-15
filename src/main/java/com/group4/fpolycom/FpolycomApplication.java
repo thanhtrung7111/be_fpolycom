@@ -243,8 +243,8 @@ public class FpolycomApplication implements CommandLineRunner {
 //		Orders orders = Orders.builder().paymentType(paymentType).orderStatus(OrderStatus.complete).createdDate(new Date()).deleted(false).address("35 Tran dai nghia").addressDetail("35 Trai Dai Nghiax kp noi hoa 2 ").updatedDate(null).deletedDate(null).id(1L).pickupDate(new Date()).noteContent("Content").store(store).deliveryType(deliveryType).userAccount(userAccount).finalTotal(50000.0).totalAmount(60000.0).totalAmountShip(80000.0).totalAmountVoucher(30000.0).deliveryDate(new Date()).build();
 //		ordersRepository.save(orders);
 
-//		ExampleData();
 	}
+
 
 //	public void ExampleData(){
 //		provinceRepository.saveAll(Arrays.asList(

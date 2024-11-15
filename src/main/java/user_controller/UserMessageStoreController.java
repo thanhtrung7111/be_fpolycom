@@ -56,6 +56,7 @@ public class UserMessageStoreController {
         return ResponseEntity.ok(dataReturnService.success(storeGroupMessService.getAllGroupByUser(request.get("userCode"))));
     }
 
+
     @PostMapping("/message/send")
     public ResponseEntity<Object> sendMessage(@RequestBody List<MessageStoreUserRequestDTO> requestDTO) {
         List<MessageStoreUserResponseDTO> responseDTO = messageStoreUserService.postNew(requestDTO);
