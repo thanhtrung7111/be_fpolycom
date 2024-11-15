@@ -4,6 +4,7 @@ import dto.user_account.*;
 import entity.Store;
 import entity.UserAccount;
 import entity.enum_package.UserStatus;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -78,21 +79,21 @@ public interface UserAccountRepository extends JpaRepository<UserAccount,Long> {
             " from Orders o" +
             " where o.createdDate = :date" +
             " group by o.createdDate,o.store")
-    List<RevenueByStoreInDayResponseDTO> findRevenueByStoreInDay(@Param("date") Date date);
+    List<RevenueByStoreInDayResponseDTO> findRevenueByStoreInDay(@Param("date") Date date, Pageable pageable);
 
     @Query(value = "select  new dto.user_account.RevenueByStoreInMonthResponseDTO(" +
             " month(o.createdDate),year(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name,count(o))" +
             " from Orders o" +
             " where month(o.createdDate) =:month and year(o.createdDate) =:year " +
             " group by month(o.createdDate),year(o.createdDate),o.store.name")
-    List<RevenueByStoreInMonthResponseDTO> findRevenueByStoreInMonth(@Param("month") Integer month,@Param("year")Integer year);
+    List<RevenueByStoreInMonthResponseDTO> findRevenueByStoreInMonth(@Param("month") Integer month,@Param("year")Integer year,Pageable pageable);
 
     @Query(value = "select  new dto.user_account.RevenueByStoreInYearResponseDTO(" +
             " year(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name,count(o))" +
             " from Orders o" +
             " where year(o.createdDate) = :year" +
             " group by year(o.createdDate),o.store.name")
-    List<RevenueByStoreInYearResponseDTO> findRevenueByStoreInYear( @Param("year") Integer year);
+    List<RevenueByStoreInYearResponseDTO> findRevenueByStoreInYear( @Param("year") Integer year,Pageable pageable);
 
 
 }

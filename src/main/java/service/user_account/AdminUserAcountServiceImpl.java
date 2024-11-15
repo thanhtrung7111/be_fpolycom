@@ -8,6 +8,8 @@ import entity.UserAccount;
 import entity.enum_package.UserStatus;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,25 +75,29 @@ public class AdminUserAcountServiceImpl implements AdminUserAccountService {
 
     @Override
     public List<NumberOfOrdersDayByDayResponseDTO> findOrdersDayByDay(DashboardRequestDTO request) {
+
         List<NumberOfOrdersDayByDayResponseDTO> res = userAccountRepository.findOrdersDayByDay(request.getStartDate(), request.getEndDate());
         return res;
     }
 
     @Override
     public List<RevenueByStoreInDayResponseDTO> findRevenueByStoreInDay(DashboardRequestDTO request) {
-        List<RevenueByStoreInDayResponseDTO> res = userAccountRepository.findRevenueByStoreInDay(request.getDate());
+        Pageable pageable = PageRequest.of(0,10);
+        List<RevenueByStoreInDayResponseDTO> res = userAccountRepository.findRevenueByStoreInDay(request.getDate(),pageable);
         return res;
     }
 
     @Override
     public List<RevenueByStoreInMonthResponseDTO> findRevenueByStoreInMonth(DashboardRequestDTO request) {
-        List<RevenueByStoreInMonthResponseDTO> res = userAccountRepository.findRevenueByStoreInMonth(request.getMonth(),request.getYear());
+        Pageable pageable = PageRequest.of(0,10);
+        List<RevenueByStoreInMonthResponseDTO> res = userAccountRepository.findRevenueByStoreInMonth(request.getMonth(),request.getYear(),pageable);
         return res;
     }
 
     @Override
     public List<RevenueByStoreInYearResponseDTO> findRevenueByStoreInYear(DashboardRequestDTO request) {
-        List<RevenueByStoreInYearResponseDTO> res = userAccountRepository.findRevenueByStoreInYear(request.getYear());
+        Pageable pageable = PageRequest.of(0,10);
+        List<RevenueByStoreInYearResponseDTO> res = userAccountRepository.findRevenueByStoreInYear(request.getYear(),pageable);
         return res;
     }
 }

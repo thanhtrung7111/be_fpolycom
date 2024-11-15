@@ -50,17 +50,17 @@ public class DashboardAdminController {
         return ResponseEntity.ok(dataReturnService.success(adminUserAccountService.findOrdersDayByDay(request)));
     }
 
-    @PostMapping("/revenue-store-day")
+    @PostMapping("/top10-revenue-store-day")
     public ResponseEntity<Object> findRevenueByStoreInDay(@RequestBody DashboardRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(adminUserAccountService.findRevenueByStoreInDay(request)));
     }
 
-    @PostMapping("/revenue-store-month")
+    @PostMapping("/top10-revenue-store-month")
     public ResponseEntity<Object> findRevenueByStoreInMonth(@RequestBody DashboardRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(adminUserAccountService.findRevenueByStoreInMonth(request)));
     }
 
-    @PostMapping("/revenue-store-year")
+    @PostMapping("/top10-revenue-store-year")
     public ResponseEntity<Object> findRevenueByStoreInYear(@RequestBody DashboardRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(adminUserAccountService.findRevenueByStoreInYear(request)));
     }
