@@ -41,10 +41,10 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value = "select new dto.store.RevenueYearsResponseDTO(" +
             "year(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
             "from Orders o " +
-            "where o.store =:store and o.orderStatus = entity.enum_package.OrderStatus.complete " +
+            "where o.store =:store and year(o.createdDate) between :startYear and :endYear and o.orderStatus = entity.enum_package.OrderStatus.complete " +
             "group by year(o.createdDate), o.store.name"
     )
-    List<RevenueYearsResponseDTO> findAllRevenueYears(@Param("store") Store store);
+    List<RevenueYearsResponseDTO> findAllRevenueYears(@Param("store") Store store, @Param("startYear")Integer startYear, @Param("endYear")Integer endYear);
 
     @Query(value = "select new dto.store.RevenueByMonthResponseDTO(" +
             "month(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
@@ -65,10 +65,10 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
     @Query(value = "select new dto.store.RevenueDayResponseDTO(" +
             " o.createdDate, sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
             "from Orders o " +
-            "where o.store =:store and o.orderStatus = entity.enum_package.OrderStatus.complete " +
+            "where o.store =:store and o.orderStatus = entity.enum_package.OrderStatus.complete and o.createdDate between :startDate and :endDate " +
             "group by o.createdDate, o.store.name"
     )
-    List<RevenueDayResponseDTO> findRevenueByDay(@Param("store") Store store);
+    List<RevenueDayResponseDTO> findRevenueByDay(@Param("store") Store store,@Param("startDate") Date startDate, @Param("endDate")Date endDate);
 
     @Query(value = "select new dto.store.Top5ProductBestSellerResponseDTO(" +
             " pd.product.name,  pd.product.typeGood.name, count(od), sum(od.totalAmount  - od.totalDiscount )) " +

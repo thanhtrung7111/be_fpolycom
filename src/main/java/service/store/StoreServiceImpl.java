@@ -219,7 +219,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public List<RevenueYearsResponseDTO> revenueYears(DashboardRequestDTO requestDTO) {
         Store store = storeRepository.findById(requestDTO.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
-        List<RevenueYearsResponseDTO> res = storeRepository.findAllRevenueYears(store);
+        List<RevenueYearsResponseDTO> res = storeRepository.findAllRevenueYears(store,requestDTO.getStartYear(),requestDTO.getEndYear());
         return res;
     }
 
@@ -240,7 +240,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public List<RevenueDayResponseDTO> revenuelDayByDay(DashboardRequestDTO requestDTO) {
         Store store = storeRepository.findById(requestDTO.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
-        List<RevenueDayResponseDTO> res = storeRepository.findRevenueByDay(store);
+        List<RevenueDayResponseDTO> res = storeRepository.findRevenueByDay(store,requestDTO.getStartDate(),requestDTO.getEndDate());
         return res;
     }
 

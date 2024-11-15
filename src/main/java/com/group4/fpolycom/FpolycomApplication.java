@@ -131,7 +131,9 @@ public class FpolycomApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Store store = storeRepository.findById(Long.parseLong("1")).get();
+//		UserAccount userAccount = UserAccount.builder().id(23L).createdDate(new Date()).userLogin("vongtrung22").password("check").build();
+//		userAccountRepository.save(userAccount);
+//		Store store = storeRepository.findById(Long.parseLong("2")).get();
 //		Calendar calendar = Calendar.getInstance();
 //		calendar.setTime(new Date());
 //

@@ -1,21 +1,23 @@
-package dto.store;
+package dto.user_account;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DashboardRequestDTO {
-    Long storeCode;
+    Integer year;
 
     Integer month;
 
-    Integer year;
+    Date startDate;
+
+    Date endDate;
 
     Integer startYear;
 
@@ -23,9 +25,6 @@ public class DashboardRequestDTO {
 
     Date date;
 
-    Long typeGoodCode;
 
-    Date startDate;
 
-    Date endDate;
 }

@@ -25,7 +25,7 @@ public class DashboardStoreController {
     public ResponseEntity<DataReturn> revenueByMonthInYear(@RequestBody @Valid DashboardRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(storeService.revenueByMonthInYear(request)));
     }
-    @PostMapping(value = "revenueByYears")
+    @PostMapping(value = "revenue-between-year")
     public ResponseEntity<DataReturn> revenueByYears(@RequestBody @Valid DashboardRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(storeService.revenueYears(request)));
     }
