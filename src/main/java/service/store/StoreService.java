@@ -1,17 +1,12 @@
 package service.store;
 
-import dto.store.StoreRegisterRequestDTO;
-import dto.store.StoreRegisterResponseDTO;
-import dto.store.StoreResponseDTO;
-import dto.store.UserStoreDetailResponseDTO;
+import dto.store.*;
 import dto.store_account.ChangeInfoStoreRequestDTO;
 import dto.store_account.ChangeInfoStoreResponseDTO;
 import dto.store_account.ChangeStorePasswordRequestDTO;
 import dto.store_account.ChangeStorePasswordResponseDTO;
-import entity.Store;
 import entity.enum_package.StoreStatus;
 import java.util.List;
-import java.util.Optional;
 
 public interface StoreService {
 
@@ -39,5 +34,22 @@ public interface StoreService {
     public StoreResponseDTO approveStore(Long storeCode);
 
     public StoreResponseDTO lockStore(Long storeCode);
+
+    public List<RevenueByMonthResponseDTO> revenueByMonthInYear(DashboardRequestDTO requestDTO);
+    public List<RevenueYearsResponseDTO> revenueYears(DashboardRequestDTO requestDTO);
+
+    public RevenueByMonthResponseDTO revenueByMonth(DashboardRequestDTO requestDTO);
+
+    public RevenueYearsResponseDTO revenueByYear(DashboardRequestDTO requestDTO);
+    public List<RevenueDayResponseDTO> revenuelDayByDay(DashboardRequestDTO requestDTO);
+
+    public  List<Top5ProductBestSellerResponseDTO> top5ProductBestSeller(DashboardRequestDTO request);
+
+    public RevenueDayResponseDTO searchRevenuelDayByDay(DashboardRequestDTO requestDTO);
+
+    public List<Top5ProductBestSellerResponseDTO> findProductByTypeGood(DashboardRequestDTO requestDTO);
+
+    public List<NumberOfProductByTypeResponseDTO> NumberOfProductByType(DashboardRequestDTO requestDTO);
+
 
 }

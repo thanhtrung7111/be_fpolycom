@@ -1,9 +1,6 @@
 package service.store;
 
-import dao.DistrictRepository;
-import dao.PaymentWallerStoreRepository;
-import dao.StoreRepository;
-import dao.UserAccountRepository;
+import dao.*;
 import dto.store.StoreMapper;
 import dto.store.StoreRegisterRequestDTO;
 import dto.store.StoreRegisterResponseDTO;
@@ -17,6 +14,8 @@ import entity.enum_package.DocumentType;
 import entity.enum_package.StoreStatus;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +24,6 @@ import service.auth_user.AuthUserService;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class StoreServiceImpl implements StoreService {
@@ -44,6 +42,15 @@ public class StoreServiceImpl implements StoreService {
 
     @Autowired
     PaymentWallerStoreRepository paymentWallerStoreRepository;
+
+    @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
+    OrderDetailRepository orderDetailRepository;
+
+    @Autowired
+    TypeGoodRepository typeGoodRepository;
 
 
     @Override
@@ -201,6 +208,70 @@ public class StoreServiceImpl implements StoreService {
         store.setStoreStatus(StoreStatus.lock);
         storeRepository.save(store);
         return StoreMapper.INSTANCE.toUserStoreResponseDto(store);
+    }
+
+    @Override
+    public List<RevenueByMonthResponseDTO> revenueByMonthInYear(DashboardRequestDTO requestDTO) {
+        Store store = storeRepository.findById(requestDTO.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
+        List<RevenueByMonthResponseDTO> res = storeRepository.findAllRevenueByMonth(store,  requestDTO.getYear());
+        return res;
+    }
+    @Override
+    public List<RevenueYearsResponseDTO> revenueYears(DashboardRequestDTO requestDTO) {
+        Store store = storeRepository.findById(requestDTO.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
+        List<RevenueYearsResponseDTO> res = storeRepository.findAllRevenueYears(store,requestDTO.getStartYear(),requestDTO.getEndYear());
+        return res;
+    }
+
+    @Override
+    public RevenueByMonthResponseDTO revenueByMonth(DashboardRequestDTO requestDTO) {
+        Store store = storeRepository.findById(requestDTO.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
+        RevenueByMonthResponseDTO res = storeRepository.findRevenueByMonthAndYear(store, requestDTO.getMonth(), requestDTO.getYear());
+        return res;
+    }
+
+    @Override
+    public RevenueYearsResponseDTO revenueByYear(DashboardRequestDTO requestDTO) {
+        Store store = storeRepository.findById(requestDTO.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
+        RevenueYearsResponseDTO res = storeRepository.findRevenueByYear(store,  requestDTO.getYear());
+        return res;
+    }
+
+    @Override
+    public List<RevenueDayResponseDTO> revenuelDayByDay(DashboardRequestDTO requestDTO) {
+        Store store = storeRepository.findById(requestDTO.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
+        List<RevenueDayResponseDTO> res = storeRepository.findRevenueByDay(store,requestDTO.getStartDate(),requestDTO.getEndDate());
+        return res;
+    }
+
+    @Override
+    public List<Top5ProductBestSellerResponseDTO> top5ProductBestSeller(DashboardRequestDTO request) {
+        Store store = storeRepository.findById(request.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
+        Pageable pageable = PageRequest.of(0,5);
+        List<Top5ProductBestSellerResponseDTO> res = storeRepository.findTop5ProductBestSeller(store, pageable);
+        return res;
+    }
+
+    @Override
+    public RevenueDayResponseDTO searchRevenuelDayByDay(DashboardRequestDTO requestDTO) {
+        Store store = storeRepository.findById(requestDTO.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
+        RevenueDayResponseDTO res = storeRepository.findRevenueByMonthAndYearAndDay(store,requestDTO.getDate());
+        return res;
+    }
+
+    @Override
+    public List<Top5ProductBestSellerResponseDTO> findProductByTypeGood(DashboardRequestDTO requestDTO) {
+        Store store = storeRepository.findById(requestDTO.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
+        TypeGood typeGood = typeGoodRepository.findById(requestDTO.getTypeGoodCode()).orElseThrow(() -> new DataNotFoundException("khong tim thay loai hang"));
+        List<Top5ProductBestSellerResponseDTO> res = storeRepository.findProductByTypeGood(store,typeGood);
+        return res;
+    }
+
+    @Override
+    public List<NumberOfProductByTypeResponseDTO> NumberOfProductByType(DashboardRequestDTO requestDTO) {
+        Store store = storeRepository.findById(requestDTO.getStoreCode()).orElseThrow(()-> new DataNotFoundException("khong tim thay store"));
+        List<NumberOfProductByTypeResponseDTO> res = storeRepository.NumberOfProductByType(store);
+        return res;
     }
 
 

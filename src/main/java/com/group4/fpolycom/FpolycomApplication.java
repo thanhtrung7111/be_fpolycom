@@ -131,6 +131,25 @@ public class FpolycomApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+//		UserAccount userAccount = UserAccount.builder().id(23L).createdDate(new Date()).userLogin("vongtrung22").password("check").build();
+//		userAccountRepository.save(userAccount);
+//		Store store = storeRepository.findById(Long.parseLong("2")).get();
+//		Calendar calendar = Calendar.getInstance();
+//		calendar.setTime(new Date());
+//
+//		// Cộng thêm 1 tháng
+//		calendar.add(Calendar.MONTH, -1);
+//
+//		// Lấy ngày mới
+//		Date nextMonth = calendar.getTime();
+//		Orders orders = Orders.builder().id(15L).totalAmount(300000.0).totalAmountDiscount(10000.0).totalAmountVoucher(20000.0).store(store).createdDate(new Date()).build();
+//		ordersRepository.save(orders);
+//		Orders orders2 = ordersRepository.findById(Long.parseLong("2")).get();
+//		OrderDetail orderDetail = OrderDetail.builder().id(1L).orders(orders).createdDate(new Date()).finalTotal(100000.0).build();
+//		OrderDetail orderDetail2 = OrderDetail.builder().id(2L).orders(orders).createdDate(new Date()).finalTotal(200000.0).build();
+//		orderDetailRepository.save(orderDetail);
+//		orderDetailRepository.save(orderDetail2);
+
 //		UserAccount userAccount =  UserAccount.builder().id(1L).email("thanhtrung711199@gmail.com").userLogin("thanhtrung").name("Thành Trung").password(encoder.encode("thanhtrung")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).province(Province.builder().id(1L).build()).updatedDate(null).deleted(false).deletedDate(null).build();
 //		UserAccount userAccount2 = UserAccount.builder().id(2L).email("thanhtrung7199@gmail.com").userLogin("thanhtrung1").name("Thành Trung 2").password(encoder.encode("thanhtrung1")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
 //		UserAccount userAccount3 = UserAccount.builder().id(3L).email("ngocchau@gmail.com").userLogin("ngocchau").name("Ngọc Châu").password(encoder.encode("ngocchau")).userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong").createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
@@ -827,4 +846,5 @@ public class FpolycomApplication implements CommandLineRunner {
 //		calendar.add(Calendar.DAY_OF_YEAR, 7);
 //		return calendar.getTime();
 //	}
+
 }
