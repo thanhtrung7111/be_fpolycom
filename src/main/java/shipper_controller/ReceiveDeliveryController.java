@@ -48,7 +48,7 @@ public class ReceiveDeliveryController {
     }
 
     @PostMapping(value = "/receive-delivery/all")
-    public ResponseEntity<Object> receiveDelivery(@RequestBody ReceiveDeliveryRequestDTO request) {
+    public ResponseEntity<Object> receiveList(@RequestBody ReceiveDeliveryRequestDTO request) {
         if(request.getShipperCode().describeConstable().isEmpty()){
             throw new DataNotFoundException("Shipper code is empty");
         }

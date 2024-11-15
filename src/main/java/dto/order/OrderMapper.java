@@ -1,13 +1,13 @@
 package dto.order;
 
 import dto.order_detail.OrderDetailMapper;
-import dto.order_detail.OrderDetailRequestDTO;
+import dto.receive_delivery.ConsignorResponseDTO;
 import dto.receive_delivery.ReceiveDeliveryMapper;
 import dto.receive_delivery.ReceiveDeliveryRequestDTO;
+import dto.receive_delivery.RecieverResponseDTO;
 import dto.voucher.VoucherMapper;
 import dto.voucher.VoucherRequestDTO;
 import entity.*;
-import jdk.jfr.Name;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -60,20 +60,17 @@ public interface OrderMapper {
     @Mapping(target = "voucherList",source = "voucherApplyList",qualifiedByName = "voucherList")
     OrderInfoResponseDTO toOrderInfoResponseDto (Orders orders);
 
-    @Mapping(target = "shippingFee",source ="shippingFee.fee" )
-    @Mapping(target = "name",source = "userAccount.name")
-    @Mapping(target = "phone",source = "userAccount.phone")
-    @Mapping(target = "province",source = "userAccount.province.name")
-    @Mapping(target = "district",source = "userAccount.district.name")
-    @Mapping(target = "ward",source = "userAccount.ward.name")
-    @Mapping(target = "deliveryType",source = "deliveryType.name")
-    @Mapping(target = "orderDetailShipperList",source = "orderDetailList")
-    @Mapping(target = "store",source = "store.name")
+
     @Mapping(target = "orderCode",source = "id")
+    @Mapping(target = "orderDate",source = "createdDate")
+    @Mapping(target = "shippingFee",source ="shippingFee.fee" )
+    @Mapping(target = "deliveryType",source = "deliveryType.name")
+    @Mapping(target = "storeInfo",source = "store", qualifiedByName = "mapConsignorResponseDTO")
     @Mapping(target = "paymentType",source = "paymentType.name")
     @Mapping(target = "paymentSuccess",source = "paymentReceiptList",qualifiedByName = "paymentSuccess")
+    @Mapping(target = "userAccountInfo",source = "userAccount", qualifiedByName = "mapReceiverResponseDTO")
+    @Mapping(target = "orderDetailShipperList",source = "orderDetailList")
     @Mapping(target = "receiveDeliveryList",source = "receiveDeliveryList")
-    @Mapping(target = "orderDate",source = "createdDate")
     OrderShipperResponseDTO toOrderShipperResponseDTO (Orders orders);
 
     List<OrderResponseDTO> toOrderResponseDtoList(List<Orders> ordersList);
@@ -87,7 +84,18 @@ public interface OrderMapper {
 
 //    List<Orders> toOrdersLists(List<Orders> list);
 
+    @Named("mapConsignorResponseDTO")
+    @Mapping(target = "id",             source = "id")
+    @Mapping(target = "ward",           source = "ward.name")
+    @Mapping(target = "district",       source = "district.name")
+    @Mapping(target = "province",       source = "province.name")
+    ConsignorResponseDTO mapConsignorResponseDTO(Store store);
 
+    @Named("mapReceiverResponseDTO")
+    @Mapping(target = "ward",           source = "ward.name")
+    @Mapping(target = "district",       source = "district.name")
+    @Mapping(target = "province",       source = "province.name")
+    RecieverResponseDTO mapReceiverResponseDTO(UserAccount userAccount);
 
     @Named("paymentSuccess")
     default  Boolean paymentSuccess (List<PaymentReceipt> paymentReceiptList){

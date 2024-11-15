@@ -229,26 +229,33 @@ public class FpolycomApplication implements CommandLineRunner {
 
 	public void ExampleData(){
 		provinceRepository.saveAll(Arrays.asList(
-				Province.builder().id(1L).name("TPHCM")		.build(),
-				Province.builder().id(2L).name("Bình Dương").build()
+				Province.builder().id(1L).name("Thành phố Hồ Chí Minh").build(),
+				Province.builder().id(2L).name("Thành phố Bình Dương").build(),
+				Province.builder().id(3L).name("Tỉnh Lâm Đồng").build()
 		));
 
 		districtRepository.saveAll(Arrays.asList(
 				District.builder().id(1L).name("Quận 1")			.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
 				District.builder().id(2L).name("Quận Bình Thạnh")	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
 				District.builder().id(3L).name("Quận Châu Thành")	.province(provinceRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-				District.builder().id(4L).name("Quận Lái Thiêu")	.province(provinceRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build()
+				District.builder().id(4L).name("Quận Lái Thiêu")	.province(provinceRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				District.builder().id(5L).name("Huyện Lâm Hà")		.province(provinceRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				District.builder().id(6L).name("Thành phố Đà Lạt")	.province(provinceRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""))).build()
 		));
 
 		wardRepository.saveAll(Arrays.asList(
-				Ward.builder().id(1L).name("Phường 1")	.district(districtRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-				Ward.builder().id(2L).name("Phường 2")	.district(districtRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-				Ward.builder().id(3L).name("Phường 13")	.district(districtRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-				Ward.builder().id(4L).name("Phường 4")	.district(districtRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-				Ward.builder().id(5L).name("Phường 5")	.district(districtRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-				Ward.builder().id(6L).name("Phường 6")	.district(districtRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-				Ward.builder().id(7L).name("Phường 7")	.district(districtRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
-				Ward.builder().id(8L).name("Phường 8")	.district(districtRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""))).build()
+				Ward.builder().id(1L).name("Phường 1")			.district(districtRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(2L).name("Phường 2")			.district(districtRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(3L).name("Phường 13")			.district(districtRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(4L).name("Phường 4")			.district(districtRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(5L).name("Phường 5")			.district(districtRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(6L).name("Phường 6")			.district(districtRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(7L).name("Phường 7")			.district(districtRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(8L).name("Phường 8")			.district(districtRepository.findById(4L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(9L).name("Thị trấn Đinh Văn")	.district(districtRepository.findById(5L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(10L).name("Thị trấn Nam Ban")	.district(districtRepository.findById(5L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(11L).name("Phường 9")			.district(districtRepository.findById(6L).orElseThrow(() -> new EntityNotFoundException(""))).build(),
+				Ward.builder().id(12L).name("Phường 10")		.district(districtRepository.findById(6L).orElseThrow(() -> new EntityNotFoundException(""))).build()
 		));
 
 		userAccountRepository.saveAll(Arrays.asList(
@@ -260,11 +267,24 @@ public class FpolycomApplication implements CommandLineRunner {
 						.province(	provinceRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
 						.district(	districtRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
 						.ward(		wardRepository		.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
-						.address(	"560 Nơ Trang Long")
+						.address(		"Nơ Trang Long")
+						.addressDetail(	"Số 2 - Hẻm 558")
 						.phone("0356597539")
 						.build(),
-				UserAccount.builder().id(2L).email("DTTrung0123@gmail.com")	.userLogin("user2")		.name("Đỗ Thành Trung")		.password(encoder.encode("123456"))	.userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong")	.createdDate(new Date())	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))	.updatedDate(null)	.deleted(false)	.deletedDate(null).build(),
-				UserAccount.builder().id(3L).email("VTr0505@gmail.com")		.userLogin("vt0505")	.name("Vòng Trung")			.password(encoder.encode("123456"))	.userStatus(UserStatus.active).address("123 Đường 456, Phường 7, Quận 8, Thành Phố 9")								.createdDate(new Date())	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))	.updatedDate(null)	.deleted(false)	.deletedDate(null).build()
+				UserAccount.builder().id(2L).email("ducnvps28090@fpt.edu.vn")	.userLogin("Ngvd49")	.name("Nguyễn Viết Tèo")	.password(encoder.encode("123456"))	.userStatus(UserStatus.active)
+						.createdDate(new Date())
+						.updatedDate(null)
+						.deleted(false)
+						.deletedDate(null)
+						.province(	provinceRepository	.findById(3L).orElseThrow(() -> new EntityNotFoundException("")))
+						.district(	districtRepository	.findById(5L).orElseThrow(() -> new EntityNotFoundException("")))
+						.ward(		wardRepository		.findById(9L).orElseThrow(() -> new EntityNotFoundException("")))
+						.address(		"Tổ dân phố Bồ Liêng")
+						.addressDetail(	"Số 272 - Khu phố Bồ Liêng 2")
+						.phone("0356597540")
+						.build(),
+				UserAccount.builder().id(3L).email("DTTrung0123@gmail.com")	.userLogin("user2")		.name("Đỗ Thành Trung")		.password(encoder.encode("123456"))	.userStatus(UserStatus.active).address("35 Tran Dai Nghia,KP Noi Hoa 2, P. Binh AN, Tx. Di An, Tinh Binh Duong")	.createdDate(new Date())	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))	.updatedDate(null)	.deleted(false)	.deletedDate(null).build(),
+				UserAccount.builder().id(4L).email("VTr0505@gmail.com")		.userLogin("vt0505")	.name("Vòng Trung")			.password(encoder.encode("123456"))	.userStatus(UserStatus.active).address("123 Đường 456, Phường 7, Quận 8, Thành Phố 9")								.createdDate(new Date())	.province(provinceRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))	.updatedDate(null)	.deleted(false)	.deletedDate(null).build()
 		));
 
 		String storeImg 		= "https://images.stockcake.com/public/7/a/4/7a49a413-44d8-42bb-a4f0-dcee546f439c_medium/electronics-store-interior-stockcake.jpg";
@@ -272,7 +292,7 @@ public class FpolycomApplication implements CommandLineRunner {
 		String storeBannerImg 	= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fokcredit.in%2Fblog%2Fhow-to-open-a-computer-laptop-showroom%2F&psig=AOvVaw1acMwXcK125ldhmS2I2FW-&ust=1730542216883000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLCszqLyuokDFQAAAAAdAAAAABAE";
 		String storeBannerImg2 	= "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpetstore.ae%2F&psig=AOvVaw3wRPuy0BWXOHZitP-P3JuF&ust=1730542864610000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCKj09db0uokDFQAAAAAdAAAAABAe";
 		UserAccount userAcc 	= userAccountRepository.findById(1L).orElseThrow(() -> new EntityNotFoundException(""));
-		UserAccount userAcc2 	= userAccountRepository.findById(2L).orElseThrow(() -> new EntityNotFoundException(""));
+		UserAccount userAcc2 	= userAccountRepository.findById(3L).orElseThrow(() -> new EntityNotFoundException(""));
 
 
 		storeRepository.saveAll(Arrays.asList(
@@ -575,7 +595,7 @@ public class FpolycomApplication implements CommandLineRunner {
 						.pickupDate(new Date()).noteContent("Content")
 						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
 						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.userAccount(	userAccountRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
 						.finalTotal(50000.0)
 						.totalAmount(60000.0)
 						.totalAmountShip(80000.0)
@@ -595,7 +615,7 @@ public class FpolycomApplication implements CommandLineRunner {
 						.pickupDate(new Date()).noteContent("Content")
 						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
 						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.userAccount(	userAccountRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
 						.finalTotal(50000.0)
 						.totalAmount(60000.0)
 						.totalAmountShip(80000.0)
@@ -615,7 +635,7 @@ public class FpolycomApplication implements CommandLineRunner {
 						.pickupDate(new Date()).noteContent("Content")
 						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
 						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.userAccount(	userAccountRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
 						.finalTotal(50000.0)
 						.totalAmount(60000.0)
 						.totalAmountShip(80000.0)
@@ -635,7 +655,7 @@ public class FpolycomApplication implements CommandLineRunner {
 						.pickupDate(new Date()).noteContent("Content")
 						.store(			storeRepository			.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
 						.deliveryType(	deliveryTypeRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
-						.userAccount(	userAccountRepository	.findById(1L).orElseThrow(() -> new EntityNotFoundException("")))
+						.userAccount(	userAccountRepository	.findById(2L).orElseThrow(() -> new EntityNotFoundException("")))
 						.finalTotal(50000.0)
 						.totalAmount(60000.0)
 						.totalAmountShip(80000.0)
