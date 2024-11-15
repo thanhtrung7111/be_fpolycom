@@ -21,4 +21,10 @@ public class MessageStoreUserRequestDTO {
     Long groupMessageCode;
 
     Long messageCode;
+
+    Long storeCode;
+
+    Long userCode;
+
+
 }

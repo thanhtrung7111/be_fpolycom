@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,6 +16,8 @@ public class MessageStoreUserResponseDTO {
 
     TypeMessage typeMessage;
 
+    LocalDateTime timeSend;
+
     Long idSender;
 
     TypeSender typeSender;
@@ -21,4 +25,18 @@ public class MessageStoreUserResponseDTO {
     Long messageCode;
 
     Long groupMessageCode;
+
+    String storeName;
+
+    String username;
+
+    String storeImage;
+
+    String userImage;
+
+    Boolean readed;
+
+    Long storeCode;
+
+    Long userCode;
 }

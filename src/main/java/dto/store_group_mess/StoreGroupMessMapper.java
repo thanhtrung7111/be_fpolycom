@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,uses = {MessageStoreUserMapper.class})
 public interface StoreGroupMessMapper {
 
     StoreGroupMessMapper INSTANCE = Mappers.getMapper(StoreGroupMessMapper.class);

@@ -6,6 +6,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SendMessageService {
 
@@ -14,14 +16,16 @@ public class SendMessageService {
     private SimpMessagingTemplate messagingTemplate;
 
     @Async("taskExecutor")
-    public void sendMessageFromStore(Long userCode,MessageStoreUserResponseDTO responseDTO){
-        messagingTemplate.convertAndSend("/user/"+userCode,responseDTO);
+    public void sendMessageFromStore(Long userCode, List<MessageStoreUserResponseDTO> responseDTO){
+        messagingTemplate.convertAndSend("/topic/message/user/"+userCode,responseDTO);
+        System.out.println("Send success");
     }
 
 
     @Async("taskExecutor")
-    public void sendMessageFromUser(Long storeCode,MessageStoreUserResponseDTO responseDTO){
-        messagingTemplate.convertAndSend("/store/"+storeCode,responseDTO);
+    public void sendMessageFromUser(Long storeCode,List<MessageStoreUserResponseDTO> responseDTO){
+        messagingTemplate.convertAndSend("/topic/message/store/"+storeCode,responseDTO);
+        System.out.println("Send success");
     }
 
 }

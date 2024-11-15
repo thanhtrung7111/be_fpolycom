@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,11 +27,6 @@ public class StoreGroupMessResponseDTO {
 
     Long groupCode;
 
-    String message;
-
-    TypeMessage typeMessage;
-
-    TypeSender typeSender;
-
+//    List<MessageStoreUserResponseDTO> messageStoreUserList;
 
 }

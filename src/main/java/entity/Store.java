@@ -88,6 +88,9 @@ public class Store extends EntityCommon {
     @OneToMany(mappedBy = "store")
     List<StoreBanner> storeBannerList;
 
+    @OneToMany(mappedBy = "store")
+    List<Orders> ordersList;
+
 
     @OneToOne(mappedBy = "store")
     PaymentWalletStore paymentWalletStore;
