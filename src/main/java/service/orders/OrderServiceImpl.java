@@ -107,9 +107,10 @@ public class OrderServiceImpl implements OrderService {
             item.getPaymentReceiptList().add(saved);
         });
         ordersList.stream().forEach(item->{
+
             userNotifyService.sendNotifyToUser("Thanh toán đơn hàng #"+item.getId(),"Thanh toán thành công đơn hàng #"+item.getId(),item.getId().toString(), TypeNotifycationUser.order,item.getOrderDetailList().get(0).getProductDetail().getImage(), item.getUserAccount().getId());
         });
-
+        asyncUpdate.updateProductDetail(ordersList);
         return OrderMapper.INSTANCE.toOrderInfoResponseDtoList(ordersList);
     }
 
@@ -170,6 +171,7 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderStatus(OrderStatus.complete);
         userNotifyService.sendNotifyToUser("Đơn hàng #"+order.getId()+" giao thành công!","Đơn hàng đã giao thành công đến bạn!",order.getId().toString(), TypeNotifycationUser.order,order.getOrderDetailList().get(0).getProductDetail().getImage(),order.getUserAccount().getId());
         ordersRepository.save(order);
+        asyncUpdate.updatePaymentWalletStore(order);
         importExportOrdersRepository.save(importExportOrders);
          paymenReceiptRepository.save(paymentReceipt);
         return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);

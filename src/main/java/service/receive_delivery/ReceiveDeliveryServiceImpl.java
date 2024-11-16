@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import security.AsyncUpdate;
 import service.user_notify.UserNotifyService;
 
 import java.time.LocalDate;
@@ -35,6 +36,9 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
 
     @Autowired
     UserNotifyService userNotifyService;
+
+    @Autowired
+    AsyncUpdate asyncUpdate;
 
     /**
      * @param shipperCode
@@ -62,6 +66,7 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
         if(orders.getPaymentReceiptList().size() >0){
             orders.setOrderStatus(OrderStatus.complete);
             userNotifyService.sendNotifyToUser("Đơn hàng "+orders.getId()+" đang giao!","Đơn hàng đang được giao đến bạn, vui lòng để ý điện thoại!",orders.getId().toString(), TypeNotifycationUser.order,orders.getOrderDetailList().get(0).getProductDetail().getImage(),orders.getUserAccount().getId());
+            asyncUpdate.updatePaymentWalletStore(orders);
         }
         ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("khong thay id cua shipper"));
         receiveDelivery.setStatusDelivery(StatusDelivery.complete);
