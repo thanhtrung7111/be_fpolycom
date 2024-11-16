@@ -1,9 +1,14 @@
 package admin_controller;
 
+import dao.ShipperRepository;
 import dto.import_export_orders.ImportExportListOrdersRequestDTO;
 import dto.receive_delivery.AddReceiveDeliveryRequestDTO;
+import dto.receive_delivery.ReceiveDeliveryMapper;
 import dto.receive_delivery.ReceiveDeliveryRequestDTO;
 import dto.warehouse.WarehouseRequestDTO;
+import entity.*;
+import entity.enum_package.TypeDelivery;
+import entity.enum_package.TypeImportExportOrders;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +16,12 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import service.data_return.DataReturnService;
 import service.import_export_orders.ImportExportOrdersService;
+import service.orders.OrderService;
 import service.receive_delivery.ReceiveDeliveryService;
 import service.warehouse.WarehouseService;
+
+import java.util.Date;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping(value = "/admin")
@@ -28,6 +37,12 @@ public class WarehouseController {
 
     @Autowired
     ImportExportOrdersService importExportOrdersService;
+
+    @Autowired
+    ShipperRepository shipperRepository;
+
+    @Autowired
+    OrderService orderService;
 
     @GetMapping(value = "/warehouse/all")
     public ResponseEntity<Object> getAll() {
@@ -55,14 +70,33 @@ public class WarehouseController {
         return ResponseEntity.ok(dataReturnService.success(warehouseService.deleteData(request)));
     }
 
-    @PostMapping(value = "warehouse/add-delivery")
+    @PostMapping(value = "/warehouse/add-delivery")
     public ResponseEntity<Object> receiveDeliveryNewList(@RequestBody AddReceiveDeliveryRequestDTO request) {
         return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addDeliveryToList(request)));
     }
 
+    @GetMapping(value = "/warehouse/all-receive")
+    public ResponseEntity<Object> allReceive() {
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.getAllReceiveByTypeDelivery(TypeDelivery.receive)));
+    }
 
-    @PostMapping(value = "warehouse/add-receive")
+    @GetMapping(value = "/warehouse/all-delivery")
+    public ResponseEntity<Object> allDelivery() {
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.getAllReceiveByTypeDelivery(TypeDelivery.delivery)));
+    }
+
+    @GetMapping(value = "/warehouse/all-refund")
+    public ResponseEntity<Object> allRefund() {
+        return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.getAllReceiveByTypeDelivery(TypeDelivery.refund)));
+    }
+
+
+
+
+
+    @PostMapping(value = "/warehouse/add-receive")
     public ResponseEntity<Object> receiveReceiveNewList(@RequestBody AddReceiveDeliveryRequestDTO request) {
+
         return ResponseEntity.ok(dataReturnService.success(receiveDeliveryService.addReceiveToList(request)));
     }
 
@@ -72,6 +106,14 @@ public class WarehouseController {
             throw new DataNotFoundException("Don hang bi trong!!");
         }
         return ResponseEntity.ok(dataReturnService.success(importExportOrdersService.confirmListImport(request)));
+    }
+
+    @PostMapping(value = "/warehouse/confirmDeliverySuccess")
+    public ResponseEntity<Object> confirmImport(@RequestBody HashMap<String,Long> request) {
+        if (request.isEmpty() || request.get("orderCode") == null) {
+            throw new DataNotFoundException("Don hang bi trong!!");
+        }
+        return ResponseEntity.ok(orderService.confirmOrderPaymentSuccess(request.get("orderCode")));
     }
 
     @PostMapping(value = "/warehouse/export-warehouse")

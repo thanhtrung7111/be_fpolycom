@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddReceiveDeliveryRequestDTO {
-    List<Long> ordersCode;
+    List<Long> receiveCodes;
 
     Long shipperCode;
 }

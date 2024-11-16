@@ -4,6 +4,7 @@ import dto.receive_delivery.AddReceiveDeliveryRequestDTO;
 import dto.receive_delivery.ReceiveDeliveryRequestDTO;
 import dto.receive_delivery.ReceiveDeliveryResponseDTO;
 import dto.receive_delivery.ReceiveDeliveryShipperResponse;
+import entity.enum_package.TypeDelivery;
 
 import java.util.List;
 
@@ -30,6 +31,8 @@ public interface ReceiveDeliveryService{
     public List<ReceiveDeliveryResponseDTO> addReceiveToList(AddReceiveDeliveryRequestDTO request );
 
     public ReceiveDeliveryResponseDTO cancelDelivery(ReceiveDeliveryRequestDTO request);
+
+    public List<ReceiveDeliveryResponseDTO> getAllReceiveByTypeDelivery(TypeDelivery typeDelivery);
 
 
 }

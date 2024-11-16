@@ -1,9 +1,11 @@
 package dto.receive_delivery;
 
 import dao.UserAccountRepository;
-import entity.Orders;
-import entity.ReceiveDelivery;
+import dto.import_export_orders.ImportExportOrdersMapper;
+import dto.import_export_orders.ImportExportOrdersResponseDTO;
+import entity.*;
 import entity.enum_package.TypeDelivery;
+import org.hibernate.query.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -13,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE, componentModel = "spring", uses = {UserAccountRepository.class})
+@Mapper(unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE, uses = {UserAccountRepository.class, ImportExportOrdersMapper.class})
 public interface ReceiveDeliveryMapper {
 
     ReceiveDeliveryMapper INSTANCE = Mappers.getMapper(ReceiveDeliveryMapper.class);
@@ -57,7 +59,18 @@ public interface ReceiveDeliveryMapper {
     @Mapping(target ="ordersCode",source = "orders.id")
     @Mapping(target = "receiveDeliveryCode", source = "id")
     @Mapping(target = "shipperName", source = "shipper.name")
+    @Mapping(target = "shipperPhone", source = "shipper.phone")
+    @Mapping(target = "isWarehouse",source = "orders.confirmWarehouse")
+    @Mapping(target = "warehouse",source = "orders.importExportOrdersList")
+    @Mapping(target = "typePayment",source = "orders.paymentType.name")
+    @Mapping(target = "paymentSuccess",source = "orders.paymentReceiptList",qualifiedByName = "paymentSuccess")
     ReceiveDeliveryResponseDTO toReceiveDeliveryResponseDTO(ReceiveDelivery entity);
 
     List<ReceiveDeliveryResponseDTO> toReceiveDeliveryResponseDtoList(List<ReceiveDelivery> list);
+
+    @Named("paymentSuccess")
+    default  Boolean paymentSuccess (List<PaymentReceipt> paymentReceiptList){
+        return paymentReceiptList == null ||  !paymentReceiptList.isEmpty();
+    }
+
 }

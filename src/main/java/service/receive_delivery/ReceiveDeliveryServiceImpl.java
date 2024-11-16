@@ -5,19 +5,19 @@ import dao.ReceiveDeliveryRepository;
 import dao.ShipperRepository;
 import dto.order.OrderMapper;
 import dto.receive_delivery.*;
+import entity.NotifycationUser;
 import entity.Orders;
 import entity.ReceiveDelivery;
 import entity.Shipper;
-import entity.enum_package.OrderStatus;
-import entity.enum_package.StatusDelivery;
-import entity.enum_package.TypeDelivery;
-import entity.enum_package.TypeShipper;
+import entity.enum_package.*;
 import exeception_handler.DataNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.query.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import service.user_notify.UserNotifyService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,6 +32,9 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
     OrdersRepository ordersRepository;
     @Autowired
     ShipperRepository shipperRepository;
+
+    @Autowired
+    UserNotifyService userNotifyService;
 
     /**
      * @param shipperCode
@@ -56,7 +59,10 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
     @Override
     public ReceiveDeliveryResponseDTO completeDelivery(ReceiveDeliveryRequestDTO request) {
         Orders orders = ordersRepository.findById(request.getOrdersCode()).orElseThrow(() -> new DataNotFoundException("Orders not found"));
-        orders.setOrderStatus(OrderStatus.complete);
+        if(orders.getPaymentReceiptList().size() >0){
+            orders.setOrderStatus(OrderStatus.complete);
+            userNotifyService.sendNotifyToUser("Đơn hàng "+orders.getId()+" đang giao!","Đơn hàng đang được giao đến bạn, vui lòng để ý điện thoại!",orders.getId().toString(), TypeNotifycationUser.order,orders.getOrderDetailList().get(0).getProductDetail().getImage(),orders.getUserAccount().getId());
+        }
         ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("khong thay id cua shipper"));
         receiveDelivery.setStatusDelivery(StatusDelivery.complete);
         ordersRepository.save(orders);
@@ -114,33 +120,31 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
 
     @Override
     public List<ReceiveDeliveryResponseDTO> addDeliveryToList(AddReceiveDeliveryRequestDTO request) {
-        List<Orders> list = ordersRepository.findOrdersByOrders(request.getOrdersCode());
+        List<ReceiveDelivery> list = receiveDeliveryRepository.findAllById(request.getReceiveCodes());
         Shipper shipper = shipperRepository.findById(request.getShipperCode()).orElseThrow(() -> new DataNotFoundException("Khong tim thay shipper"));
-        List<ReceiveDelivery> mainList = new ArrayList<>();
         if(list.isEmpty()) System.out.println("list rong");
-        for (Orders orders : list) {
-            orders.setOrderStatus(OrderStatus.delivery);
-            ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().shipper(shipper).orders(orders).deliveryDate(new Date()).createdDate(new Date()).statusDelivery(StatusDelivery.taking).typeDelivery(TypeDelivery.delivery).build();
-            receiveDeliveryRepository.save(receiveDelivery);
-            ordersRepository.save(orders);
-            mainList.add(receiveDelivery);
+        for (ReceiveDelivery receiveDelivery : list) {
+            Orders order = receiveDelivery.getOrders();
+            order.setOrderStatus(OrderStatus.delivery);
+            userNotifyService.sendNotifyToUser("Đơn hàng #"+order.getId()+" đang giao!","Đơn hàng đang được giao đến bạn, vui lòng để ý điện thoại!",order.getId().toString(), TypeNotifycationUser.order,order.getOrderDetailList().get(0).getProductDetail().getImage(),order.getUserAccount().getId());
+            ordersRepository.save(order);
+           receiveDelivery.setShipper(shipper);
         }
-        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(mainList);
+        receiveDeliveryRepository.saveAll(list);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(list);
     }
 
     @Override
     public List<ReceiveDeliveryResponseDTO> addReceiveToList(AddReceiveDeliveryRequestDTO request) {
-        List<Orders> list = ordersRepository.findOrdersByOrders(request.getOrdersCode());
+        List<ReceiveDelivery> list = receiveDeliveryRepository.findAllById(request.getReceiveCodes());
         Shipper shipper = shipperRepository.findById(request.getShipperCode()).orElseThrow(() -> new DataNotFoundException("Khong tim thay shipper"));
-        List<ReceiveDelivery> mainList = new ArrayList<>();
+
         if(list.isEmpty()) System.out.println("list rong");
-        for (Orders order : list) {
-            ReceiveDelivery receiveDelivery = ReceiveDelivery.builder().shipper(shipper).orders(order).deliveryDate(new Date()).createdDate(new Date()).statusDelivery(StatusDelivery.taking).typeDelivery(TypeDelivery.receive).build();
-            receiveDeliveryRepository.save(receiveDelivery);
-            ordersRepository.save(order);
-            mainList.add(receiveDelivery);
+        for (ReceiveDelivery receiveDelivery : list) {
+            receiveDelivery.setShipper(shipper);
         }
-        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(mainList);
+        receiveDeliveryRepository.saveAll(list);
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(list);
     }
 
     @Override
@@ -154,6 +158,11 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
         receiveDeliveryRepository.save(receiveDelivery);
         return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDeliveryRepository.save(returnReceiveDelivery));
 
+    }
+
+    @Override
+    public List<ReceiveDeliveryResponseDTO> getAllReceiveByTypeDelivery(TypeDelivery typeDelivery) {
+        return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDtoList(receiveDeliveryRepository.findAllByTypeDelivery(typeDelivery));
     }
 
 

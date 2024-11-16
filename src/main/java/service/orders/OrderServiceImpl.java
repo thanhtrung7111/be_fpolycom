@@ -1,17 +1,11 @@
 package service.orders;
 
-import dao.OrdersRepository;
-import dao.PaymenReceiptRepository;
-import dao.ReceiveDeliveryRepository;
-import dao.UserAccountRepository;
+import dao.*;
 import dto.order.*;
 import dto.product.ProductMapper;
 import dto.receive_delivery.ReceiveDeliveryMapper;
 import entity.*;
-import entity.enum_package.OrderStatus;
-import entity.enum_package.StatusDelivery;
-import entity.enum_package.TypeDelivery;
-import entity.enum_package.TypeNotifycationUser;
+import entity.enum_package.*;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -54,6 +48,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     UserNotifyService userNotifyService;
+
+    @Autowired
+    ImportExportOrdersRepository importExportOrdersRepository;
 
     @Override
     public List<OrderResponseDTO> getAllOrderByUser(String userLogin) {
@@ -163,5 +160,18 @@ public class OrderServiceImpl implements OrderService {
         order.setConfirmPickup(true);
 
         return OrderMapper.INSTANCE.toOrderInfoResponseDto(ordersRepository.save(order));
+    }
+
+    @Override
+    public OrderInfoResponseDTO confirmOrderPaymentSuccess(Long orderCode) {
+        Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay don hang"));
+        PaymentReceipt paymentReceipt = PaymentReceipt.builder().paymentType(order.getPaymentType()).finalTotal(order.getFinalTotal()).totalAmount(order.getTotalAmount()).totalAmountShip(order.getTotalAmountShip()).totalAmountVoucher(order.getTotalAmountVoucher()).totalAmountDiscount(order.getTotalAmountDiscount()).totalAmountPaid(order.getFinalTotal()).orders(order).createdDate(new Date()).deleted(false).updatedDate(null).deletedDate(null).build();
+        ImportExportOrders importExportOrders = ImportExportOrders.builder().typeImportExportOrders(TypeImportExportOrders.exportOrders).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).orders(order).warehouse(Warehouse.builder().id(1L).build()).build();
+        order.setOrderStatus(OrderStatus.complete);
+        userNotifyService.sendNotifyToUser("Đơn hàng #"+order.getId()+" giao thành công!","Đơn hàng đã giao thành công đến bạn!",order.getId().toString(), TypeNotifycationUser.order,order.getOrderDetailList().get(0).getProductDetail().getImage(),order.getUserAccount().getId());
+        ordersRepository.save(order);
+        importExportOrdersRepository.save(importExportOrders);
+         paymenReceiptRepository.save(paymentReceipt);
+        return OrderMapper.INSTANCE.toOrderInfoResponseDto(order);
     }
 }
