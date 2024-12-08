@@ -69,6 +69,7 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
             asyncUpdate.updatePaymentWalletStore(orders);
         }
         ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("khong thay id cua shipper"));
+        System.out.println(receiveDelivery.getId());
         receiveDelivery.setStatusDelivery(StatusDelivery.complete);
         ordersRepository.save(orders);
         receiveDeliveryRepository.save(receiveDelivery);

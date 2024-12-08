@@ -62,6 +62,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderResponseDTO> getAllOrder() {
+        return OrderMapper.INSTANCE.toOrderResponseDtoList(ordersRepository.findAll());
+    }
+
+    @Override
     public List<OrderInfoResponseDTO> postNewOrder(List<UserOrderRequestDTO> userOrderRequestDTO) {
         if (!userOrderRequestDTO.isEmpty()) {
             if (!authUserService.isValidUserLogin(userOrderRequestDTO.getFirst().getUserLogin())) {

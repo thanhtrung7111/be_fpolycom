@@ -12,6 +12,8 @@ public interface OrderService {
 
     public List<OrderResponseDTO> getAllOrderByUser(String userLogin);
 
+    public List<OrderResponseDTO> getAllOrder();
+
     public OrderShipperResponseDTO getShipperOrderById(Long orderCode);
     public List<OrderInfoResponseDTO> postNewOrder(List<UserOrderRequestDTO> userOrderRequestDTO);
 
