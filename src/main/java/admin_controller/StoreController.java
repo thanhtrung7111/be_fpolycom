@@ -53,5 +53,19 @@ public class StoreController {
     }
 
 
+    @PostMapping("/store/reject")
+    public ResponseEntity<Object> rejectStore(@RequestBody HashMap<String,String> request) {
+        if(request.isEmpty() || request.get("storeCode").isBlank()){
+            throw new DataNotFoundException("Cua hang khong ton tai!");
+        }
+
+        if(request.isEmpty() || request.get("reason").isBlank()){
+            throw new DataNotFoundException("Ly do trong khong ton tai!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(storeService.rejectStore(Long.valueOf(request.get("storeCode")),request.get("reason"))));
+    }
+
+
+
 
 }

@@ -4,7 +4,9 @@ public enum TypeNotifycationUser {
     evaluate("Evaluate"),
     voucher("Voucher"),
     order("Order"),
-    product("Product");
+    product("Product"),
+    friend("Friend"),
+    store("Store");
     private String description;
     // Constructor
     TypeNotifycationUser(String description) {

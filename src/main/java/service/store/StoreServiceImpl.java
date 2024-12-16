@@ -12,6 +12,7 @@ import entity.Store;
 import entity.UserAccount;
 import entity.enum_package.DocumentType;
 import entity.enum_package.StoreStatus;
+import entity.enum_package.TypeNotifycationUser;
 import exeception_handler.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import service.auth_user.AuthUserService;
+import service.common.SendMessageService;
+import service.user_notify.UserNotifyService;
 
 import java.util.Date;
 import java.util.List;
@@ -52,6 +55,8 @@ public class StoreServiceImpl implements StoreService {
     @Autowired
     TypeGoodRepository typeGoodRepository;
 
+   @Autowired
+    UserNotifyService userNotifyService;
 
     @Override
     public StoreRegisterResponseDTO registerStore(StoreRegisterRequestDTO requestDTO) {
@@ -184,6 +189,11 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public List<StoreResponseDTO> getAllStoreByStatusAndKeyword(StoreStatus storeStatus, String keyword) {
+         return StoreMapper.INSTANCE.toUserStoreResponseDtoList(storeRepository.findAllStoreByStatusAndKeyword(storeStatus,keyword));
+    }
+
+    @Override
     public List<StoreResponseDTO> getAll() {
         return StoreMapper.INSTANCE.toUserStoreResponseDtoList(storeRepository.findAll());
     }
@@ -193,11 +203,13 @@ public class StoreServiceImpl implements StoreService {
         Store store = storeRepository.findById(storeCode).orElseThrow(()->new DataNotFoundException("Du lieu khong ton tai!"));
         store.setUpdatedDate(new Date());
         store.setStoreStatus(StoreStatus.active);
+        store.setReason(null);
         storeRepository.save(store);
         if(store.getPaymentWalletStore() == null){
             PaymentWalletStore paymentWalletStore = PaymentWalletStore.builder().store(store).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).balance(0.0).password(null).build();
             paymentWallerStoreRepository.save(paymentWalletStore);
         }
+        userNotifyService.sendNotifyToUser("Đăng kí thành công!","Cửa hàng của bạn đã được duyệt",store.getId().toString(), TypeNotifycationUser.store,store.getImage(),store.getUserAccount().getId());
         return StoreMapper.INSTANCE.toUserStoreResponseDto(store);
     }
 
@@ -207,6 +219,16 @@ public class StoreServiceImpl implements StoreService {
         store.setUpdatedDate(new Date());
         store.setStoreStatus(StoreStatus.lock);
         storeRepository.save(store);
+        return StoreMapper.INSTANCE.toUserStoreResponseDto(store);
+    }
+
+    @Override
+    public StoreResponseDTO rejectStore(Long storeCode, String rejectReason) {
+        Store store  = storeRepository.findById(storeCode).orElseThrow(()->new DataNotFoundException("Cua hang khong ton tai"));
+        store.setReason(rejectReason);
+        store.setStoreStatus(StoreStatus.rejected);
+        storeRepository.save(store);
+        userNotifyService.sendNotifyToUser("Từ chối duyệt!","Cửa hàng "+store.getName()+" bị từ chối. Lý do: "+rejectReason,store.getId().toString(), TypeNotifycationUser.store,store.getImage(),store.getUserAccount().getId());
         return StoreMapper.INSTANCE.toUserStoreResponseDto(store);
     }
 

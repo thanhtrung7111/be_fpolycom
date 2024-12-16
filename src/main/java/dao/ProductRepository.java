@@ -18,9 +18,13 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query(value = "select o from Product o where o.productStatus = :status" )
     List<Product> getAllProductByStatus(@Param("status") ProductStatus productStatus);
 
+    @Query(value = "SELECT * FROM product o WHERE o.product_status = :status AND lower(replace(remove_diacritics(o.name),' ','-')) LIKE %:keyword%", nativeQuery = true)
+    List<Product> getAllProductByStatusAndKeyword(@Param("status") ProductStatus productStatus,@Param("keyword") String word);
 
     @Query(value = "select o from Product o where o.store.id = :storeCode and o.productStatus = :status" )
     List<Product> getAllProductByStoreAndStatus(@Param("storeCode") Long storeCode,@Param("status") ProductStatus productStatus);
+
+
 
     @Query(value = "select o from Product o where o.store.id = :storeCode" )
     List<Product> getAllProductByStore(@Param("storeCode") Long storeCode);

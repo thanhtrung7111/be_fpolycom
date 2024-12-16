@@ -43,5 +43,7 @@ public class StoreRegisterResponseDTO {
 
     String wardName;
 
+    String reason;
+
     List<StoreDocumentResponseDTO> documentList;
 }

@@ -28,12 +28,16 @@ public interface StoreService {
     public ChangeInfoStoreResponseDTO changeInfoStore(ChangeInfoStoreRequestDTO requestDTO);
     public List<StoreResponseDTO> getAllStoreByStatus(StoreStatus storeStatus);
 
+    public List<StoreResponseDTO> getAllStoreByStatusAndKeyword(StoreStatus storeStatus,String keyword);
+
     public List<StoreResponseDTO> getAll();
 
 
     public StoreResponseDTO approveStore(Long storeCode);
 
     public StoreResponseDTO lockStore(Long storeCode);
+
+    public StoreResponseDTO rejectStore(Long storeCode,String rejectReason);
 
     public List<RevenueByMonthResponseDTO> revenueByMonthInYear(DashboardRequestDTO requestDTO);
     public List<RevenueYearsResponseDTO> revenueYears(DashboardRequestDTO requestDTO);

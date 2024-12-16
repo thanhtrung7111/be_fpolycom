@@ -40,6 +40,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<UserProductResponseDTO> getALlProductByStatusAndKeyWord(ProductStatus productStatus, String keyWord) {
+
+        return ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.getAllProductByStatusAndKeyword(productStatus,keyWord));
+    }
+
+    @Override
     public List<UserProductResponseDTO> getALlProductByStore(Long storeCode) {
         return ProductMapper.INSTANCE.toUserProductResponseDtoList(productRepository.getAllProductByStore(storeCode));
     }

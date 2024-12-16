@@ -36,4 +36,6 @@ public class StoreResponseDTO {
 
     String  numberOfFollowed;
     String  numberOfLiked;
+
+    String rejectReason;
 }

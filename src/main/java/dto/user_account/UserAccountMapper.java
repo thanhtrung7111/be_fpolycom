@@ -40,6 +40,15 @@ public interface UserAccountMapper {
     @Mapping(target = "wardName",source = "ward.name")
     UserAccountChangeResponseDTO toUserAccountChangeResponseDto(UserAccount userAccount);
 
+
+    @Mapping(target = "provinceCode",source = "province.id")
+    @Mapping(target = "districtCode",source = "district.id")
+    @Mapping(target = "wardCode",source = "ward.id")
+    @Mapping(target = "provinceName",source = "province.name")
+    @Mapping(target = "districtName",source = "district.name")
+    @Mapping(target = "wardName",source = "ward.name")
+    UserAccountCommonResponseDTO toUserAccountCommonResponseDto(UserAccount userAccount);
+
     @Mapping(target = "province.id",source = "provinceCode")
     @Mapping(target = "ward.id",source = "wardCode")
     @Mapping(target = "district.id",source = "districtCode")

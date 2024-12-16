@@ -63,12 +63,13 @@ public interface ReceiveDeliveryMapper {
     @Mapping(target = "isWarehouse",source = "orders.confirmWarehouse")
     @Mapping(target = "warehouse",source = "orders.importExportOrdersList")
     @Mapping(target = "typePayment",source = "orders.paymentType.name")
-    @Mapping(target = "paymentSuccess",source = "orders.paymentReceiptList",qualifiedByName = "paymentSuccess")
+    @Mapping(target = "paymentSuccess",source = "orders.paymentReceiptList",qualifiedByName = "paymentSuccesss" +
+            "")
     ReceiveDeliveryResponseDTO toReceiveDeliveryResponseDTO(ReceiveDelivery entity);
 
     List<ReceiveDeliveryResponseDTO> toReceiveDeliveryResponseDtoList(List<ReceiveDelivery> list);
 
-    @Named("paymentSuccess")
+    @Named("paymentSuccesss")
     default  Boolean paymentSuccess (List<PaymentReceipt> paymentReceiptList){
         return paymentReceiptList == null ||  !paymentReceiptList.isEmpty();
     }

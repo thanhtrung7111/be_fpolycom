@@ -17,7 +17,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
-@AttributeOverride(name = "id",column = @Column(name = "storeCode"))
+@AttributeOverride(name = "id", column = @Column(name = "storeCode"))
 public class Store extends EntityCommon {
 
     @Lob
@@ -36,6 +36,10 @@ public class Store extends EntityCommon {
     @Nationalized
     String address;
 
+    @Lob
+    @Nationalized
+    String reason;
+
     String phone;
 
     String email;
@@ -50,7 +54,7 @@ public class Store extends EntityCommon {
 
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="userCode",referencedColumnName = "userCode")
+    @JoinColumn(name = "userCode", referencedColumnName = "userCode")
     UserAccount userAccount;
 
 
@@ -68,7 +72,7 @@ public class Store extends EntityCommon {
     Ward ward;
 
 
-    @OneToMany(mappedBy = "store",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     List<StoreDocument> storeDocumentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "store")

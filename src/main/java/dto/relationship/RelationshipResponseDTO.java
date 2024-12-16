@@ -14,6 +14,8 @@ public class RelationshipResponseDTO {
 
     String username;
 
+    String image;
+
     FriendshipStatus status;
 
 

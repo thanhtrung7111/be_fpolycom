@@ -1,5 +1,6 @@
 package dto.user_account;
 
+import entity.enum_package.FriendshipStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAccountChangeResponseDTO {
+public class UserAccountCommonResponseDTO {
 
     String name;
 
@@ -44,4 +45,6 @@ public class UserAccountChangeResponseDTO {
     String wardName;
 
     Date createdDate;
+
+    FriendshipStatus friendshipStatus;
 }

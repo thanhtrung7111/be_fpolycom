@@ -20,6 +20,7 @@ public interface RelationshipMapper {
 
     @Mapping(target = "userCode",source = "userAccountSecondary.id")
     @Mapping(target = "username",source = "userAccountSecondary.name")
+    @Mapping(target = "image",source = "userAccountSecondary.image")
     @Mapping(target = "status",source = "friendshipStatus")
     RelationshipResponseDTO toRelationshipResponseDto(Relationship relation);
 

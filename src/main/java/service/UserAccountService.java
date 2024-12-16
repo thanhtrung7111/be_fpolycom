@@ -1,9 +1,6 @@
 package service;
 
-import dao.PasswordRecoverRepository;
-import dao.PaymentWalletUserRepository;
-import dao.TokenRegisterRepository;
-import dao.UserAccountRepository;
+import dao.*;
 import dto.user_auth.ChangePasswordRequestDTO;
 import dto.user_auth.ForgotPasswordRequestDTO;
 import dto.user_account.*;
@@ -13,6 +10,7 @@ import exeception_handler.DataNotFoundException;
 import exeception_handler.NotRightException;
 import exeception_handler.TokenExpiredException;
 import jakarta.mail.MessagingException;
+import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
@@ -30,6 +28,7 @@ import service.auth_user.AuthUserService;
 import service.common.EncodingService;
 import service.common.MailService;
 
+import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
@@ -60,6 +59,8 @@ public class UserAccountService implements UserDetailsService {
     @Autowired
     PaymentWalletUserRepository paymentWalletUserRepository;
 
+    @Autowired
+    RelationshipRepository relationshipRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -96,7 +97,7 @@ public class UserAccountService implements UserDetailsService {
                 "      <h3 style='color: rgb(48, 48, 48); margin-top: 0px'>FpolyCom</h3>\n" +
                 "      <p>Thank you for register!</p>\n" +
                 "      <a\n" +
-                "        href='http://localhost:5173/confirm_account/"+tokenRegister.getToken()+"'\n" +
+                "        href='http://localhost:5173/confirm_account/" + tokenRegister.getToken() + "'\n" +
                 "        style='\n" +
                 "          width: fit-content;\n" +
                 "          display: block;\n" +
@@ -148,7 +149,7 @@ public class UserAccountService implements UserDetailsService {
 
     public String forgotPassword(String email) throws MessagingException {
         UserAccount userAccount = userAccountRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Khong tim tha nguoi dung"));
-        if(userAccount.getPasswordRecover()!=null){
+        if (userAccount.getPasswordRecover() != null) {
             passwordRecoverRepository.delete(userAccount.getPasswordRecover());
         }
         String token = UUID.randomUUID().toString();
@@ -172,7 +173,7 @@ public class UserAccountService implements UserDetailsService {
                 "      <h3 style='color: rgb(48, 48, 48); margin-top: 0px'>FpolyCom</h3>\n" +
                 "      <p>Recover Your Passwo!</p>\n" +
                 "      <a\n" +
-                "        href='http://localhost:5173/recover_password/"+passwordRecover.getTokenRecover()+"'\n" +
+                "        href='http://localhost:5173/recover_password/" + passwordRecover.getTokenRecover() + "'\n" +
                 "        style='\n" +
                 "          width: fit-content;\n" +
                 "          display: block;\n" +
@@ -210,6 +211,27 @@ public class UserAccountService implements UserDetailsService {
         String username = authUserService.extractUserlogin(token);
         UserAccount userAccount = userAccountRepository.findByUserLogin(username).orElseThrow(() -> new UsernameNotFoundException("Nguoi dung khong ton tai!"));
         return UserAccountMapper.INSTANCE.toUserAccountChangeResponseDto(userAccount);
+    }
+
+    public UserAccountCommonResponseDTO getInfoUser(Long userCodeMain, Long userCode)  {
+        UserAccount userAccount = null;
+        UserAccountCommonResponseDTO result = null;
+        if (userCodeMain == null) {
+            userAccount = userAccountRepository.findById(userCode).orElseThrow(() -> new UsernameNotFoundException("Nguoi dung khong ton tai!"));
+            result = UserAccountMapper.INSTANCE.toUserAccountCommonResponseDto(userAccount);
+        } else {
+            Optional<Relationship> relationship = relationshipRepository.getRelationshipByUserloginAndUsercode(userCodeMain,userCode);
+            if(relationship.isPresent()){
+                userAccount = userAccountRepository.findById(userCode).orElseThrow(() -> new UsernameNotFoundException("Nguoi dung khong ton tai!"));
+                result = UserAccountMapper.INSTANCE.toUserAccountCommonResponseDto(userAccount);
+                result.setFriendshipStatus(relationship.get().getFriendshipStatus());
+            }else{
+                userAccount = userAccountRepository.findById(userCode).orElseThrow(() -> new UsernameNotFoundException("Nguoi dung khong ton tai!"));
+                result = UserAccountMapper.INSTANCE.toUserAccountCommonResponseDto(userAccount);
+            }
+        }
+
+        return result;
     }
 
 

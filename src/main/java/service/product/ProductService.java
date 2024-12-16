@@ -18,6 +18,7 @@ public interface ProductService {
     public UserProductResponseDTO unlockProduct(Long productCode);
 
     public List<UserProductResponseDTO> getALlProductByStatus(ProductStatus productStatus);
+    public List<UserProductResponseDTO> getALlProductByStatusAndKeyWord(ProductStatus productStatus,String keyWord);
 
     public List<UserProductResponseDTO> getALlProductByStore(Long storeCode);
 

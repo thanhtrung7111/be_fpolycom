@@ -4,10 +4,10 @@ import dto.store.*;
 import entity.Store;
 import entity.TypeGood;
 import entity.enum_package.StoreStatus;
-import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
@@ -16,19 +16,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StoreRepository extends JpaRepository<Store,Long> {
+public interface StoreRepository extends JpaRepository<Store, Long> {
 
     @Query(value = "select u from Store u where u.userAccount.userLogin = :userLogin")
-    Optional<Store> findByUserAccount(@Param("userLogin")String userLogin);
+    Optional<Store> findByUserAccount(@Param("userLogin") String userLogin);
 
     @Query(value = "select u from Store u where u.id = :storeCode and u.storeStatus = :storeStatus")
-    Optional<Store> findStoreByCodeAndStatus(@Param("storeCode")Long storeCode, @Param("storeStatus")StoreStatus storeStatus);
+    Optional<Store> findStoreByCodeAndStatus(@Param("storeCode") Long storeCode, @Param("storeStatus") StoreStatus storeStatus);
 
     @Query(value = "select u from Store u where u.id = :storeCode")
-    Store findStoreByCode(@Param("storeCode")Long storeCode);
+    Store findStoreByCode(@Param("storeCode") Long storeCode);
 
     @Query(value = "select u from Store u where  u.storeStatus = :storeStatus")
-    List<Store> findAllStoreByStatus( @Param("storeStatus")StoreStatus storeStatus);
+    List<Store> findAllStoreByStatus(@Param("storeStatus") StoreStatus storeStatus);
+
+    @Query(value = "SELECT * FROM store o WHERE o.store_status = :status AND lower(replace(remove_diacritics(o.name),' ','-')) LIKE %:keyword%", nativeQuery = true)
+    List<Store> findAllStoreByStatusAndKeyword(@Param("status") StoreStatus storeStatus, @Param("keyword") String keyword);
 
     @Query(value = "select new dto.store.RevenueByMonthResponseDTO(" +
             "month(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
@@ -44,7 +47,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
             "where o.store =:store and year(o.createdDate) between :startYear and :endYear and o.orderStatus = entity.enum_package.OrderStatus.complete " +
             "group by year(o.createdDate), o.store.name"
     )
-    List<RevenueYearsResponseDTO> findAllRevenueYears(@Param("store") Store store, @Param("startYear")Integer startYear, @Param("endYear")Integer endYear);
+    List<RevenueYearsResponseDTO> findAllRevenueYears(@Param("store") Store store, @Param("startYear") Integer startYear, @Param("endYear") Integer endYear);
 
     @Query(value = "select new dto.store.RevenueByMonthResponseDTO(" +
             "month(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
@@ -52,7 +55,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
             "where o.store =:store and year(o.createdDate) =:year and month(o.createdDate)=:month and o.orderStatus = entity.enum_package.OrderStatus.complete " +
             " group by month (o.createdDate), o.store.name"
     )
-    RevenueByMonthResponseDTO findRevenueByMonthAndYear(@Param("store") Store store,@Param("month") Integer month, @Param("year") Integer year);
+    RevenueByMonthResponseDTO findRevenueByMonthAndYear(@Param("store") Store store, @Param("month") Integer month, @Param("year") Integer year);
 
     @Query(value = "select new dto.store.RevenueYearsResponseDTO(" +
             "year(o.createdDate), sum(o.totalAmount - o.totalAmountDiscount - o.totalAmountVoucher), o.store.name, count(o.id)) " +
@@ -68,7 +71,7 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
             "where o.store =:store and o.orderStatus = entity.enum_package.OrderStatus.complete and o.createdDate between :startDate and :endDate " +
             "group by o.createdDate, o.store.name"
     )
-    List<RevenueDayResponseDTO> findRevenueByDay(@Param("store") Store store,@Param("startDate") Date startDate, @Param("endDate")Date endDate);
+    List<RevenueDayResponseDTO> findRevenueByDay(@Param("store") Store store, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     @Query(value = "select new dto.store.Top5ProductBestSellerResponseDTO(" +
             " pd.product.name,  pd.product.typeGood.name, count(od), sum(od.totalAmount  - od.totalDiscount )) " +
@@ -84,14 +87,14 @@ public interface StoreRepository extends JpaRepository<Store,Long> {
             "where o.store =:store and o.createdDate =:date and o.orderStatus = entity.enum_package.OrderStatus.complete " +
             " group by o.createdDate, o.store.name"
     )
-    RevenueDayResponseDTO findRevenueByMonthAndYearAndDay(@Param("store") Store store,@Param("date") Date date);
+    RevenueDayResponseDTO findRevenueByMonthAndYearAndDay(@Param("store") Store store, @Param("date") Date date);
 
     @Query(value = "select new dto.store.Top5ProductBestSellerResponseDTO(" +
             "pd.product.name,  pd.product.typeGood.name, count(od), sum(od.totalAmount  - od.totalDiscount )) " +
             " from OrderDetail od join od.productDetail pd" +
             " where od.orders.store =:store and pd.product.typeGood =:typeGood " +
-            "group by  pd.product.typeGood.id, pd.product.id " )
-    List<Top5ProductBestSellerResponseDTO> findProductByTypeGood(@Param("store") Store store,@Param("typeGood") TypeGood typeGood);
+            "group by  pd.product.typeGood.id, pd.product.id ")
+    List<Top5ProductBestSellerResponseDTO> findProductByTypeGood(@Param("store") Store store, @Param("typeGood") TypeGood typeGood);
 
     @Query(value = "select new dto.store.NumberOfProductByTypeResponseDTO(" +
             " count(p),p.typeGood.name ) " +
