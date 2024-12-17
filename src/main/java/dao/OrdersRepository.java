@@ -23,7 +23,7 @@ public interface OrdersRepository extends JpaRepository<Orders,Long> {
     List<Orders> findAllOrdersByStore(@Param("storeCode")Long storeCode);
 
 
-    @Query(value = "select o from Orders o where o.orderBillCode = :orderBillCode and o.createdDate = CURRENT_DATE")
+    @Query(value = "select o from Orders o where o.orderBillCode = :orderBillCode")
     List<Orders> findAllOrdersByOrderBill(@Param("orderBillCode")String orderBillCode);
 
     @Query(value = "SELECT o FROM Orders o WHERE o.orderStatus = :orderStatus AND o.ward.id = :wardCode")

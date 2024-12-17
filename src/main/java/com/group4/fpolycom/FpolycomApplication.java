@@ -232,8 +232,9 @@ public class FpolycomApplication implements CommandLineRunner {
 //		Voucher voucher = Voucher.builder().id(1L).voucherType(VoucherType.store).store(store).beginDate(new Date()).endDate(new Date()).percentDecrease(10).priceApply(100000.0).name("Khuye mai thang 10").beginDate(new Date()).endDate(new Date()).build();
 //		voucherRepository.save(voucher);
 //
-//		DeliveryType deliveryType = DeliveryType.builder().id(1L).name("Ship hang sieu toc").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(20000.0).build();
-//		deliveryTypeRepository.save(deliveryType);
+//		DeliveryType deliveryType = DeliveryType.builder().id(1L).name("Giao hàng nhanh").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(20000.0).build();
+//		DeliveryType deliveryType2 = DeliveryType.builder().id(2L).name("Giao tiết kiệm").createdDate(new Date()).deletedDate(new Date()).deleted(false).updatedDate(null).fee(15000.0).build();
+//		deliveryTypeRepository.saveAll(List.of(deliveryType,deliveryType2));
 //
 //
 //
