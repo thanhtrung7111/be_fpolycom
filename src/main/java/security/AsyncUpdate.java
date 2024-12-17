@@ -46,7 +46,7 @@ public class AsyncUpdate {
 
     @Async("taskExecutor")
     public void updatePaymentWalletStore(Orders orders){
-        PaymentWalletStore paymentWalletStore = paymentWallerStoreRepository.findPaymentWalletByStore(orders.getId()).orElseThrow(()->new DataNotFoundException("Vi khong ton tai"));
+        PaymentWalletStore paymentWalletStore = paymentWallerStoreRepository.findPaymentWalletByStore(orders.getStore().getId()).orElseThrow(()->new DataNotFoundException("Vi khong ton tai"));
         paymentWalletStore.setBalance(paymentWalletStore.getBalance()+orders.getFinalTotal()-orders.getTotalAmountShip());
         paymentWallerStoreRepository.save(paymentWalletStore);
     }

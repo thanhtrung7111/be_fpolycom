@@ -57,6 +57,7 @@ public interface OrderMapper {
     @Mapping(target = "paymentSuccess",source = "paymentReceiptList",qualifiedByName = "paymentSuccess")
     @Mapping(target = "receiveDeliveryList",source = "receiveDeliveryList")
     @Mapping(target = "orderDate",source = "createdDate")
+    @Mapping(target = "paymentTypeName",source = "paymentType.name")
     @Mapping(target = "voucherList",source = "voucherApplyList",qualifiedByName = "voucherList")
     OrderInfoResponseDTO toOrderInfoResponseDto (Orders orders);
 

@@ -29,6 +29,7 @@ public interface OrderDetailMapper {
     @Mapping(target = "productDetailName",source = "productDetail.name")
     @Mapping(target = "productDetailPrice",source = "productDetail.price")
     @Mapping(target = "productName",source = "productDetail.product.name")
+    @Mapping(target = "productCode",source = "productDetail.product.id")
     OrderDetailResponseDTO toOrderDetailResponseDto(OrderDetail requestDTO);
 
 

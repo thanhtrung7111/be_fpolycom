@@ -29,6 +29,8 @@ public class OrderDetailResponseDTO {
 
     String productName;
 
+    Long productCode;
+
     Double productDetailPrice;
 
 }

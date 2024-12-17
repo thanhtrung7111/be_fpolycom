@@ -8,10 +8,12 @@ import dto.relationship.RelationshipResponseDTO;
 import entity.Relationship;
 import entity.UserAccount;
 import entity.enum_package.FriendshipStatus;
+import entity.enum_package.TypeNotifycationUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import service.auth_user.AuthUserService;
+import service.user_notify.UserNotifyService;
 
 import java.util.Date;
 import java.util.List;
@@ -27,6 +29,9 @@ public class RelationshipServiceImpl implements RelationshipService {
 
     @Autowired
     UserAccountRepository userAccountRepository;
+
+    @Autowired
+    UserNotifyService userNotifyService;
 
     @Override
     public RelationshipResponseDTO postData(RelationshipRequestDTO relationshipRequestDTO) {
@@ -91,6 +96,8 @@ public class RelationshipServiceImpl implements RelationshipService {
 
         relationshipRepository.saveAll(List.of(relationship, relationship2));
 
+        Relationship relationshipNotify = Relationship.builder().userAccountPrimary(userAccountPrimary).userAccountSecondary(userAccountPrimary).friendshipStatus(FriendshipStatus.friendRequest).createdDate(new Date()).deleted(false).updatedDate(null).deletedDate(null).build();
+        userNotifyService.sendAddFriendToUser(userAccountSecondary.getId(),relationshipNotify);
 
         return RelationshipMapper.INSTANCE.toRelationshipResponseDto(relationship);
     }
@@ -106,6 +113,9 @@ public class RelationshipServiceImpl implements RelationshipService {
         List<Relationship> relationships = relationshipRepository.getAllRelationShipByUserAndUser(userAccountPrimary, userAccountSecondary);
         relationships.forEach(item -> item.setFriendshipStatus(FriendshipStatus.accepted));
         relationshipRepository.saveAll(relationships);
+
+        userNotifyService.sendNotifyToUser("Yêu cầu kết bạn",userAccountPrimary.getName()+" chấp nhận lời yêu cầu kết bạn!",userAccountPrimary.getId().toString(), TypeNotifycationUser.friend,userAccountPrimary.getImage(), userAccountSecondary.getId());
+
         return RelationshipMapper.INSTANCE.toRelationshipResponseDto(relationships.stream().filter(item->item.getUserAccountSecondary().getId() == requestDTO.getUserCodeSecond()).findFirst().get());
     }
 

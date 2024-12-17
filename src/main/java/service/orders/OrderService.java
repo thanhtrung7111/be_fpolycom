@@ -28,6 +28,8 @@ public interface OrderService {
 
     public OrderInfoResponseDTO pickUpReceiveOrders(Long orderCode);
 
+    public OrderInfoResponseDTO updateEvaluate(Long orderCode);
+
     public OrderInfoResponseDTO confirmOrderPaymentSuccess(Long orderCode);
 
 //

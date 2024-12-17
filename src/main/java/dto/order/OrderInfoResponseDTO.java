@@ -43,11 +43,15 @@ public class OrderInfoResponseDTO {
 
     String orderBillCode;
 
+    Boolean isEvaluate;
+
     String noteContent;
 
     String addressDetail;
 
     String address;
+
+    String paymentTypeName;
 
     Long shippingFeeCode;
 

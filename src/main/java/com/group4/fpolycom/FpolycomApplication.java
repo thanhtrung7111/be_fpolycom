@@ -162,8 +162,8 @@ public class FpolycomApplication implements CommandLineRunner {
 //		Relationship relationship4 = Relationship.builder().id(4L).userAccountPrimary(userAccount).userAccountSecondary(userAccount3).friendshipStatus(FriendshipStatus.accepted).build();
 //		relationshipRepository.saveAll(List.of(relationship,relationship2,relationship3,relationship4));
 //
-//		Administration administration = Administration.builder().id(1L).name("Thaành Trung").image("sdfsdf").userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
-//		adminRepository.save(administration);
+		Administration administration = Administration.builder().id(1L).name("Thaành Trung").image("sdfsdf").userLogin("thanhtrung2").password(encoder.encode("thanhtrung2")).id(1L).createdDate(new Date()).updatedDate(null).deleted(false).deletedDate(null).build();
+		adminRepository.save(administration);
 //
 //		Province province = Province.builder().id(1L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Bình Dương").build();
 //		Province province2 = Province.builder().id(2L).createdDate(new Date()).deleted(false).deletedDate(null).updatedDate(null).name("Đồng Nai").build();

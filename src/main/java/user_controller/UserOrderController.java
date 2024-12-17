@@ -47,6 +47,15 @@ public class UserOrderController {
         return ResponseEntity.ok(dataReturnService.success(orderService.getOrderById(Long.valueOf(requestDTO.get("orderCode")))));
     }
 
+    @PostMapping(value = "/user/orders/updateEvaluate")
+    public ResponseEntity<Object> updateEvalute(@RequestBody HashMap<String,String> requestDTO) {
+        if(requestDTO.isEmpty() || requestDTO.get("orderCode").isBlank()){
+            throw new DataNotFoundException("Du lieu khong ton tai!");
+        }
+        return ResponseEntity.ok(dataReturnService.success(orderService.updateEvaluate(Long.valueOf(requestDTO.get("orderCode")))));
+    }
+
+
 
     @PostMapping(value = "/order-confirm/{orderBillCode}")
     public ResponseEntity<Object> postNewOrder(@PathVariable("orderBillCode") String orderBillCode) {

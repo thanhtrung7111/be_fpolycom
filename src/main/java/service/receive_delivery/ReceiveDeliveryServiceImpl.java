@@ -53,6 +53,7 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
     public ReceiveDeliveryResponseDTO completeReceive(ReceiveDeliveryRequestDTO request) {
         Orders orders = ordersRepository.findById(request.getOrdersCode()).orElseThrow(() -> new DataNotFoundException("Orders not found"));
         orders.setOrderStatus(OrderStatus.warehouse);
+//        orders.setConfirmPickup(true);
         ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("khong thay id cua shipper"));
         receiveDelivery.setStatusDelivery(StatusDelivery.complete);
         receiveDeliveryRepository.save(receiveDelivery);
@@ -63,15 +64,16 @@ public class ReceiveDeliveryServiceImpl implements ReceiveDeliveryService {
     @Override
     public ReceiveDeliveryResponseDTO completeDelivery(ReceiveDeliveryRequestDTO request) {
         Orders orders = ordersRepository.findById(request.getOrdersCode()).orElseThrow(() -> new DataNotFoundException("Orders not found"));
+//        orders.setConfirmDelivery(true);
         if(orders.getPaymentReceiptList().size() >0){
             orders.setOrderStatus(OrderStatus.complete);
-            userNotifyService.sendNotifyToUser("Đơn hàng "+orders.getId()+" đang giao!","Đơn hàng đang được giao đến bạn, vui lòng để ý điện thoại!",orders.getId().toString(), TypeNotifycationUser.order,orders.getOrderDetailList().get(0).getProductDetail().getImage(),orders.getUserAccount().getId());
             asyncUpdate.updatePaymentWalletStore(orders);
         }
         ReceiveDelivery receiveDelivery = receiveDeliveryRepository.findById(request.getReceiveDeliveryCode()).orElseThrow(() -> new DataNotFoundException("khong thay id cua shipper"));
         System.out.println(receiveDelivery.getId());
         receiveDelivery.setStatusDelivery(StatusDelivery.complete);
         ordersRepository.save(orders);
+        userNotifyService.sendNotifyToUser("Đơn hàng "+orders.getId()+" đã được giao!","Đơn hàng đã đến tay bạn, vui lòng đánh giá sản phẩm!",orders.getId().toString(), TypeNotifycationUser.order,orders.getOrderDetailList().get(0).getProductDetail().getImage(),orders.getUserAccount().getId());
         receiveDeliveryRepository.save(receiveDelivery);
         return ReceiveDeliveryMapper.INSTANCE.toReceiveDeliveryResponseDTO(receiveDelivery);
     }

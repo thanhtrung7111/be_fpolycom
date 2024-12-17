@@ -1,10 +1,12 @@
 package service.user_notify;
 
 import dao.UserNotifycationRepository;
+import dto.relationship.RelationshipMapper;
 import dto.user_notify.UserNotifycationMapper;
 import dto.user_notify.UserNotifycationRequestDTO;
 import dto.user_notify.UserNotifycationResponseDTO;
 import entity.NotifycationUser;
+import entity.Relationship;
 import entity.UserAccount;
 import entity.enum_package.TypeNotifycationUser;
 import exeception_handler.DataNotFoundException;
@@ -67,6 +69,12 @@ public class UserNotifyImpl implements UserNotifyService{
         NotifycationUser notifycationUser =NotifycationUser.builder().userAccount(UserAccount.builder().id(userCode).build()).title(title).content(content).linkContent(linkContent).typeNotifycation(typeNotifycationUser).createdDate(new Date()).deleted(false).readed(false).image(image).deletedDate(null).updatedDate(null).build();
         userNotifycationRepository.save(notifycationUser);
         messagingTemplate.convertAndSend("/topic/notifications/"+userCode, UserNotifycationMapper.INSTANCE.toUserNotifycationResponseDto(notifycationUser));
+    }
+
+    @Override
+    @Async("taskExecutor")
+    public void sendAddFriendToUser(Long userCode ,Relationship relationship) {
+        messagingTemplate.convertAndSend("/topic/notifications/friend/"+userCode, RelationshipMapper.INSTANCE.toRelationshipResponseDto(relationship));
     }
 
     @Override

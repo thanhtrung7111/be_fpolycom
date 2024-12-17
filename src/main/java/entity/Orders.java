@@ -53,6 +53,8 @@ public class Orders extends EntityCommon {
 
     Boolean confirmWarehouse;
 
+    Boolean isEvaluate;
+
     Double finalTotal;
 
     String orderBillCode;

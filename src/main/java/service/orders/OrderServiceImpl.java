@@ -169,6 +169,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public OrderInfoResponseDTO updateEvaluate(Long orderCode) {
+        Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay don hang"));
+        order.setIsEvaluate(true);
+        ordersRepository.save(order);
+        return OrderMapper.INSTANCE.toOrderInfoResponseDto(ordersRepository.save(order));
+    }
+
+    @Override
     public OrderInfoResponseDTO confirmOrderPaymentSuccess(Long orderCode) {
         Orders order = ordersRepository.findById(orderCode).orElseThrow(() -> new DataNotFoundException("Khong tim thay don hang"));
         PaymentReceipt paymentReceipt = PaymentReceipt.builder().paymentType(order.getPaymentType()).finalTotal(order.getFinalTotal()).totalAmount(order.getTotalAmount()).totalAmountShip(order.getTotalAmountShip()).totalAmountVoucher(order.getTotalAmountVoucher()).totalAmountDiscount(order.getTotalAmountDiscount()).totalAmountPaid(order.getFinalTotal()).orders(order).createdDate(new Date()).deleted(false).updatedDate(null).deletedDate(null).build();
