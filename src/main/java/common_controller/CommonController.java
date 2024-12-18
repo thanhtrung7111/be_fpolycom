@@ -105,9 +105,14 @@ public class CommonController {
     }
 
     @PostMapping(value = "/common/store/all-banner")
-    public ResponseEntity<Object> getAllBanner(@RequestBody HashMap<String, String> request) {
+    public ResponseEntity<Object> getAllBannerStore(@RequestBody HashMap<String, String> request) {
         System.out.print(Long.valueOf(request.get("storeCode")));
         return ResponseEntity.ok(dataReturnService.success(StoreBannerMapper.INSTANCE.toStoreBannerResponseList(storeBannerRepository.findAllStoreBannerByStoreAndStatus(Long.valueOf(request.get("storeCode")), true))));
+    }
+
+    @GetMapping(value = "/common/all-banner")
+    public ResponseEntity<Object> getAllBanner() {
+        return ResponseEntity.ok(dataReturnService.success(StoreBannerMapper.INSTANCE.toStoreBannerResponseList(storeBannerRepository.findAll())));
     }
 
     @PostMapping(value = "/common/store/all-product")

@@ -25,6 +25,7 @@ public interface StoreBannerMapper {
     @Mapping(target = "storeCode",source = "store.id")
     @Mapping(target = "storeName",source = "store.name")
     @Mapping(target = "productName",source = "product.name")
+    @Mapping(target = "typeGoodName",source = "product.typeGood.name")
     StoreBannerResponse toStoreBannerResponse(StoreBanner request);
 
 

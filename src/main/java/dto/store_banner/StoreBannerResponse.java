@@ -15,6 +15,8 @@ public class StoreBannerResponse {
     String image;
 
     String title;
+    String typeGoodName;
+
 
     Boolean status;
 
